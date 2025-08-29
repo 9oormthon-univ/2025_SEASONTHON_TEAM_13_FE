@@ -29,3 +29,6 @@ yarn.lock
 pnpm-lock.yaml
 bun.lock
 bun.lockb
+
+*storybook.log
+storybook-static
