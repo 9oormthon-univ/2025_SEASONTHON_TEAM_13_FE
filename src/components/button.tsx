@@ -13,6 +13,10 @@ const buttonVariants = cva(
         full: 'w-full p-4'
       }
     },
+    defaultVariants: {
+      variant: 'primary',
+      size: 'full'
+    }
   }
 );
 
