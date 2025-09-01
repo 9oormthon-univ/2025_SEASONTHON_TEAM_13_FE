@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 export const FeelingTagButton = ({ className, selected = false, ...props }: React.ComponentProps<'button'> & {
-  selected: boolean
+  selected?: boolean
 }) => {
   return (
     <button
