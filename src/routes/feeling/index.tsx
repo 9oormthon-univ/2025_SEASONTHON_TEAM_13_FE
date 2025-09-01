@@ -1,16 +1,10 @@
 import { Button } from '@/components/button';
 import { FeelingTagButton } from '@/components/feeling-tag-button';
-import { FEELINGS } from '@/constants/feelings';
+import { FEELINGS, type FeelingKey } from '@/constants/feelings';
 import React from 'react';
 
 export const SelectFeelings = () => {
-  const [selectedFeelings, setSelectedFeelings] = React.useState<string[]>([]);
-
-  React.useEffect(() => {
-    if (selectedFeelings.length > 3) {
-      setSelectedFeelings((prev) => prev.slice(0, 3));
-    }
-  }, [selectedFeelings]);
+  const [selectedFeelings, setSelectedFeelings] = React.useState<FeelingKey[]>([]);
 
   return (
     <div className='min-h-screen w-full flex flex-col items-center gap-2 px-4'>
@@ -22,13 +16,19 @@ export const SelectFeelings = () => {
             <FeelingTagButton
               key={key}
               onClick={() => {
-                if (selectedFeelings.includes(key)) {
-                  setSelectedFeelings((prev) => prev.filter((item) => item !== key));
-                } else {
-                  setSelectedFeelings((prev) => [...prev, key]);
-                }
+                setSelectedFeelings((prev) => {
+                  if (prev.includes(key as FeelingKey)) {
+                    return prev.filter((item) => item !== (key as FeelingKey));
+                  }
+                  if (prev.length < 3) {
+                    return [...prev, key as FeelingKey];
+                  } else {
+                    return prev;
+                  }
+                });
               }}
-              selected={selectedFeelings.includes(key)}
+              disabled={!selectedFeelings.includes(key as FeelingKey) && selectedFeelings.length >= 3}
+              selected={selectedFeelings.includes(key as FeelingKey)}
             >
               {value}
             </FeelingTagButton>

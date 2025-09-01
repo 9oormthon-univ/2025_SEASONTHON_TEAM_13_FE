@@ -16,4 +16,6 @@ export const FEELINGS = {
   excitement: '🥰 설렘',
   surprised: '😮 놀람',
   dizzy: '🤪 어지러운',
-};
+} as const;
+
+export type FeelingKey = keyof typeof FEELINGS;
