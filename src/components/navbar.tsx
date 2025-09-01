@@ -10,9 +10,13 @@ import activeRanking from '@/assets/navbar/ranking_active.svg';
 import activeCalendar from '@/assets/navbar/calendar_active.svg';
 import activeProfile from '@/assets/navbar/profile_active.svg';
 
-export const Navbar = () => {
+interface NavbarProps {
+  currentPath?: string;
+}
+
+export const Navbar = ({ currentPath }: NavbarProps) => {
   const location = useLocation();
-  const currentPath = location.pathname;
+  const actualPath = currentPath || location.pathname;
   const navigate = useNavigate();
 
   const handleClick = (path: string) => {
@@ -23,46 +27,46 @@ export const Navbar = () => {
     <div className='pt-[17px] pb-[34px] border-t border-t-[#F2F2F2] rounded-t-[24px] flex justify-center items-center fixed bottom-0 max-w-[500px] w-full'>
       <div className='flex flex-col items-center gap-[4px] flex-grow cursor-pointer' onClick={() => handleClick('/feed')}>
         <img
-          src={currentPath === '/feed' ? activeFeed : feed}
+          src={actualPath === '/feed' ? activeFeed : feed}
           alt='feed'
         />
-        <p className={`body-s ${currentPath === '/feed' ? 'text-primary' : 'text-gray300'} font-semibold`}>
+        <p className={`body-s ${actualPath === '/feed' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           피드
         </p>
       </div>
       <div className='flex flex-col items-center gap-[4px] flex-grow cursor-pointer' onClick={() => handleClick('/search')}>
         <img
-          src={currentPath === '/search' ? activeSearch : search}
+          src={actualPath === '/search' ? activeSearch : search}
           alt='search'
         />
-        <p className={`body-s ${currentPath === '/search' ? 'text-primary' : 'text-gray300'} font-semibold`}>
+        <p className={`body-s ${actualPath === '/search' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           검색
         </p>
       </div>
       <div className='flex flex-col items-center gap-[4px] flex-grow cursor-pointer' onClick={() => handleClick('/ranking')}>
         <img
-          src={currentPath === '/ranking' ? activeRanking : ranking}
+          src={actualPath === '/ranking' ? activeRanking : ranking}
           alt='ranking'
         />
-        <p className={`body-s ${currentPath === '/ranking' ? 'text-primary' : 'text-gray300'} font-semibold`}>
+        <p className={`body-s ${actualPath === '/ranking' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           랭킹
         </p>
       </div>
       <div className='flex flex-col items-center gap-[4px] flex-grow cursor-pointer' onClick={() => handleClick('/calendar')}>
         <img
-          src={currentPath === '/calendar' ? activeCalendar : calendar}
+          src={actualPath === '/calendar' ? activeCalendar : calendar}
           alt='calendar'
         />
-        <p className={`body-s ${currentPath === '/calendar' ? 'text-primary' : 'text-gray300'} font-semibold`}>
+        <p className={`body-s ${actualPath === '/calendar' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           캘린더
         </p>
       </div>
       <div className='flex flex-col items-center gap-[4px] flex-grow cursor-pointer' onClick={() => handleClick('/profile')}>
         <img
-          src={currentPath === '/profile' ? activeProfile : profile}
+          src={actualPath === '/profile' ? activeProfile : profile}
           alt='profile'
         />
-        <p className={`body-s ${currentPath === '/profile' ? 'text-primary' : 'text-gray300'} font-semibold`}>
+        <p className={`body-s ${actualPath === '/profile' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           프로필
         </p>
       </div>
