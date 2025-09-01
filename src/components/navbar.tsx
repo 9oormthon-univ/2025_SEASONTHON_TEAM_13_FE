@@ -25,7 +25,6 @@ export const Navbar = () => {
         <img
           src={currentPath === '/feed' ? activeFeed : feed}
           alt='feed'
-          onClick={() => handleClick('/feed')}
         />
         <p className={`body-s ${currentPath === '/feed' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           피드
@@ -35,7 +34,6 @@ export const Navbar = () => {
         <img
           src={currentPath === '/search' ? activeSearch : search}
           alt='search'
-          onClick={() => handleClick('/search')}
         />
         <p className={`body-s ${currentPath === '/search' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           검색
@@ -45,7 +43,6 @@ export const Navbar = () => {
         <img
           src={currentPath === '/ranking' ? activeRanking : ranking}
           alt='ranking'
-          onClick={() => handleClick('/ranking')}
         />
         <p className={`body-s ${currentPath === '/ranking' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           랭킹
@@ -55,7 +52,6 @@ export const Navbar = () => {
         <img
           src={currentPath === '/calendar' ? activeCalendar : calendar}
           alt='calendar'
-          onClick={() => handleClick('/calendar')}
         />
         <p className={`body-s ${currentPath === '/calendar' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           캘린더
@@ -65,7 +61,6 @@ export const Navbar = () => {
         <img
           src={currentPath === '/profile' ? activeProfile : profile}
           alt='profile'
-          onClick={() => handleClick('/profile')}
         />
         <p className={`body-s ${currentPath === '/profile' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           프로필
