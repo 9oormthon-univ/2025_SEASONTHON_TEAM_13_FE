@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import feed from '@/assets/navbar/feed.svg';
 import search from '@/assets/navbar/search.svg';
 import ranking from '@/assets/navbar/ranking.svg';
@@ -17,59 +17,45 @@ interface NavbarProps {
 export const Navbar = ({ currentPath }: NavbarProps) => {
   const location = useLocation();
   const actualPath = currentPath || location.pathname;
-  const navigate = useNavigate();
 
-  const handleClick = (path: string) => {
-    navigate(path);
-  };
+  const isActive = (path: string) => actualPath === path;
 
   return (
     <div className='pt-[17px] pb-[34px] border-t border-t-[#F2F2F2] rounded-t-[24px] flex justify-center items-center fixed bottom-0 max-w-[500px] w-full'>
-      <div className='flex flex-col items-center gap-[4px] flex-grow cursor-pointer' onClick={() => handleClick('/feed')}>
-        <img
-          src={actualPath === '/feed' ? activeFeed : feed}
-          alt='feed'
-        />
+      <Link to='/feed' className='flex flex-col items-center gap-[4px] flex-grow' aria-current={isActive('/feed') ? 'page' : undefined}>
+        <img src={actualPath === '/feed' ? activeFeed : feed} alt='' aria-hidden='true' />
         <p className={`body-s ${actualPath === '/feed' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           피드
         </p>
-      </div>
-      <div className='flex flex-col items-center gap-[4px] flex-grow cursor-pointer' onClick={() => handleClick('/search')}>
-        <img
-          src={actualPath === '/search' ? activeSearch : search}
-          alt='search'
-        />
+      </Link>
+
+      <Link to='/search' className='flex flex-col items-center gap-[4px] flex-grow' aria-current={isActive('/search') ? 'page' : undefined}>
+        <img src={actualPath === '/search' ? activeSearch : search} alt='' aria-hidden='true' />
         <p className={`body-s ${actualPath === '/search' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           검색
         </p>
-      </div>
-      <div className='flex flex-col items-center gap-[4px] flex-grow cursor-pointer' onClick={() => handleClick('/ranking')}>
-        <img
-          src={actualPath === '/ranking' ? activeRanking : ranking}
-          alt='ranking'
-        />
+      </Link>
+
+      <Link to='/ranking' className='flex flex-col items-center gap-[4px] flex-grow' aria-current={isActive('/ranking') ? 'page' : undefined}>
+        <img src={actualPath === '/ranking' ? activeRanking : ranking} alt='' aria-hidden='true' />
         <p className={`body-s ${actualPath === '/ranking' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           랭킹
         </p>
-      </div>
-      <div className='flex flex-col items-center gap-[4px] flex-grow cursor-pointer' onClick={() => handleClick('/calendar')}>
-        <img
-          src={actualPath === '/calendar' ? activeCalendar : calendar}
-          alt='calendar'
-        />
+      </Link>
+
+      <Link to='/calendar' className='flex flex-col items-center gap-[4px] flex-grow' aria-current={isActive('/calendar') ? 'page' : undefined}>
+        <img src={actualPath === '/calendar' ? activeCalendar : calendar} alt='' aria-hidden='true' />
         <p className={`body-s ${actualPath === '/calendar' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           캘린더
         </p>
-      </div>
-      <div className='flex flex-col items-center gap-[4px] flex-grow cursor-pointer' onClick={() => handleClick('/profile')}>
-        <img
-          src={actualPath === '/profile' ? activeProfile : profile}
-          alt='profile'
-        />
+      </Link>
+
+      <Link to='/profile' className='flex flex-col items-center gap-[4px] flex-grow' aria-current={isActive('/profile') ? 'page' : undefined}>
+        <img src={actualPath === '/profile' ? activeProfile : profile} alt='' aria-hidden='true' />
         <p className={`body-s ${actualPath === '/profile' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           프로필
         </p>
-      </div>
+      </Link>
     </div>
   );
 };
