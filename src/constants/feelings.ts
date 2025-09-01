@@ -1,0 +1,21 @@
+export const FEELINGS = {
+  annoying: '😡 짜증',
+  angry: '😤 화남',
+  overwhelmed: '🤯 힘듦',
+  fun: '🤗 즐거움',
+  joy: '☺️ 기쁨',
+  happy: '🥰 행복',
+  tired: '🥱 피곤함',
+  depressed: '😔 우울',
+  sleepy: '😪 졸림',
+  lonely: '😢 외로움',
+  sad: '😭 슬픔',
+  complexed: '💭 복잡함',
+  pounding: '😍 두근거림',
+  touched: '🥹 감동',
+  excitement: '🥰 설렘',
+  surprised: '😮 놀람',
+  dizzy: '🤪 어지러운',
+} as const;
+
+export type FeelingKey = keyof typeof FEELINGS;

@@ -36,6 +36,15 @@ export const router = createBrowserRouter([
         path: '/profile',
         element: <Profile />,
       },
+      {
+        path: '/feeling',
+        lazy: async () => {
+          const { SelectFeelings } = await import('./feeling');
+          return {
+            Component: SelectFeelings
+          };
+        },
+      },
     ],
   },
 ]);
