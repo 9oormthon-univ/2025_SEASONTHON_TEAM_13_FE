@@ -24,5 +24,8 @@ export const Primary: Story = {
       options: ['full'],
       control: { type: 'select' }
     },
+    disabled: {
+      control: { type: 'boolean' }
+    }
   }
 };
