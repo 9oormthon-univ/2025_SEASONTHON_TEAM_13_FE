@@ -11,6 +11,15 @@ export const router = createBrowserRouter([
         path: '/',
         element: <Index />,
       },
+      {
+        path: '/feeling',
+        lazy: async () => {
+          const { SelectFeelings } = await import('./feeling');
+          return {
+            Component: SelectFeelings
+          };
+        }
+      }
     ],
   },
 ]);
