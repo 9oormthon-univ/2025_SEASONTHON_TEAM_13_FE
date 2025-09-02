@@ -1,4 +1,5 @@
 import React from 'react';
+import { ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/button';
 import { TextInput } from '@/components/text-input';
 import { UserIcon } from '@/icons/user';
@@ -9,9 +10,14 @@ export const SelectTags = () => {
   const [tags, setTags] = React.useState<string[]>([]);
 
   return (
-    <div className='min-h-screen w-full flex flex-col items-center gap-2 px-4'>
-      <div className='flex flex-col items-center gap-2 flex-grow w-full'>
-        <h2 className='heading2 pt-24'>당신의 하루를 말해주세요</h2>
+    <div className='min-h-screen w-full flex flex-col items-center gap-2'>
+      <div className='flex w-full py-6 px-4'>
+        <button className='hover:cursor-pointer' onClick={() => window.history.back()}>
+          <ChevronLeft className='size-7 text-gray800' />
+        </button>
+      </div>
+      <div className='flex flex-col items-center gap-2 flex-grow w-full px-4'>
+        <h2 className='heading2 pt-8'>당신의 하루를 말해주세요</h2>
         <p className='body-m font-medium text-gray500'>사람들에게 당신의 하루를 태그로 소개해요</p>
         <div className='mt-14' />
         <TextInput
@@ -25,6 +31,8 @@ export const SelectTags = () => {
           onChange={(e) => setTagText(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && tagText.trim() !== '' && !tags.includes(tagText.trim())) {
+              // Block default behavior(submit)
+              e.preventDefault();
               setTags([...tags, tagText.trim()]);
               setTagText('');
             }
@@ -50,9 +58,11 @@ export const SelectTags = () => {
           </>
         )}
       </div>
-      <Button className='mt-4 mb-16' disabled={tags.length === 0}>
-        노래 추천 받기
-      </Button>
+      <div className='px-4 w-full'>
+        <Button className='mt-4 mb-16' disabled={tags.length === 0}>
+          노래 추천 받기
+        </Button>
+      </div>
     </div>
   );
 };
