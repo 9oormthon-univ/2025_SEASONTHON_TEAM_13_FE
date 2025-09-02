@@ -8,11 +8,11 @@ export const router = createBrowserRouter([
     element: <DefaultLayout />,
     children: [
       {
-        path: '/',
+        index: true,
         element: <Index />,
       },
       {
-        path: '/feed',
+        path: 'feed',
         lazy: async () => {
           const { default: Feed } = await import('./feed');
           return {
@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
         },
       },
       {
-        path: '/search',
+        path: 'search',
         lazy: async () => {
           const { default: Search } = await import('./search');
           return {
@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
         },
       },
       {
-        path: '/ranking',
+        path: 'ranking',
         lazy: async () => {
           const { default: Ranking } = await import('./ranking');
           return {
@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
         },
       },
       {
-        path: '/calendar',
+        path: 'calendar',
         lazy: async () => {
           const { default: Calendar } = await import('./calendar');
           return {
@@ -48,7 +48,7 @@ export const router = createBrowserRouter([
         },
       },
       {
-        path: '/profile',
+        path: 'profile',
         lazy: async () => {
           const { default: Profile } = await import('./profile');
           return {
@@ -57,14 +57,19 @@ export const router = createBrowserRouter([
         },
       },
       {
-        path: '/feeling',
-        lazy: async () => {
-          const { SelectFeelings } = await import('./feeling');
-          return {
-            Component: SelectFeelings
-          };
-        },
-      },
+        path: 'new',
+        children: [
+          {
+            path: 'feeling',
+            lazy: async () => {
+              const { SelectFeelings } = await import('./new/feeling');
+              return {
+                Component: SelectFeelings
+              };
+            },
+          },
+        ]
+      }
     ],
   },
 ]);
