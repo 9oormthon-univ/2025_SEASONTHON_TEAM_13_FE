@@ -68,6 +68,15 @@ export const router = createBrowserRouter([
               };
             },
           },
+          {
+            path: 'tag',
+            lazy: async () => {
+              const { SelectTags } = await import('./new/tag');
+              return {
+                Component: SelectTags
+              };
+            }
+          }
         ]
       }
     ],
