@@ -68,6 +68,15 @@ export const router = createBrowserRouter([
               };
             },
           },
+          {
+            path: 'music',
+            lazy: async () => {
+              const { SelectMusic } = await import('./new/music');
+              return {
+                Component: SelectMusic
+              };
+            }
+          }
         ]
       }
     ],
