@@ -28,15 +28,18 @@ export const SelectTags = () => {
             </div>
           }
           value={tagText}
-          onChange={(e) => setTagText(e.target.value)}
+          onChange={(e) => {
+            if (!e.target.value.endsWith(' ')) {
+              setTagText(e.target.value);
+            }
+          }}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' && tagText.trim() !== '' && !tags.includes(tagText.trim())) {
-              // Block default behavior(submit)
-              e.preventDefault();
+            if (e.key === ' ' && tagText.trim() !== '' && !tags.includes(tagText.trim())) {
               setTags([...tags, tagText.trim()]);
               setTagText('');
             }
           }}
+          disabled={tags.length >= 3}
           maxLength={30}
         />
         <div className='ml-auto'>
