@@ -26,6 +26,15 @@ export const router = createBrowserRouter([
         },
       },
       {
+        path: 'feed/:id',
+        lazy: async () => {
+          const { default: FeedId } = await import('./feed/id');
+          return {
+            Component: FeedId
+          };
+        },
+      },
+      {
         path: 'search',
         lazy: async () => {
           const { default: Search } = await import('./search');
