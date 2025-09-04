@@ -14,6 +14,18 @@ type Story = StoryObj<typeof TextInputComp>;
 export const Default: Story = {
   args: {
     placeholder: 'Search...',
+  },
+  argTypes: {
+    placeholder: {
+      control: {
+        type: 'text'
+      }
+    },
+    disabled: {
+      control: {
+        type: 'boolean'
+      }
+    }
   }
 };
 
