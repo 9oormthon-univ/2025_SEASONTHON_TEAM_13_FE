@@ -1,18 +1,5 @@
 import { instance } from '@/apis/instance';
-
-interface Feed {
-  id: number;
-  emotionTags: string[];
-  dailyTags: string[];
-  trackId: string;
-  user: string;
-  likeCount: number;
-  likeState: boolean;
-  userImageUrl: string;
-  commentCount: number;
-  createdAt: string;
-  updatedAt: string;
-}
+import type { Feed } from '@/types/feed';
 
 export const getFeed = async (): Promise<Feed[]> => {
   const response = await instance.get('/posts');
