@@ -1,10 +1,10 @@
 import { useSuspenseQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getFeed, likeFeed, unlikeFeed, getFeedById, getFeedComments, postFeedComment } from '@/apis/feed';
 
-export const useGetFeed = () => {
+export const useGetFeed = (sortBy: 'createdAt' | 'likeCount') => {
   return useSuspenseQuery({
-    queryKey: ['feed'],
-    queryFn: getFeed,
+    queryKey: ['feed', sortBy],
+    queryFn: () => getFeed(sortBy),
   });
 };
 

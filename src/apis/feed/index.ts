@@ -1,8 +1,12 @@
 import { instance } from '@/apis/instance';
 import type { Feed, FeedComment } from '@/types/feed';
 
-export const getFeed = async (): Promise<Feed[]> => {
-  const response = await instance.get('/posts');
+export const getFeed = async (sortBy: 'createdAt' | 'likeCount'): Promise<Feed[]> => {
+  const response = await instance.get('/posts', {
+    params: {
+      sortBy,
+    },
+  });
   return response.data;
 };
 
