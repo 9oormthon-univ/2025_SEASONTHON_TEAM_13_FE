@@ -1,11 +1,12 @@
 import heart from '@/assets/heart.svg';
 import heartActive from '@/assets/heart_active.svg';
 import comment from '@/assets/comment.svg';
-import { useGetFeed } from '@/hooks/useFeed';
+import { useGetFeed, useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
 
 export default function Feed () {
   const { data: feeds } = useGetFeed();
-  console.log(feeds);
+  const { mutate: likeFeed } = useLikeFeed();
+  const { mutate: unlikeFeed } = useUnlikeFeed();
   return (
     <div className='min-h-screen bg-[#F8F8F8]'>
       {/* <div>Tab</div> */}
@@ -13,7 +14,7 @@ export default function Feed () {
         {feeds.map((item) => (
           <div
             key={item.id}
-            className='p-[20px] bg-white rounded-[16px'
+            className='p-[20px] bg-white cursor-pointer'
           >
             <div className='flex items-center gap-[12px] mb-[20px]'>
               <img src={item.userImageUrl} alt='user' className='w-[44px] h-[44px] rounded-full' />
@@ -53,7 +54,15 @@ export default function Feed () {
             <div className='h-[1px] bg-[#E7E7E7] my-[20px]' />
             <div className='flex items-center gap-[16px]'>
               <div className='flex items-center gap-[4px]'>
-                <img src={item.likeState ? heartActive : heart} alt='heart' className='cursor-pointer' />
+                <img
+                  src={item.likeState ? heartActive : heart} alt='heart' className='cursor-pointer' onClick={() => {
+                    if (item.likeState) {
+                      unlikeFeed(item.id);
+                    } else {
+                      likeFeed(item.id);
+                    }
+                  }}
+                />
                 <p className='text-gray700 text-[15px] leading-[140%] font-medium'>{item.likeCount}</p>
               </div>
               <div className='flex items-center gap-[4px]'>
