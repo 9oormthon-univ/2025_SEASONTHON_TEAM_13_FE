@@ -1,27 +1,47 @@
 import arrowBack from '@/assets/arrow_back.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetFeedById } from '@/hooks/useFeed';
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '../components/Card';
+import commentPost from '@/assets/comment_post.svg';
+import { useGetUser } from '@/hooks/useUser';
 
 export default function FeedId () {
   const navigate = useNavigate();
   const { id } = useParams();
   const { data: feed } = useGetFeedById(Number(id));
+  const { data: user } = useGetUser();
+  const [comment, setComment] = useState('');
 
-  console.log(feed);
   const handleClick = (e: React.MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
     navigate(-1);
   };
 
   return (
-    <div>
-      <div className='relative px-[20px] py-[14px] bg-white flex items-center justify-center text-gray800 text-[20px] font-semibold leading-[140%]'>
+    <div className='min-h-screen bg-[#F8F8F8]'>
+      <div className='relative px-[20px] py-[14px] bg-white flex items-center justify-center text-gray800 text-[20px] font-semibold leading-[140%] mb-[8px]'>
         <img src={arrowBack} alt='뒤로가기' className='absolute left-[20px] cursor-pointer' onClick={handleClick} />
         게시글
       </div>
       <Card item={feed} />
+      <div className='mt-[8px] pt-[10px] px-[20px] bg-white flex flex-col gap-[32px] border-b border-b-gray100'>
+        <div className='py-[16px] flex gap-[12px]'>
+          <img src={user.profileUrl} alt='user' className='w-[44px] h-[44px] rounded-full' />
+          <div className='flex flex-col gap-[2px] grow'>
+            <input
+              placeholder='댓글을 게시하기'
+              type='text' className='w-full border-none outline-none placeholder:text-gray400 font-medium text-[14px] leading-[140%]'
+              value={comment}
+              onChange={(e) => {
+                setComment(e.target.value);
+              }}
+            />
+            <p className='text-gray500 text-[12px] leading-[140%] font-medium'>{comment.length}/500</p>
+          </div>
+          <img src={commentPost} alt='댓글 게시' className='cursor-pointer' />
+        </div>
+      </div>
     </div>
   );
 }
