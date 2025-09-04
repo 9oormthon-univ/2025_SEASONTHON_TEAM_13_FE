@@ -11,3 +11,11 @@ export interface Feed {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface FeedComment {
+  id: number,
+  content: string,
+  authorNickname: string,
+  authorProfileImageUrl: string,
+  createdAt: string
+}

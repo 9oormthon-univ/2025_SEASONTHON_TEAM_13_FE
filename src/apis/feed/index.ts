@@ -1,5 +1,5 @@
 import { instance } from '@/apis/instance';
-import type { Feed } from '@/types/feed';
+import type { Feed, FeedComment } from '@/types/feed';
 
 export const getFeed = async (): Promise<Feed[]> => {
   const response = await instance.get('/posts');
@@ -18,5 +18,10 @@ export const unlikeFeed = async (postId: number) => {
 
 export const getFeedById = async (postId: number) => {
   const response = await instance.get(`/posts/${postId}`);
+  return response.data;
+};
+
+export const getFeedComments = async (postId: number): Promise<FeedComment[]> => {
+  const response = await instance.get(`/posts/${postId}/comments`);
   return response.data;
 };
