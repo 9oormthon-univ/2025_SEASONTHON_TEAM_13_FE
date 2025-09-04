@@ -4,10 +4,12 @@ import { Button } from '@/components/button';
 import { TextInput } from '@/components/text-input';
 import { UserIcon } from '@/icons/user';
 import { Tag } from '@/components/tag';
+import { useNavigate } from 'react-router-dom';
 
 export const SelectTags = () => {
   const [tagText, setTagText] = React.useState('');
   const [tags, setTags] = React.useState<string[]>([]);
+  const navigate = useNavigate();
 
   return (
     <div className='min-h-screen w-full flex flex-col items-center gap-2'>
@@ -21,7 +23,7 @@ export const SelectTags = () => {
         <p className='body-m font-medium text-gray500'>사람들에게 당신의 하루를 태그로 소개해요</p>
         <div className='mt-14' />
         <TextInput
-          placeholder='#오늘은 무슨 일이 있으셨나요?'
+          placeholder='입력 후 스페이스바를 누르세요'
           icon={
             <div className='rounded-full bg-[#FFEBEA]'>
               <UserIcon className='size-7 text-primary rounded-full' />
@@ -49,10 +51,17 @@ export const SelectTags = () => {
           <>
             <div className='bg-[#F8F8F8] w-full h-1 my-6' />
             <div className='flex flex-col w-full gap-4'>
-              <p className='body-l font-semibold text-gray700'>입력한 태그</p>
+              <div className='flex items-center gap-4'>
+                <p className='body-l font-semibold text-gray700'>입력한 태그</p>
+                <p className='body-s font-medium text-gray500'>최대 3개까지 가능합니다</p>
+              </div>
               <div className='flex flex-wrap gap-2'>
                 {tags.map((tag, index) => (
-                  <Tag key={index}>
+                  <Tag
+                    key={index} onClickRemove={() => {
+                      setTags(tags.filter((t) => t !== tag));
+                    }}
+                  >
                     {tag}
                   </Tag>
                 ))}
@@ -62,7 +71,11 @@ export const SelectTags = () => {
         )}
       </div>
       <div className='px-4 w-full'>
-        <Button className='mt-4 mb-16' disabled={tags.length === 0}>
+        <Button
+          className='mt-4 mb-16' disabled={tags.length === 0} onClick={() => {
+            navigate('/new/music');
+          }}
+        >
           노래 추천 받기
         </Button>
       </div>
