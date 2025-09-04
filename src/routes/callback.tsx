@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { instance } from '@/apis/instance';
 
@@ -27,8 +27,12 @@ export default function Callback () {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const hasExecuted = useRef(false);
 
   useEffect(() => {
+    // 이미 실행된 경우 중복 실행 방지
+    if (hasExecuted.current) return;
+
     if (!code) {
       setError('인증 코드를 찾을 수 없습니다.');
       setLoading(false);
@@ -37,6 +41,7 @@ export default function Callback () {
 
     const fetchData = async () => {
       try {
+        hasExecuted.current = true;
         setLoading(true);
         await getKakaoToken();
         navigate('/new/feeling');
