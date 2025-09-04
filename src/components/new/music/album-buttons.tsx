@@ -24,10 +24,10 @@ export const BigMusicAlbum = ({ title, albumURL, artist, playCount, onClick }: {
       <div className='flex flex-grow flex-col'>
         <p className='font-medium'>{title}</p>
         <p className='text-xs font-medium text-gray500'>{artist}</p>
-        <div className='flex items-center gap-1'>
-          <DiscIcon className='size-4 text-gray500' />
-          <p className='text-xs font-medium text-gray500'>{playCount}</p>
-        </div>
+      </div>
+      <div className='flex items-center gap-1'>
+        <DiscIcon className='size-4 text-gray500' />
+        <p className='text-xs font-medium text-gray500'>{playCount}</p>
       </div>
     </div>
   );
