@@ -1,6 +1,8 @@
 import arrowBack from '@/assets/arrow_back.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetFeedById } from '@/hooks/useFeed';
+import React from 'react';
+import Card from '../components/Card';
 
 export default function FeedId () {
   const navigate = useNavigate();
@@ -8,7 +10,7 @@ export default function FeedId () {
   const { data: feed } = useGetFeedById(Number(id));
 
   console.log(feed);
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (e: React.MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
     navigate(-1);
   };
@@ -19,7 +21,7 @@ export default function FeedId () {
         <img src={arrowBack} alt='뒤로가기' className='absolute left-[20px] cursor-pointer' onClick={handleClick} />
         게시글
       </div>
-
+      <Card item={feed} />
     </div>
   );
 }
