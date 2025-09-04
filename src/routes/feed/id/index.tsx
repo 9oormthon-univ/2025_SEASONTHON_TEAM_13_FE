@@ -1,6 +1,6 @@
 import arrowBack from '@/assets/arrow_back.svg';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetFeedById, useGetFeedComments } from '@/hooks/useFeed';
+import { useGetFeedById, useGetFeedComments, usePostFeedComment } from '@/hooks/useFeed';
 import React, { useState } from 'react';
 import Card from '../components/Card';
 import commentPost from '@/assets/comment_post.svg';
@@ -13,14 +13,14 @@ export default function FeedId () {
   const { data: comments } = useGetFeedComments(Number(id));
   const [comment, setComment] = useState('');
   const navigate = useNavigate();
-
+  const { mutate: postComment } = usePostFeedComment();
   const handleClick = (e: React.MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
     navigate(-1);
   };
 
   return (
-    <div className='min-h-screen bg-[#F8F8F8]'>
+    <div className='min-h-screen bg-[#F8F8F8] pb-[124px]'>
       <div className='relative px-[20px] py-[14px] bg-white flex items-center justify-center text-gray800 text-[20px] font-semibold leading-[140%] mb-[8px]'>
         <img src={arrowBack} alt='뒤로가기' className='absolute left-[20px] cursor-pointer' onClick={handleClick} />
         게시글
@@ -40,7 +40,12 @@ export default function FeedId () {
             />
             <p className='text-gray500 text-[12px] leading-[140%] font-medium'>{comment.length}/500</p>
           </div>
-          <img src={commentPost} alt='댓글 게시' className='cursor-pointer' />
+          <img
+            src={commentPost} alt='댓글 게시' className='cursor-pointer' onClick={() => {
+              postComment({ postId: Number(id), content: comment });
+              setComment('');
+            }}
+          />
         </div>
         <div className='flex flex-col gap-[32px] pb-[32px]'>
           {comments.map((comment) => (

@@ -25,3 +25,8 @@ export const getFeedComments = async (postId: number): Promise<FeedComment[]> =>
   const response = await instance.get(`/posts/${postId}/comments`);
   return response.data;
 };
+
+export const postFeedComment = async (postId: number, content: string) => {
+  const response = await instance.post(`/posts/${postId}/comments`, { content });
+  return response.data;
+};

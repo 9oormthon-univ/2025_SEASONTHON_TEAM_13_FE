@@ -1,5 +1,5 @@
 import { useSuspenseQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getFeed, likeFeed, unlikeFeed, getFeedById, getFeedComments } from '@/apis/feed';
+import { getFeed, likeFeed, unlikeFeed, getFeedById, getFeedComments, postFeedComment } from '@/apis/feed';
 
 export const useGetFeed = () => {
   return useSuspenseQuery({
@@ -39,5 +39,15 @@ export const useGetFeedComments = (postId: number) => {
   return useSuspenseQuery({
     queryKey: ['feed', postId, 'comments'],
     queryFn: () => getFeedComments(postId),
+  });
+};
+
+export const usePostFeedComment = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ postId, content }: { postId: number; content: string }) => postFeedComment(postId, content),
+    onSuccess: (_, { postId }) => {
+      queryClient.invalidateQueries({ queryKey: ['feed', postId, 'comments'] });
+    },
   });
 };
