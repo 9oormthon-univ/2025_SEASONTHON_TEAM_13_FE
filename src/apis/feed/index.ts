@@ -28,3 +28,8 @@ export const unlikeFeed = async (postId: number) => {
   const response = await instance.delete(`/posts/${postId}/like`);
   return response.data;
 };
+
+export const getFeedById = async (postId: number) => {
+  const response = await instance.get(`/posts/${postId}`);
+  return response.data;
+};

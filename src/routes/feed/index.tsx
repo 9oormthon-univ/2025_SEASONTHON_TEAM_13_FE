@@ -2,11 +2,13 @@ import heart from '@/assets/heart.svg';
 import heartActive from '@/assets/heart_active.svg';
 import comment from '@/assets/comment.svg';
 import { useGetFeed, useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
+import { useNavigate } from 'react-router-dom';
 
 export default function Feed () {
   const { data: feeds } = useGetFeed();
   const { mutate: likeFeed } = useLikeFeed();
   const { mutate: unlikeFeed } = useUnlikeFeed();
+  const navigate = useNavigate();
   return (
     <div className='min-h-screen bg-[#F8F8F8]'>
       {/* <div>Tab</div> */}
@@ -14,7 +16,10 @@ export default function Feed () {
         {feeds.map((item) => (
           <div
             key={item.id}
-            className='p-[20px] bg-white cursor-pointer'
+            className='p-[25px] bg-white cursor-pointer'
+            onClick={() => {
+              navigate(`/feed/${item.id}`);
+            }}
           >
             <div className='flex items-center gap-[12px] mb-[20px]'>
               <img src={item.userImageUrl} alt='user' className='w-[44px] h-[44px] rounded-full' />
@@ -55,7 +60,8 @@ export default function Feed () {
             <div className='flex items-center gap-[16px]'>
               <div className='flex items-center gap-[4px]'>
                 <img
-                  src={item.likeState ? heartActive : heart} alt='heart' className='cursor-pointer' onClick={() => {
+                  src={item.likeState ? heartActive : heart} alt='heart' className='cursor-pointer' onClick={(e) => {
+                    e.stopPropagation();
                     if (item.likeState) {
                       unlikeFeed(item.id);
                     } else {
