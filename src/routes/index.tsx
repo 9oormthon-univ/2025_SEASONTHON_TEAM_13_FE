@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import kakao from '@/assets/kakao.svg';
 
 function App () {
   const [showSplash, setShowSplash] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -12,7 +10,7 @@ function App () {
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [navigate]);
+  }, []);
 
   if (showSplash) {
     return (
