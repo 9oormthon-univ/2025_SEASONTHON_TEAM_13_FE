@@ -22,18 +22,11 @@ export default function CalendarPage () {
     const itemMonth = itemDate.getMonth() + 1;
     const itemDay = itemDate.getDate();
 
-    console.log('선택한 날짜:', `${selectedYear}-${selectedMonth}-${selectedDay}`);
-    console.log('아이템 날짜:', `${itemYear}-${itemMonth}-${itemDay}`);
-    console.log('매칭 여부:', selectedYear === itemYear && selectedMonth === itemMonth && selectedDay === itemDay);
-
     return selectedYear === itemYear && selectedMonth === itemMonth && selectedDay === itemDay;
   }) || [];
 
   // 첫 번째 데이터만 사용 (기존 로직 유지)
   const selectedDateData = selectedDateDataList[0];
-
-  console.log('전체 데이터:', data);
-  console.log('선택된 날짜 데이터:', selectedDateData);
 
   // 날짜 포맷팅 함수
   const formatDate = (date: Date) => {
@@ -85,7 +78,6 @@ export default function CalendarPage () {
             return null;
           }}
           tileClassName={({ date }) => {
-            const day = date.getDate();
             const isActiveMonth = date.getMonth() === activeStartDate.getMonth();
 
             let className = '';
@@ -95,15 +87,6 @@ export default function CalendarPage () {
               className += ' text-gray-400';
             } else {
               className += ' text-gray-800';
-            }
-
-            // 4일은 연한 빨간 배경
-            if (day === 4) {
-              className += ' bg-red-100';
-            }
-            // 17일은 진한 빨간 배경
-            if (day === 17) {
-              className += ' bg-red-500 text-white';
             }
 
             return className;
