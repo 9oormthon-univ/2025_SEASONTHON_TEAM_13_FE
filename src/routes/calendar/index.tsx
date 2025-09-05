@@ -129,12 +129,17 @@ export default function CalendarPage () {
                   <p className='text-gray-400 text-sm'>이모션 태그가 없습니다</p>
                   )}
             </div>
-            <div>
+            <div className='mb-[4px]'>
+              {selectedDateData?.song && (
+                <p className='text-[16px] text-gray800 font-semibold leading-[140%]'>{selectedDateData.song.title} - {selectedDateData.song.artist}</p>
+              )}
+            </div>
+            <div className='mb-[16px]'>
               {selectedDateData?.dailyTags
                 ? (
                   <div className='flex flex-wrap gap-[8px]'>
                     {selectedDateData.dailyTags.map((tag, index) => (
-                      <span key={index} className='  text-gray600  text-[14px] font-medium leading-[140%] '>
+                      <span key={index} className='text-gray600 text-[14px] font-medium leading-[140%]'>
                         {tag}
                       </span>
                     ))}
@@ -144,6 +149,7 @@ export default function CalendarPage () {
                   <p className='text-gray-400 text-sm'>데일리 태그가 없습니다</p>
                   )}
             </div>
+
           </div>
         </div>
       )}
