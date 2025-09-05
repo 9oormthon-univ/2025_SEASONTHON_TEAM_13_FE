@@ -19,3 +19,4 @@ export const FEELINGS = [
 ] as const;
 
 export type FeelingID = typeof FEELINGS[number]['id'];
+export type FeelingName = typeof FEELINGS[number]['name'];

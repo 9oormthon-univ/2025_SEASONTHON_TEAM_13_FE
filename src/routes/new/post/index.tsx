@@ -1,9 +1,14 @@
 import { Button } from '@/components/button';
+import { FEELINGS } from '@/constants/feelings';
+import { useGetUser } from '@/hooks/useUser';
 import { useNewPagesProvider } from '@/providers/new-pages-provider';
 import { useNavigate } from 'react-router-dom';
+import { postFeed } from '@/apis/feed';
+import { ChevronLeft } from 'lucide-react';
 
 export const CreateNewPost = () => {
   const { feelings, tags, music } = useNewPagesProvider();
+  const { data: user } = useGetUser();
   const navigate = useNavigate();
 
   if (!feelings || feelings.length === 0 || !tags || tags.length === 0 || !music) {
@@ -24,15 +29,63 @@ export const CreateNewPost = () => {
     );
   }
 
+  const postThePost = async () => {
+    await postFeed(feelings, tags, music.id);
+    navigate('/feed');
+  };
+
   return (
     <div className='min-h-screen w-full flex flex-col items-center gap-2 px-4'>
+      <div className='flex w-full py-6'>
+        <button className='hover:cursor-pointer' onClick={() => window.history.back()}>
+          <ChevronLeft className='size-7 text-gray800' />
+        </button>
+      </div>
       <div className='flex flex-col items-center gap-2 flex-grow'>
-        <h2 className='heading2 pt-24'>오늘의 게시물이 완성됐어요!</h2>
+        <h2 className='heading2 pt-8'>오늘의 게시물이 완성됐어요!</h2>
         <p className='body-m font-medium text-gray500'>이제 오늘의 하루와 노래를 사람들과 공유해보세요</p>
       </div>
-      {/* TODO: Use(or even make) post preview component here */}
+      <div
+        className='p-[25px] bg-white w-full'
+      >
+        <div className='flex items-center gap-[12px] mb-[20px]'>
+          <img src={user.profileUrl} alt='user' className='w-[44px] h-[44px] rounded-full' />
+          <div className='flex flex-col gap-[2px]'>
+            <p className='text-gray800 text-[14px] font-semibold leading-[140%]'>{user.username}</p>
+            <p className='text-gray400 text-[14px] leading-[140%]'>방금</p>
+          </div>
+        </div>
+        <div className='w-full h-[80px]'>
+          <iframe
+            data-testid='embed-iframe'
+            src={`https://open.spotify.com/embed/track/${music.id}?utm_source=generator&theme=0`}
+            width='100%'
+            height='100%'
+            allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
+            loading='lazy'
+          />
+        </div>
+        <div className='flex gap-[6px] mt-[16px] mb-[12px] '>
+          {tags.map((tag, index) => (
+            <div
+              className='text-gray600 text-[14px] leading-[140%] font-medium'
+              key={index}
+            >{tag}
+            </div>
+          ))}
+        </div>
+        <div className='flex gap-[8px]'>
+          {feelings.map((tag, index) => (
+            <div
+              className='border border-primary rounded-[100px] px-[16px] py-[4px] text-primary text-[14px] leading-[140%] font-medium bg-[#FFEBEA]'
+              key={index}
+            >{FEELINGS.find((feeling) => feeling.name === tag)?.name ?? '알 수 없음'}
+            </div>
+          ))}
+        </div>
+      </div>
       <div className='flex w-full flex-grow flex-col justify-end'>
-        <Button className='mt-4 mb-16'>
+        <Button className='mt-4 mb-16' onClick={postThePost}>
           시작하기
         </Button>
       </div>

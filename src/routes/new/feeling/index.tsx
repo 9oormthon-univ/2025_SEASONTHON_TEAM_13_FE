@@ -19,18 +19,18 @@ export const SelectFeelings = () => {
               key={id}
               onClick={() => {
                 setFeelings((prev) => {
-                  if (prev.includes(id)) {
-                    return prev.filter((item) => item !== id);
+                  if (prev.includes(name)) {
+                    return prev.filter((item) => item !== name);
                   }
                   if (prev.length < 3) {
-                    return [...prev, id];
+                    return [...prev, name];
                   } else {
                     return prev;
                   }
                 });
               }}
-              disabled={!feelings.includes(id) && feelings.length >= 3}
-              selected={feelings.includes(id)}
+              disabled={!feelings.includes(name) && feelings.length >= 3}
+              selected={feelings.includes(name)}
             >
               {emoji} {name}
             </FeelingTagButton>

@@ -1,4 +1,4 @@
-import type { FeelingID } from '@/constants/feelings';
+import type { FeelingName } from '@/constants/feelings';
 import type { Music } from '@/types/music';
 import React from 'react';
 
@@ -7,8 +7,8 @@ type NewPagesProviderProps = {
 };
 
 type NewPagesProviderState = {
-  feelings: FeelingID[]
-  setFeelings: (feelings: FeelingID[] | ((prev: FeelingID[]) => FeelingID[])) => void
+  feelings: FeelingName[]
+  setFeelings: (feelings: FeelingName[] | ((prev: FeelingName[]) => FeelingName[])) => void
   tags: string[]
   setTags: (tags: string[] | ((prev: string[]) => string[])) => void
   music?: Music
@@ -27,7 +27,7 @@ const initialState: NewPagesProviderState = {
 const NewPagesProviderContext = React.createContext<NewPagesProviderState>(initialState);
 
 export const NewPagesProvider = ({ children }: NewPagesProviderProps) => {
-  const [feelings, setFeelings] = React.useState<FeelingID[]>([]);
+  const [feelings, setFeelings] = React.useState<FeelingName[]>([]);
   const [tags, setTags] = React.useState<string[]>([]);
   const [music, setMusic] = React.useState<Music | undefined>(undefined);
 

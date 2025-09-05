@@ -1,7 +1,10 @@
 export type Music = {
   id: string
-  title: string
+  name: string
   artist: string
-  albumURL: string
+  spotifyUrl: string
+  imageUrl: string
+  valence: number
+  energy: number
   playCount: number
 };
