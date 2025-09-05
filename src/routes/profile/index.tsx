@@ -11,7 +11,7 @@ export default function Profile () {
   const { data: userLikes } = useGetUserLikes();
   return (
     <div className='min-h-screen bg-[#F8F8F8] pb-31'>
-      <div className='flex py-10 justify-center items-center gap-2'>
+      <div className='flex py-10 justify-center items-center gap-2 bg-white'>
         <div className='flex flex-col items-center gap-4'>
           <img src={user?.profileUrl} alt='profile' className='w-[80px] h-[80px] rounded-full' />
           <p className='text-gray800 font-semibold text-[20px] leading-[160%]'>{user?.username}</p>
