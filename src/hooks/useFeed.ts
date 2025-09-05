@@ -48,6 +48,8 @@ export const usePostFeedComment = () => {
     mutationFn: ({ postId, content }: { postId: number; content: string }) => postFeedComment(postId, content),
     onSuccess: (_, { postId }) => {
       queryClient.invalidateQueries({ queryKey: ['feed', postId, 'comments'] });
+      queryClient.invalidateQueries({ queryKey: ['feed', postId] });
+      queryClient.invalidateQueries({ queryKey: ['feed'] });
     },
   });
 };
