@@ -29,7 +29,7 @@ function App () {
       <p className=' text-center text-[30px] font-bold  leading-[140%] text-gray800  mb-[16px]'>감정과 음악을 <br /> 연결하러 함께 가볼까요</p>
 
       <p className='font-semibold text-[14px] text-primary text-center leading-[140%]'>이음에 오신 걸 환영합니다</p>
-      <div className='fixed bottom-[46px] left-0 right-0'>
+      <div className='fixed bottom-[46px] max-w-[500px] w-full'>
         <p className='text-center text-[12px] font-medium text-gray500 leading-[140%] mb-[16px]'>SNS 계정으로 로그인 / 회원가입</p>
         <div className='w-full px-[20px] '>
           <button
