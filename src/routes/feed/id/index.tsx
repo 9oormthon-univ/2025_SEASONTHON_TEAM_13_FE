@@ -1,7 +1,7 @@
 import arrowBack from '@/assets/arrow_back.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetFeedById, useGetFeedComments, usePostFeedComment } from '@/hooks/useFeed';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import commentPost from '@/assets/comment_post.svg';
 import { useGetUser } from '@/hooks/useUser';
@@ -18,6 +18,18 @@ export default function FeedId () {
     e.stopPropagation();
     navigate(-1);
   };
+
+  // id가 없으면 이전 페이지로 리다이렉트
+  useEffect(() => {
+    if (!id) {
+      navigate(-1);
+    }
+  }, [id, navigate]);
+
+  // id가 없으면 로딩 상태 표시
+  if (!id) {
+    return <div className='min-h-screen bg-[#F8F8F8] flex items-center justify-center'>로딩 중...</div>;
+  }
 
   return (
     <div className='min-h-screen bg-[#F8F8F8] pb-[124px]'>
