@@ -1,4 +1,4 @@
-import { useGetUser } from '@/hooks/useUser';
+import { useGetUser, useGetUserLikes } from '@/hooks/useUser';
 import { Tabs, TabsList, TabsTrigger } from '@/components/tabs';
 import { useState } from 'react';
 import { useCalendar } from '@/hooks/useCalendar';
@@ -8,7 +8,7 @@ export default function Profile () {
   const { data: user } = useGetUser();
   const [activeTab, setActiveTab] = useState('posts');
   const { data: calendar } = useCalendar();
-
+  const { data: userLikes } = useGetUserLikes();
   return (
     <div className='min-h-screen bg-[#F8F8F8] pb-31'>
       <div className='flex py-10 justify-center items-center gap-2'>
@@ -24,9 +24,21 @@ export default function Profile () {
         </TabsList>
       </Tabs>
       <div className='flex flex-col gap-2'>
-        {calendar?.map((item) => (
-          <Card key={item.id} item={item} isProfile />
-        ))}
+        {activeTab === 'posts'
+          ? (
+            <>
+              {calendar?.map((item) => (
+                <Card key={item.id} item={item} isProfile />
+              ))}
+            </>
+            )
+          : (
+            <>
+              {userLikes?.map((item) => (
+                <Card key={item.id} item={item} />
+              ))}
+            </>
+            )}
       </div>
     </div>
   );
