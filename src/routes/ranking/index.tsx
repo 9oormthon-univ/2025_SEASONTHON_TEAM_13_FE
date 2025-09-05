@@ -1,4 +1,12 @@
+import React from 'react';
+import { EmotionCategoryButton } from '@/components/emotion-category-button';
+import { ScrollArea, ScrollBar } from '@/components/scroll-area';
+import { FEELINGS } from '@/constants/feelings';
+
 export default function Ranking () {
+  const [selectedEmotion, setSelectedEmotion] = React.useState<typeof FEELINGS[number]>(FEELINGS[0]);
+  const currentDate = new Date();
+
   return (
     <div className='relative min-h-screen w-full flex flex-col items-center gap-2'>
       <div
@@ -10,6 +18,27 @@ export default function Ranking () {
       <div className='flex flex-col w-full h-48 bg-[#F8F8F8] justify-center items-center gap-2'>
         <img src='/vite.svg' alt='1st music' className='size-24 rounded-sm z-20' />
         <p className='body-xl'>1st music title</p>
+      </div>
+      <div className='px-6 py-5 flex flex-col gap-6 w-full'>
+        <div className='flex flex-col gap-2 w-full'>
+          <p className='body-m font-medium text-gray500'>원하는 감정 태그를 선택해 인기차트를 확인해보세요</p>
+          <ScrollArea className='max-w-full'>
+            <div className='flex space-x-2 w-max py-1'>
+              {FEELINGS.map(({ id, name }) => (
+                <EmotionCategoryButton key={id} selected={selectedEmotion.id === id} onClick={() => setSelectedEmotion(FEELINGS.find(feeling => feeling.id === id)!)}>
+                  {name}
+                </EmotionCategoryButton>
+              ))}
+            </div>
+            <ScrollBar orientation='horizontal' />
+          </ScrollArea>
+        </div>
+        <div className='flex flex-col gap-3'>
+          <div className='flex justify-between'>
+            <p className='text-xs font-medium text-gray500'>이음: {/* Later this will have count */}</p>
+            <p className='text-xs font-medium text-gray500'>{currentDate.getHours().toString().padStart(2, '0')}:{currentDate.getMinutes().toString().padStart(2, '0')} 기준</p>
+          </div>
+        </div>
       </div>
     </div>
   );
