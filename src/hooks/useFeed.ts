@@ -15,6 +15,7 @@ export const useLikeFeed = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['feed'] });
       queryClient.invalidateQueries({ queryKey: ['calendar'] });
+      queryClient.invalidateQueries({ queryKey: ['userLikes'] });
     },
   });
 };
@@ -26,6 +27,7 @@ export const useUnlikeFeed = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['feed'] });
       queryClient.invalidateQueries({ queryKey: ['calendar'] });
+      queryClient.invalidateQueries({ queryKey: ['userLikes'] });
     },
   });
 };
