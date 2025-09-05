@@ -8,11 +8,9 @@ export default function CalendarPage () {
   const [activeStartDate, setActiveStartDate] = useState(new Date());
 
   return (
-    <div className='min-h-screen bg-white'>
-      <div className='px-[20px] py-[14px] bg-white flex items-center justify-center text-gray800 text-[20px] font-semibold leading-[140%] mb-[8px]'>
-        캘린더
-      </div>
-      <div className='px-[20px]'>
+    <div className='min-h-screen  pb-[124px] bg-[#F8F8F8]'>
+
+      <div className='px-[16px] bg-white pb-[30px]'>
         <Calendar
           className='custom-calendar'
           calendarType='gregory'
