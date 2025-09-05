@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import kakao from '@/assets/kakao.svg';
+import logoSplash from '@/assets/logo_splash.svg';
 
 function App () {
   const [showSplash, setShowSplash] = useState(true);
@@ -16,9 +17,13 @@ function App () {
     return (
       <>
         <div className='w-full h-screen bg-primary flex items-center justify-center'>
-          <div>
-            <p className='text-white text-[50px] font-bold leading-[140%]'>이음</p>
+          <div className='relative'>
+            <img src={logoSplash} alt='logo' />
+            <p className='absolute text-[20px] font-bold leading-[140%] text-white top-[-100px] left-1/2 transform -translate-x-1/2 whitespace-nowrap'>
+              오늘의 감정과 음악을 연결하다
+            </p>
           </div>
+
         </div>
       </>
     );
