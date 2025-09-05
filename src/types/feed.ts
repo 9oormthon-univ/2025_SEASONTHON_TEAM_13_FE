@@ -1,8 +1,16 @@
+export interface Song {
+
+  trackId: string;
+  title: string;
+  artist: string;
+  albumArtUrl: string;
+  playCount: number;
+  spotifyPlayUrl: string;
+}
 export interface Feed {
   id: number;
   emotionTags: string[];
   dailyTags: string[];
-  trackId: string;
   user: string;
   likeCount: number;
   likeState: boolean;
@@ -10,8 +18,8 @@ export interface Feed {
   commentCount: number;
   createdAt: string;
   updatedAt: string;
+  song: Song;
 }
-
 export interface FeedComment {
   id: number,
   content: string,

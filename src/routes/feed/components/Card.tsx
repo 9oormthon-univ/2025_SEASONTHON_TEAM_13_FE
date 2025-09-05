@@ -4,6 +4,7 @@ import heartActive from '@/assets/heart_active.svg';
 import heart from '@/assets/heart.svg';
 import comment from '@/assets/comment.svg';
 import { useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
+import { getRelativeTime } from '@/lib/dateUtils';
 
 export default function Card ({ item }: { item: Feed }) {
   const navigate = useNavigate();
@@ -21,13 +22,13 @@ export default function Card ({ item }: { item: Feed }) {
         <img src={item.userImageUrl} alt='user' className='w-[44px] h-[44px] rounded-full' />
         <div className='flex flex-col gap-[2px]'>
           <p className='text-gray800 text-[14px] font-semibold leading-[140%]'>{item.user}</p>
-          <p className='text-gray400 text-[14px] leading-[140%]'>{item.createdAt}</p>
+          <p className='text-gray400 text-[14px] leading-[140%]'>{getRelativeTime(item.createdAt)}</p>
         </div>
       </div>
       <div className='w-full h-[80px]'>
         <iframe
           data-testid='embed-iframe'
-          src={`https://open.spotify.com/embed/track/${item.trackId}?utm_source=generator&theme=0`}
+          src={`https://open.spotify.com/embed/track/${item.song.trackId}?utm_source=generator&theme=0`}
           width='100%'
           height='100%'
           allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
