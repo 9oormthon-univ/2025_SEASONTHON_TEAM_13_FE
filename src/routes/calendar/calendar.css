@@ -39,14 +39,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   padding: 0 20px;
   position: relative;
 }
 
 .custom-calendar .react-calendar__navigation__label {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   color: #1f2937;
   background: none;
   border: none;
@@ -92,8 +92,8 @@
 }
 
 .custom-calendar .react-calendar__month-view__weekdays__weekday {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   color: #6b7280;
   text-align: center;
   padding: 8px 0;
@@ -102,6 +102,15 @@
   justify-content: center;
   height: 20px;
   width: 100%;
+}
+
+/* 요일 헤더의 점(dot) 완전 제거 */
+.custom-calendar .react-calendar__month-view__weekdays__weekday::after {
+  display: none !important;
+}
+
+.custom-calendar .react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none !important;
 }
 
 /* 날짜 그리드 */
@@ -122,7 +131,7 @@
   border-radius: 18px;
   background: none;
   border: none;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   display: flex;
   align-items: center;
