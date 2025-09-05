@@ -6,7 +6,12 @@ import comment from '@/assets/comment.svg';
 import { useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
 import { getRelativeTime } from '@/lib/dateUtils';
 
-export default function Card ({ item }: { item: Feed }) {
+interface CardProps {
+  item: Feed;
+  isProfile?: boolean;
+}
+
+export default function Card ({ item, isProfile = false }: CardProps) {
   const navigate = useNavigate();
   const { mutate: likeFeed } = useLikeFeed();
   const { mutate: unlikeFeed } = useUnlikeFeed();
@@ -17,14 +22,16 @@ export default function Card ({ item }: { item: Feed }) {
       onClick={() => {
         navigate(`/feed/${item.id}`);
       }}
-    >
-      <div className='flex items-center gap-[12px] mb-[20px]'>
-        <img src={item.userImageUrl} alt='user' className='w-[44px] h-[44px] rounded-full' />
-        <div className='flex flex-col gap-[2px]'>
-          <p className='text-gray800 text-[14px] font-semibold leading-[140%]'>{item.user}</p>
-          <p className='text-gray400 text-[14px] leading-[140%]'>{getRelativeTime(item.createdAt)}</p>
+    >{!isProfile &&
+      (
+        <div className='flex items-center gap-[12px] mb-[20px]'>
+          <img src={item.userImageUrl} alt='user' className='w-[44px] h-[44px] rounded-full' />
+          <div className='flex flex-col gap-[2px]'>
+            <p className='text-gray800 text-[14px] font-semibold leading-[140%]'>{item.user}</p>
+            <p className='text-gray400 text-[14px] leading-[140%]'>{getRelativeTime(item.createdAt)}</p>
+          </div>
         </div>
-      </div>
+      )}
       <div className='w-full h-[80px]'>
         <iframe
           data-testid='embed-iframe'
