@@ -5,10 +5,11 @@ import { TextInput } from '@/components/text-input';
 import { UserIcon } from '@/icons/user';
 import { Tag } from '@/components/tag';
 import { useNavigate } from 'react-router-dom';
+import { useNewPagesProvider } from '@/providers/new-pages-provider';
 
 export const SelectTags = () => {
   const [tagText, setTagText] = React.useState('');
-  const [tags, setTags] = React.useState<string[]>([]);
+  const { tags, setTags } = useNewPagesProvider();
   const navigate = useNavigate();
 
   return (

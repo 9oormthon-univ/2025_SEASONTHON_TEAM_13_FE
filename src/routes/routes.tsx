@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import DefaultLayout from '@/layouts/DefaultLayout';
 import Index from './index';
 import Callback from './callback';
+import { NewPagesLayout } from './new/layout';
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +64,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'new',
+        element: <NewPagesLayout />,
         children: [
           {
             path: 'feeling',
@@ -79,6 +81,15 @@ export const router = createBrowserRouter([
               const { SelectTags } = await import('./new/tag');
               return {
                 Component: SelectTags
+              };
+            }
+          },
+          {
+            path: 'post',
+            lazy: async () => {
+              const { CreateNewPost } = await import('./new/post');
+              return {
+                Component: CreateNewPost
               };
             }
           }
