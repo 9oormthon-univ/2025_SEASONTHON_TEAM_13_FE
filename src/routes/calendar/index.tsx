@@ -56,7 +56,7 @@ export default function CalendarPage () {
               setActiveStartDate(activeStartDate);
             }
           }}
-          formatDay={(locale, date) => date.getDate().toString()}
+          formatDay={(_, date) => date.getDate().toString()}
           tileContent={({ date }) => {
             // createdAt이 존재하는 날짜에만 빨간 점 표시
             const hasData = data?.some(item => {
