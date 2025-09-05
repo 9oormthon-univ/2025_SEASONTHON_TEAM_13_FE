@@ -5,6 +5,7 @@ import { useNewPagesProvider } from '@/providers/new-pages-provider';
 import { useNavigate } from 'react-router-dom';
 import { postFeed } from '@/apis/feed';
 import { ChevronLeft } from 'lucide-react';
+import { toast } from 'sonner';
 
 export const CreateNewPost = () => {
   const { feelings, tags, music } = useNewPagesProvider();
@@ -30,8 +31,13 @@ export const CreateNewPost = () => {
   }
 
   const postThePost = async () => {
-    await postFeed(feelings, tags, music.id);
-    navigate('/feed');
+    try {
+      await postFeed(feelings, tags, music.id);
+      navigate('/feed');
+    } catch (error) {
+      toast.error('게시물 작성에 실패했어요. 잠시 후 다시 시도해주세요.');
+      console.error(error);
+    }
   };
 
   return (

@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { Navbar } from '@/components/navbar';
+import { Toaster } from 'sonner';
 
 const DefaultLayout = () => {
   const location = useLocation();
@@ -13,6 +14,7 @@ const DefaultLayout = () => {
     <>
       <Outlet />
       {shouldShowNav && <Navbar />}
+      <Toaster richColors position='bottom-center' />
     </>
   );
 };
