@@ -16,10 +16,12 @@
 }
 
 @layer base {
-  html, body {
+
+  html,
+  body {
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
   }
-  
+
   * {
     font-family: inherit;
   }
@@ -29,6 +31,7 @@
       width: 500px;
     }
   }
+
   @media (max-width: 500px) {
     #root {
       width: 100vw;
@@ -40,6 +43,7 @@
     margin: 0 auto;
     position: relative;
     box-shadow: rgba(100, 100, 112, 0.2) 0 0 30px 0;
+    overflow: hidden;
   }
 }
 
@@ -47,25 +51,31 @@
   .heading1 {
     @apply text-[34px] font-bold leading-[140%] tracking-[-0.04em];
   }
+
   .heading2 {
     @apply text-[24px] font-bold leading-[140%] tracking-[-0.04em];
   }
+
   .heading3 {
     @apply text-[20px] font-semibold leading-[140%] tracking-[-0.04em];
   }
-  
+
   .body-xl {
     @apply text-[18px] font-bold leading-[140%] tracking-[-0.04em];
   }
+
   .body-l {
     @apply text-[16px] font-bold leading-[140%] tracking-[-0.04em];
   }
+
   .body-m {
     @apply text-[14px] font-bold leading-[140%] tracking-[-0.04em];
   }
+
   .body-s {
     @apply text-[12px] font-extrabold leading-[140%] tracking-[-0.04em];
   }
+
   .body-xs {
     @apply text-[10px] font-extrabold leading-[140%] tracking-[-0.04em];
   }
