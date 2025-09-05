@@ -3,6 +3,7 @@ import 'react-calendar/dist/Calendar.css';
 import './calendar.css';
 import { useState } from 'react';
 import { useCalendar } from '@/hooks/useCalendar';
+import music from '@/assets/music.svg';
 
 export default function CalendarPage () {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -114,7 +115,10 @@ export default function CalendarPage () {
             </div>
             <div className='mb-[4px]'>
               {selectedDateData?.song && (
-                <p className='text-[16px] text-gray800 font-semibold leading-[140%]'>{selectedDateData.song.title} - {selectedDateData.song.artist}</p>
+                <div className='flex items-center '>
+                  <img src={music} alt='music' />
+                  <p className='text-[16px] text-gray800 font-semibold leading-[140%]'>{selectedDateData.song.title} - {selectedDateData.song.artist}</p>
+                </div>
               )}
             </div>
             <div className='mb-[16px]'>
