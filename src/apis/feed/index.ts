@@ -20,7 +20,7 @@ export const unlikeFeed = async (postId: number) => {
   return response.data;
 };
 
-export const getFeedById = async (postId: number) => {
+export const getFeedById = async (postId: number): Promise<Feed> => {
   const response = await instance.get(`/posts/${postId}`);
   return response.data;
 };
