@@ -2,15 +2,17 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css';
 import { useState } from 'react';
+import { useCalendar } from '@/hooks/useCalendar';
 
 export default function CalendarPage () {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [activeStartDate, setActiveStartDate] = useState(new Date());
-
+  const { data } = useCalendar();
+  console.log(data);
   return (
     <div className='min-h-screen  pb-[124px] bg-[#F8F8F8]'>
 
-      <div className='px-[16px] bg-white pb-[30px]'>
+      <div className='px-[16px] bg-white pb-[30px] pt-[20px]'>
         <Calendar
           className='custom-calendar'
           calendarType='gregory'
