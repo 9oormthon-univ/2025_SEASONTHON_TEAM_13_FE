@@ -41,9 +41,14 @@ export default function FeedId () {
             <p className='text-gray500 text-[12px] leading-[140%] font-medium'>{comment.length}/500</p>
           </div>
           <img
-            src={commentPost} alt='댓글 게시' className='cursor-pointer' onClick={() => {
-              postComment({ postId: Number(id), content: comment });
-              setComment('');
+            src={commentPost}
+            alt='댓글 게시'
+            className={`${comment.trim() ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+            onClick={() => {
+              if (comment.trim()) {
+                postComment({ postId: Number(id), content: comment });
+                setComment('');
+              }
             }}
           />
         </div>
