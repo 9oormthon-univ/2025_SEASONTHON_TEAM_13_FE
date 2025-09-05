@@ -28,7 +28,7 @@ export default function FeedId () {
   };
 
   return (
-    <div className='min-h-screen bg-[#F8F8F8] pb-[124px]'>
+    <div className='min-h-screen bg-[#F8F8F8] pb-31'>
       <div className='relative px-[20px] py-[14px] bg-white flex items-center justify-center text-gray800 text-[20px] font-semibold leading-[140%] mb-[8px]'>
         <img src={arrowBack} alt='뒤로가기' className='absolute left-[20px] cursor-pointer' onClick={handleClick} />
         게시글
