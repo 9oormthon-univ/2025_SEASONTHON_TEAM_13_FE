@@ -9,11 +9,13 @@ import { useNewPagesProvider } from '@/providers/new-pages-provider';
 import type { Music } from '@/types/music';
 import { Button } from '@/components/button';
 import { searchSongs } from '@/apis/songs';
+import { toast } from 'sonner';
 
 export const SelectMusic = () => {
   const navigate = useNavigate();
   const [musicSearchQuery, setMusicSearchQuery] = React.useState('');
   const [searchedMusics, setSearchedMusics] = React.useState<Music[]>([]);
+  const [searching, setSearching] = React.useState(false);
   const { setMusic, feelings } = useNewPagesProvider();
 
   if (feelings.length === 0) {
@@ -42,8 +44,15 @@ export const SelectMusic = () => {
   };
 
   const onSearchMusic = async (query: string) => {
-    const data = await searchSongs(query);
-    setSearchedMusics(data);
+    setSearching(true);
+    try {
+      const data = await searchSongs(query);
+      setSearchedMusics(data);
+    } catch (error) {
+      toast.error('노래 검색에 실패했어요. 잠시 후 다시 시도해주세요.');
+      console.error(error);
+    }
+    setSearching(false);
   };
 
   return (
@@ -74,7 +83,9 @@ export const SelectMusic = () => {
             if (e.key === 'Enter' && musicSearchQuery.trim() !== '') {
               // Block default behavior(submit)
               e.preventDefault();
-              onSearchMusic(musicSearchQuery);
+              if (!searching) {
+                onSearchMusic(musicSearchQuery.trim());
+              }
             }
           }}
         />

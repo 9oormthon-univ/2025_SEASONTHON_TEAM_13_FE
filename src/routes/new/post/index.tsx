@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from '@/components/button';
 import { FEELINGS } from '@/constants/feelings';
 import { useGetUser } from '@/hooks/useUser';
@@ -10,6 +11,7 @@ import { toast } from 'sonner';
 export const CreateNewPost = () => {
   const { feelings, tags, music } = useNewPagesProvider();
   const { data: user } = useGetUser();
+  const [posting, setPosting] = React.useState(false);
   const navigate = useNavigate();
 
   if (!feelings || feelings.length === 0 || !tags || tags.length === 0 || !music) {
@@ -31,6 +33,7 @@ export const CreateNewPost = () => {
   }
 
   const postThePost = async () => {
+    setPosting(true);
     try {
       await postFeed(feelings, tags, music.id);
       navigate('/feed');
@@ -38,6 +41,7 @@ export const CreateNewPost = () => {
       toast.error('게시물 작성에 실패했어요. 잠시 후 다시 시도해주세요.');
       console.error(error);
     }
+    setPosting(false);
   };
 
   return (
@@ -91,8 +95,8 @@ export const CreateNewPost = () => {
         </div>
       </div>
       <div className='flex w-full flex-grow flex-col justify-end'>
-        <Button className='mt-4 mb-16' onClick={postThePost}>
-          시작하기
+        <Button className='mt-4 mb-16' onClick={postThePost} disabled={posting}>
+          {posting ? '게시 중...' : '시작하기'}
         </Button>
       </div>
     </div>
