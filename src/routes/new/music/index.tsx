@@ -81,7 +81,7 @@ export const SelectMusic = () => {
         {
           searchedMusics.length === 0
             ? (
-              <div className='grid grid-cols-4 gap-4 mt-12 w-full'>
+              <div className='grid grid-cols-4 gap-4 mt-12 w-full items-start'>
                 {recommendedMusics
                   .map((music, index) => (
                     <SmallMusicAlbum
