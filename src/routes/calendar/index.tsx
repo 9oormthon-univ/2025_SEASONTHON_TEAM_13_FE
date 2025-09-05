@@ -38,7 +38,7 @@ export default function CalendarPage () {
   };
 
   return (
-    <div className='min-h-screen  pb-[124px] bg-[#F8F8F8]'>
+    <div className='min-h-screen  pb-31 bg-[#F8F8F8]'>
 
       <div className='px-[16px] bg-white pb-[30px] pt-[20px]'>
         <Calendar
@@ -98,7 +98,7 @@ export default function CalendarPage () {
           <p className='font-semibold text-[20px] text-gray800 leading-[140%]'>{formatDate(selectedDate)}</p>
           <div className='flex flex-col px-[20px] py-[16px] bg-white rounded-[16px]'>
             <div className='mb-[16px]'>
-              {selectedDateData?.emotionTags
+              {selectedDateData?.emotionTags?.length > 0
                 ? (
                   <div className='flex flex-wrap gap-[8px]'>
                     {selectedDateData.emotionTags.map((tag, index) => (
@@ -118,7 +118,7 @@ export default function CalendarPage () {
               )}
             </div>
             <div className='mb-[16px]'>
-              {selectedDateData?.dailyTags
+              {selectedDateData?.dailyTags?.length > 0
                 ? (
                   <div className='flex flex-wrap gap-[8px]'>
                     {selectedDateData.dailyTags.map((tag, index) => (

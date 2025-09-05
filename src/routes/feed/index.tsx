@@ -18,7 +18,7 @@ export default function Feed () {
   };
 
   return (
-    <div className='min-h-screen bg-[#F8F8F8] pb-[124px]'>
+    <div className='min-h-screen bg-[#F8F8F8] pb-31'>
       <Tabs value={currentSort === 'createdAt' ? 'createdAt' : 'likeCount'} onValueChange={handleTabChange}>
         <TabsList>
           <TabsTrigger value='createdAt'>최신</TabsTrigger>
