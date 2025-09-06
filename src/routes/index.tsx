@@ -4,23 +4,34 @@ import { jwtDecode } from 'jwt-decode';
 import kakao from '@/assets/kakao.svg';
 import logoSplash from '@/assets/logo_splash.svg';
 import logo from '@/assets/logo.svg';
+import { getMyTodayFeed } from '@/apis/feed';
+import { toast } from 'sonner';
 
 function App () {
   const [showSplash, setShowSplash] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
       const token = localStorage.getItem('accessToken');
       if (token) {
         try {
           const decodedToken: { exp: number } = jwtDecode(token);
           const currentTime = Math.floor(Date.now() / 1000);
           if (decodedToken.exp > currentTime) {
-            // TODO: Check if the user already posted today
-            // If posted, navigate to /feed, else navigate to /new/feeling
-            navigate('/new/feeling');
-            return;
+            try {
+              const myTodayFeed = await getMyTodayFeed();
+              if (myTodayFeed) {
+                navigate('/feed');
+                return;
+              } else {
+                navigate('/new/feeling');
+                return;
+              }
+            } catch (error) {
+              console.error("Error fetching today's feed:", error);
+              toast.error('오늘 작성한 게시글을 확인하는데 실패했어요. 잠시 후 다시 시도해주세요.');
+            }
           } else {
             localStorage.removeItem('accessToken');
           }

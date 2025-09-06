@@ -43,3 +43,17 @@ export const postFeedComment = async (postId: number, content: string) => {
   const response = await instance.post(`/posts/${postId}/comments`, { content });
   return response.data;
 };
+
+export const getMyTodayFeed = async (): Promise<Feed | null> => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const date = `${year}-${month}-${day}`;
+  const response = await instance.get('/posts/me', {
+    params: {
+      createdDate: date
+    }
+  });
+  return response.data;
+};
