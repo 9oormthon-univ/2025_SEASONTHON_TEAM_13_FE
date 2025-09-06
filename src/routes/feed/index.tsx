@@ -19,12 +19,14 @@ export default function Feed () {
 
   return (
     <div className='min-h-screen bg-[#F8F8F8] pb-31'>
-      <Tabs value={currentSort === 'createdAt' ? 'createdAt' : 'likeCount'} onValueChange={handleTabChange}>
-        <TabsList>
-          <TabsTrigger value='createdAt'>최신</TabsTrigger>
-          <TabsTrigger value='likeCount'>인기</TabsTrigger>
-        </TabsList>
-      </Tabs>
+      <div className='sticky top-0 z-50 bg-[#F8F8F8]'>
+        <Tabs value={currentSort === 'createdAt' ? 'createdAt' : 'likeCount'} onValueChange={handleTabChange}>
+          <TabsList>
+            <TabsTrigger value='createdAt'>최신</TabsTrigger>
+            <TabsTrigger value='likeCount'>인기</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </div>
       <div className='flex flex-col gap-2'>
         {feeds.map((item) => (
           <Card key={item.id} item={item} />
