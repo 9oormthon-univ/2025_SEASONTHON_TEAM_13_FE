@@ -2,10 +2,13 @@ import React from 'react';
 import { EmotionCategoryButton } from '@/components/emotion-category-button';
 import { ScrollArea, ScrollBar } from '@/components/scroll-area';
 import { FEELINGS } from '@/constants/feelings';
+import { BigMusicAlbum } from '@/components/new/music/album-buttons';
+import { useSongRankPerTag } from '@/hooks/useTag';
 
 export default function Ranking () {
   const [selectedEmotion, setSelectedEmotion] = React.useState<typeof FEELINGS[number]>(FEELINGS[0]);
   const currentDate = new Date();
+  const { data: rankings } = useSongRankPerTag(selectedEmotion.name);
 
   return (
     <div className='relative min-h-screen w-full flex flex-col items-center gap-2'>
@@ -35,8 +38,16 @@ export default function Ranking () {
         </div>
         <div className='flex flex-col gap-3'>
           <div className='flex justify-between'>
-            <p className='text-xs font-medium text-gray500'>이음: {/* Later this will have count */}</p>
+            <p className='text-xs font-medium text-gray500'>이음: {rankings[0]?.tracks.length}</p>
             <p className='text-xs font-medium text-gray500'>{currentDate.getHours().toString().padStart(2, '0')}:{currentDate.getMinutes().toString().padStart(2, '0')} 기준</p>
+          </div>
+          <div className='flex flex-col gap-5'>
+            {rankings[0]?.tracks.map((music, index) => (
+              <div className='flex items-center' key={music.trackId}>
+                <p className='w-7 font-semibold'>{index + 1}</p>
+                <BigMusicAlbum title={music.trackTitle} albumURL={music.albumImageUrl} artist={music.artist} playCount={music.playCount} />
+              </div>
+            ))}
           </div>
         </div>
       </div>

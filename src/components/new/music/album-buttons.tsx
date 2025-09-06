@@ -19,7 +19,7 @@ export const BigMusicAlbum = ({ title, albumURL, artist, playCount, onClick }: {
   onClick?: () => void;
 }) => {
   return (
-    <div className='flex justify-center items-center gap-4 w-full hover:cursor-pointer' onClick={onClick}>
+    <div className={`flex justify-center items-center gap-4 w-full ${onClick && 'hover:cursor-pointer'}`} onClick={onClick}>
       <img src={albumURL} alt={title} className='w-16 h-auto rounded' />
       <div className='flex flex-grow flex-col'>
         <p className='font-medium'>{title}</p>
