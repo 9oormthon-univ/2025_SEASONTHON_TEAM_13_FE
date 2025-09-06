@@ -5,6 +5,7 @@ import { useCalendar } from '@/hooks/useCalendar';
 import Card from '@/routes/feed/components/Card';
 import more from '@/assets/more.svg';
 import { LogOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile () {
   const { data: user } = useGetUser();
@@ -12,6 +13,12 @@ export default function Profile () {
   const [showLogout, setShowLogout] = useState(false);
   const { data: calendar } = useCalendar();
   const { data: userLikes } = useGetUserLikes();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/');
+  };
   return (
     <div className='min-h-screen bg-[#F8F8F8] pb-31'>
       <div className='flex py-10 justify-center items-center gap-2 bg-white relative'>
@@ -26,7 +33,10 @@ export default function Profile () {
           onClick={() => setShowLogout(!showLogout)}
         />
         {showLogout && (
-          <div className='flex items-center gap-2  absolute right-7.25 top-18 cursor-pointer py-2.5 pl-4 pr-9.25 rounded-lg bg-white border border-gray200 hover:bg-gray100'>
+          <div
+            className='flex items-center gap-2  absolute right-7.25 top-18 cursor-pointer py-2.5 pl-4 pr-9.25 rounded-lg bg-white border border-gray200 hover:bg-gray100'
+            onClick={handleLogout}
+          >
             <LogOut size={16} />
             <p className='text-gray600 font-semibold text-[0.875rem] leading-[160%]'>로그아웃</p>
           </div>
