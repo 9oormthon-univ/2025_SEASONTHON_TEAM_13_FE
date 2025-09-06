@@ -26,6 +26,8 @@ export default function Search () {
   }, [searchQuery]);
 
   React.useEffect(() => {
+    setSearchResults(null);
+    setPage(0);
     if (searchQuery !== '') {
       onSearch();
     }
@@ -85,7 +87,7 @@ export default function Search () {
                         setInput(tagName);
                       }}
                     >
-                      <p className={`size-5 pl-1 text-sm font-semibold ${index < 3 && 'text-primary'}`}>{index + 1}</p>
+                      <p className={`size-5 pl-1 text-sm font-semibold ${index < 3 ? 'text-primary' : ''}`}>{index + 1}</p>
                       <p className='text-sm font-medium'>{tagName}</p>
                     </div>
                   ))}
@@ -102,7 +104,7 @@ export default function Search () {
                         setInput(tagName);
                       }}
                     >
-                      <p className={`size-5 pl-1 text-sm font-semibold ${index < 3 && 'text-primary'}`}>{index + 1}</p>
+                      <p className={`size-5 pl-1 text-sm font-semibold ${index < 3 ? 'text-primary' : ''}`}>{index + 1}</p>
                       <p className='text-sm font-medium'>{tagName}</p>
                     </div>
                   ))}
