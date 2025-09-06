@@ -4,12 +4,47 @@ import { SearchIcon } from '@/icons/search';
 import type { Feed } from '@/types/feed';
 import Card from '../feed/components/Card';
 import { useTagRankings } from '@/hooks/useTag';
+import { searchFeedsByTag } from '@/apis/feed';
+import { useNearScreenBottom } from '@/hooks/useNearScreenBottom';
 
 export default function Search () {
   const [input, setInput] = React.useState('');
   const [searchQuery, setSearchQuery] = React.useState('');
   const [searchResults, setSearchResults] = React.useState<Feed[] | null>(null);
+  const [page, setPage] = React.useState(0);
+  const isNearBottom = useNearScreenBottom();
   const { data: tagRankings } = useTagRankings();
+
+  const onSearch = React.useCallback(async () => {
+    try {
+      const posts = await searchFeedsByTag(searchQuery);
+      setSearchResults(posts);
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+      setSearchResults([]);
+    }
+  }, [searchQuery]);
+
+  React.useEffect(() => {
+    if (searchQuery !== '') {
+      onSearch();
+    }
+  }, [onSearch, searchQuery]);
+
+  React.useEffect(() => {
+    if (isNearBottom && searchResults && searchResults.length >= (page + 1) * 10) {
+      const fetchMore = async () => {
+        try {
+          const morePosts = await searchFeedsByTag(searchQuery, page + 1);
+          setSearchResults(prev => prev ? [...prev, ...morePosts] : morePosts);
+          setPage(prev => prev + 1);
+        } catch (error) {
+          console.error('Error fetching more search results:', error);
+        }
+      };
+      fetchMore();
+    }
+  }, [isNearBottom, searchResults, page, searchQuery]);
 
   return (
     <div className='relative min-h-screen w-full flex flex-col items-center gap-10'>
@@ -21,6 +56,7 @@ export default function Search () {
           if (e.target.value.trim() === '') {
             setSearchResults(null);
             setSearchQuery('');
+            setPage(0);
           }
         }
       } placeholder='검색어를 입력하세요...' icon={
@@ -29,156 +65,6 @@ export default function Search () {
         if (e.key === 'Enter') {
           e.preventDefault();
           setSearchQuery(input);
-          setSearchResults([
-            {
-              id: 19,
-              emotionTags: [
-                '즐거움'
-              ],
-              dailyTags: [
-                '하루 태그'
-              ],
-              song: {
-                trackId: '4kXdx4vRJnbkLqq9vmOytw',
-                title: '귀로',
-                artist: '정미조',
-                albumArtUrl: 'https://i.scdn.co/image/ab67616d0000b2739af040c0d3ccb2cb673bf579',
-                playCount: 0,
-                spotifyPlayUrl: 'https://open.spotify.com/track/4kXdx4vRJnbkLqq9vmOytw'
-              },
-              user: '____',
-              userImageUrl: '',
-              likeCount: 1,
-              likeState: false,
-              commentCount: 0,
-              createdAt: '2025-09-05T15:18:52.643403',
-              updatedAt: '2025-09-05T15:18:52.644001'
-            },
-            {
-              id: 18,
-              emotionTags: [
-                '슬픔'
-              ],
-              dailyTags: [
-                '테스트용'
-              ],
-              song: {
-                trackId: '17YfT1Iqp3g8ilIqsHuChm',
-                title: '1024',
-                artist: 'KOYOTE',
-                albumArtUrl: 'https://i.scdn.co/image/ab67616d0000b2732ab38356d063ff626dd2da5f',
-                playCount: 0,
-                spotifyPlayUrl: 'https://open.spotify.com/track/17YfT1Iqp3g8ilIqsHuChm'
-              },
-              user: '____',
-              userImageUrl: '',
-              likeCount: 1,
-              likeState: false,
-              commentCount: 0,
-              createdAt: '2025-09-05T14:32:52.047504',
-              updatedAt: '2025-09-05T14:32:52.047528'
-            },
-            {
-              id: 17,
-              emotionTags: [
-                '즐거움',
-                '감동'
-              ],
-              dailyTags: [
-                'ssss'
-              ],
-              song: {
-                trackId: '4kXdx4vRJnbkLqq9vmOytw',
-                title: '귀로',
-                artist: '정미조',
-                albumArtUrl: 'https://i.scdn.co/image/ab67616d0000b2739af040c0d3ccb2cb673bf579',
-                playCount: 0,
-                spotifyPlayUrl: 'https://open.spotify.com/track/4kXdx4vRJnbkLqq9vmOytw'
-              },
-              user: '____',
-              userImageUrl: '',
-              likeCount: 1,
-              likeState: false,
-              commentCount: 0,
-              createdAt: '2025-09-05T14:22:44.07298',
-              updatedAt: '2025-09-05T14:22:44.073006'
-            },
-            {
-              id: 14,
-              emotionTags: [
-                '즐거움',
-                '짜증'
-              ],
-              dailyTags: [
-                '태그1'
-              ],
-              song: {
-                trackId: '06JMCvJpXO8ITrJdkoyXsN',
-                title: '2018 (이천십팔)',
-                artist: 'Choi Seong',
-                albumArtUrl: 'https://i.scdn.co/image/ab67616d0000b273b5a36a6b06f0908fe54261d1',
-                playCount: 0,
-                spotifyPlayUrl: 'https://open.spotify.com/track/06JMCvJpXO8ITrJdkoyXsN'
-              },
-              user: '____',
-              userImageUrl: '',
-              likeCount: 0,
-              likeState: false,
-              commentCount: 0,
-              createdAt: '2025-09-05T14:00:54.555158',
-              updatedAt: '2025-09-05T14:00:54.555184'
-            },
-            {
-              id: 12,
-              emotionTags: [
-                '즐거움',
-                '피곤함',
-                '졸림'
-              ],
-              dailyTags: [
-                '행복해지는법'
-              ],
-              song: {
-                trackId: '3rzVcHw0hwVgDEq5udhUJS',
-                title: 'Young Girl A - one day After Another Remix',
-                artist: 'Siinamota',
-                albumArtUrl: 'https://i.scdn.co/image/ab67616d0000b2732b8ad0729c8d7a6570642ad5',
-                playCount: 0,
-                spotifyPlayUrl: 'https://open.spotify.com/track/3rzVcHw0hwVgDEq5udhUJS'
-              },
-              user: '____',
-              userImageUrl: '',
-              likeCount: 0,
-              likeState: false,
-              commentCount: 0,
-              createdAt: '2025-09-05T13:57:00.914391',
-              updatedAt: '2025-09-05T13:57:00.914437'
-            },
-            {
-              id: 1,
-              emotionTags: [
-                '기쁨'
-              ],
-              dailyTags: [
-                'test1'
-              ],
-              song: {
-                trackId: '17YfT1Iqp3g8ilIqsHuChm',
-                title: '1024',
-                artist: 'KOYOTE',
-                albumArtUrl: 'https://i.scdn.co/image/ab67616d0000b2732ab38356d063ff626dd2da5f',
-                playCount: 0,
-                spotifyPlayUrl: 'https://open.spotify.com/track/17YfT1Iqp3g8ilIqsHuChm'
-              },
-              user: '____',
-              userImageUrl: '',
-              likeCount: 1,
-              likeState: false,
-              commentCount: 1,
-              createdAt: '2025-09-05T13:39:18.763724',
-              updatedAt: '2025-09-05T13:39:18.763771'
-            }
-          ]);
         }
       }}
         />
@@ -196,7 +82,6 @@ export default function Search () {
                     <div
                       className='flex gap-2.5 w-full cursor-pointer' key={tagName} onClick={() => {
                         setSearchQuery(tagName);
-                        setSearchResults([]);
                         setInput(tagName);
                       }}
                     >
@@ -214,7 +99,6 @@ export default function Search () {
                     <div
                       className='flex gap-2.5 w-full cursor-pointer' key={tagName} onClick={() => {
                         setSearchQuery(tagName);
-                        setSearchResults([]);
                         setInput(tagName);
                       }}
                     >
