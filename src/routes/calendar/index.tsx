@@ -135,7 +135,7 @@ export default function CalendarPage () {
                   <div className='flex flex-wrap gap-2'>
                     {selectedDateData.dailyTags.map((tag, index) => (
                       <span key={index} className='text-gray600 text-sm font-medium leading-[140%]'>
-                        {tag}
+                        #{tag}
                       </span>
                     ))}
                   </div>

@@ -48,7 +48,7 @@ export default function Card ({ item, isProfile = false }: CardProps) {
           <div
             className='text-gray600 text-sm leading-[140%] font-medium'
             key={index}
-          >{tag}
+          >#{tag}
           </div>
         ))}
       </div>
