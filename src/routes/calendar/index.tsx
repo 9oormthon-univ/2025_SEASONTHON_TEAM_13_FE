@@ -39,9 +39,9 @@ export default function CalendarPage () {
   };
 
   return (
-    <div className='min-h-screen  pb-31 bg-[#F8F8F8]'>
+    <div className='min-h-screen pb-31 bg-[#F8F8F8]'>
 
-      <div className='px-[16px] bg-white pb-[30px] pt-[20px]'>
+      <div className='px-4 bg-white pb-7.5 pt-5'>
         <Calendar
           className='custom-calendar'
           calendarType='gregory'
@@ -95,15 +95,15 @@ export default function CalendarPage () {
         />
       </div>
       {selectedDateData && (
-        <div className='p-[25px] flex flex-col gap-[24px]'>
-          <p className='font-semibold text-[20px] text-gray800 leading-[140%]'>{formatDate(selectedDate)}</p>
-          <div className='flex flex-col px-[20px] py-[16px] bg-white rounded-[16px]'>
-            <div className='mb-[16px]'>
+        <div className='p-6 flex flex-col gap-6'>
+          <p className='font-semibold text-xl text-gray800 leading-[140%]'>{formatDate(selectedDate)}</p>
+          <div className='flex flex-col px-5 py-4 bg-white rounded-2xl'>
+            <div className='mb-4'>
               {selectedDateData?.emotionTags?.length > 0
                 ? (
-                  <div className='flex flex-wrap gap-[8px]'>
+                  <div className='flex flex-wrap gap-2'>
                     {selectedDateData.emotionTags.map((tag, index) => (
-                      <span key={index} className='px-[14px] py-[3px] bg-[#FFEBEA] text-primary text-[12px] font-medium leading-[140%] rounded-full border border-primary'>
+                      <span key={index} className='px-3.5 py-1 bg-[#FFEBEA] text-primary text-xs font-medium leading-[140%] rounded-full border border-primary'>
                         {tag}
                       </span>
                     ))}
@@ -113,7 +113,7 @@ export default function CalendarPage () {
                   <p className='text-gray-400 text-sm'>이모션 태그가 없습니다</p>
                   )}
             </div>
-            <div className='mb-[4px]'>
+            <div className='mb-1'>
               {selectedDateData?.song && (
                 <div className='flex items-center '>
                   <img src={music} alt='music' />
@@ -121,12 +121,12 @@ export default function CalendarPage () {
                 </div>
               )}
             </div>
-            <div className='mb-[16px]'>
+            <div className='mb-4'>
               {selectedDateData?.dailyTags?.length > 0
                 ? (
-                  <div className='flex flex-wrap gap-[8px]'>
+                  <div className='flex flex-wrap gap-2'>
                     {selectedDateData.dailyTags.map((tag, index) => (
-                      <span key={index} className='text-gray600 text-[14px] font-medium leading-[140%]'>
+                      <span key={index} className='text-gray600 text-sm font-medium leading-[140%]'>
                         {tag}
                       </span>
                     ))}
