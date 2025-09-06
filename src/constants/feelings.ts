@@ -15,7 +15,7 @@ export const FEELINGS = [
   { id: 30, emoji: '🥹', name: '감동' },
   { id: 33, emoji: '🥰', name: '설렘' },
   { id: 34, emoji: '😮', name: '놀람' },
-  { id: 31, emoji: '🤪', name: '어지러움' }
+  { id: 31, emoji: '🤪', name: '어지러운' }
 ] as const;
 
 export type FeelingID = typeof FEELINGS[number]['id'];

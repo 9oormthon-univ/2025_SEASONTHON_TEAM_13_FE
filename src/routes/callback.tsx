@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { instance } from '@/apis/instance';
+import { getMyTodayFeed } from '@/apis/feed';
 
 const getKakaoToken = async () => {
   try {
@@ -44,8 +45,12 @@ export default function Callback () {
         hasExecuted.current = true;
         setLoading(true);
         await getKakaoToken();
-        navigate('/new/feeling');
-        setLoading(false);
+        const myTodayFeed = await getMyTodayFeed();
+        if (myTodayFeed) {
+          navigate('/feed');
+        } else {
+          navigate('/new/feeling');
+        }
       } catch (err) {
         console.error('API 호출 실패:', err);
         setError('로그인 처리 중 오류가 발생했습니다.');
