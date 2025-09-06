@@ -43,7 +43,6 @@
     margin: 0 auto;
     position: relative;
     box-shadow: rgba(100, 100, 112, 0.2) 0 0 30px 0;
-    overflow: hidden;
     touch-action: pan-y;
   }
 }
