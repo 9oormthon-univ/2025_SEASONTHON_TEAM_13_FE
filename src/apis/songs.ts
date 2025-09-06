@@ -20,3 +20,8 @@ export const searchSongs = async (query: string, limit: number = 10): Promise<Mu
   });
   return response.data;
 };
+
+export const increaseSongPlayCount = async (songId: string) => {
+  const response = await instance.post(`/songs/${songId}/count`);
+  return response.data;
+};

@@ -5,6 +5,7 @@ import heart from '@/assets/heart.svg';
 import comment from '@/assets/comment.svg';
 import { useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
 import { getRelativeTime } from '@/lib/dateUtils';
+import { SpotifyIframe } from '@/components/spotify-iframe';
 
 interface CardProps {
   item: Feed;
@@ -34,14 +35,7 @@ export default function Card ({ item, isProfile = false }: CardProps) {
         </div>
       )}
       <div className='w-full h-20'>
-        <iframe
-          data-testid='embed-iframe'
-          src={`https://open.spotify.com/embed/track/${item.song.trackId}?utm_source=generator&theme=0`}
-          width='100%'
-          height='100%'
-          allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
-          loading='lazy'
-        />
+        <SpotifyIframe id={item.song.trackId} />
       </div>
       <div className='flex gap-1.5 mt-4 mb-3'>
         {item.dailyTags.map((tag, index) => (
