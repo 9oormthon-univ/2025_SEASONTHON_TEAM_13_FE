@@ -25,7 +25,7 @@ export default function Feed () {
           <TabsTrigger value='likeCount'>인기</TabsTrigger>
         </TabsList>
       </Tabs>
-      <div className='flex flex-col gap-[24px]'>
+      <div className='flex flex-col gap-6'>
         {feeds.map((item) => (
           <Card key={item.id} item={item} />
         ))}
