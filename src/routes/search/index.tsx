@@ -227,9 +227,14 @@ export default function Search () {
                 <p className='text-lg font-bold'>감정 태그</p>
                 <div className='grid grid-cols-2 grid-rows-5 grid-flow-col w-full gap-4.5'>
                   {tagRankings.emotionTags.slice(0, 10).map(({ tagName }, index) => (
-                    <div className='flex gap-2.5 w-full' key={tagName}>
+                    <div
+                      className='flex gap-2.5 w-full cursor-pointer' key={tagName} onClick={() => {
+                        setSearchQuery(tagName);
+                        setSearchResults([]);
+                        setInput(tagName);
+                      }}
+                    >
                       <p className={`size-5 pl-1 text-sm font-semibold ${index < 3 && 'text-primary'}`}>{index + 1}</p>
-                      {/* TODO: this should lead to the search result */}
                       <p className='text-sm font-medium'>{tagName}</p>
                     </div>
                   ))}
@@ -240,9 +245,14 @@ export default function Search () {
                 <p className='text-lg font-bold'>하루 태그</p>
                 <div className='grid grid-cols-2 grid-rows-5 grid-flow-col w-full gap-4.5'>
                   {tagRankings.dayTags.slice(0, 10).map(({ tagName }, index) => (
-                    <div className='flex gap-2.5 w-full' key={tagName}>
+                    <div
+                      className='flex gap-2.5 w-full cursor-pointer' key={tagName} onClick={() => {
+                        setSearchQuery(tagName);
+                        setSearchResults([]);
+                        setInput(tagName);
+                      }}
+                    >
                       <p className={`size-5 pl-1 text-sm font-semibold ${index < 3 && 'text-primary'}`}>{index + 1}</p>
-                      {/* TODO: this should lead to the search result */}
                       <p className='text-sm font-medium'>{tagName}</p>
                     </div>
                   ))}
