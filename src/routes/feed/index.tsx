@@ -5,6 +5,8 @@ import { useIFrameAPI } from '@/hooks/useiFrameAPI';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
+import loading from '@/assets/loading.json';
+import Lottie from 'lottie-react';
 
 export default function Feed () {
   const navigate = useNavigate();
@@ -58,7 +60,7 @@ export default function Feed () {
         {/* 무한 스크롤 트리거 요소 */}
         <div ref={loadMoreRef} className='h-10 flex items-center justify-center'>
           {isFetchingNextPage && (
-            <div className='text-gray-500'>로딩 중...</div>
+            <Lottie animationData={loading} loop style={{ height: 80, width: '100%' }} />
           )}
         </div>
       </div>
