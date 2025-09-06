@@ -42,12 +42,14 @@ export default function Profile () {
           </div>
         )}
       </div>
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList>
-          <TabsTrigger value='posts'>내가 쓴 글</TabsTrigger>
-          <TabsTrigger value='likes'>좋아요</TabsTrigger>
-        </TabsList>
-      </Tabs>
+      <div className='sticky top-0 z-50 bg-[#F8F8F8]'>
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList>
+            <TabsTrigger value='posts'>내가 쓴 글</TabsTrigger>
+            <TabsTrigger value='likes'>좋아요</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </div>
       <div className='flex flex-col gap-2'>
         {activeTab === 'posts'
           ? (
