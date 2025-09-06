@@ -25,15 +25,15 @@ export default function Card ({ item, isProfile = false }: CardProps) {
     >
       {!isProfile &&
       (
-        <div className='flex items-center gap-[12px] mb-[20px]'>
-          <img src={item.userImageUrl} alt='user' className='w-[44px] h-[44px] rounded-full' />
-          <div className='flex flex-col gap-[2px]'>
-            <p className='text-gray800 text-[14px] font-semibold leading-[140%]'>{item.user}</p>
-            <p className='text-gray400 text-[14px] leading-[140%]'>{getRelativeTime(item.createdAt)}</p>
+        <div className='flex items-center gap-3 mb-5'>
+          <img src={item.userImageUrl} alt='user' className='size-11 rounded-full' />
+          <div className='flex flex-col gap-0.5'>
+            <p className='text-gray800 text-sm font-semibold leading-[140%]'>{item.user}</p>
+            <p className='text-gray400 text-sm leading-[140%]'>{getRelativeTime(item.createdAt)}</p>
           </div>
         </div>
       )}
-      <div className='w-full h-[80px]'>
+      <div className='w-full h-20'>
         <iframe
           data-testid='embed-iframe'
           src={`https://open.spotify.com/embed/track/${item.song.trackId}?utm_source=generator&theme=0`}
