@@ -10,6 +10,16 @@ export const getFeed = async (sortBy: 'createdAt' | 'likeCount'): Promise<Feed[]
   return response.data;
 };
 
+export const getFeedPage = async (sortBy: 'createdAt' | 'likeCount', page: number): Promise<Feed[]> => {
+  const response = await instance.get('/posts', {
+    params: {
+      sortBy,
+      page,
+    },
+  });
+  return response.data;
+};
+
 export const postFeed = async (emotionTags: string[], dailyTags: string[], songTrackId: string) => {
   const response = await instance.post('/posts', {
     emotionTags,
