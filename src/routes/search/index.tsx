@@ -6,6 +6,7 @@ import Card from '../feed/components/Card';
 import { useTagRankings } from '@/hooks/useTag';
 import { searchFeedsByTag } from '@/apis/feed';
 import { useNearScreenBottom } from '@/hooks/useNearScreenBottom';
+import { useIFrameAPI } from '@/hooks/useiFrameAPI';
 
 export default function Search () {
   const [input, setInput] = React.useState('');
@@ -14,6 +15,7 @@ export default function Search () {
   const [page, setPage] = React.useState(0);
   const isNearBottom = useNearScreenBottom();
   const { data: tagRankings } = useTagRankings();
+  const iFrameAPI = useIFrameAPI();
 
   const onSearch = React.useCallback(async () => {
     try {
@@ -123,7 +125,7 @@ export default function Search () {
               </p>
             </div>
             {searchResults.map(result => (
-              <Card key={result.id} item={result} />
+              <Card key={result.id} item={result} iFrameAPI={iFrameAPI} />
             ))}
           </div>
           )}
