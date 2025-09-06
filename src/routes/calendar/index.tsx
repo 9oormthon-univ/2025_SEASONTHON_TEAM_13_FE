@@ -10,9 +10,17 @@ export default function CalendarPage () {
   const [activeStartDate, setActiveStartDate] = useState<Date>(new Date());
   const { data } = useCalendar();
 
+  // UTC 시간을 한국시간으로 변환하는 함수
+  const convertToKoreaTime = (utcDateString: string) => {
+    const utcDate = new Date(utcDateString);
+    // 한국시간은 UTC+9이므로 9시간을 더함
+    const koreaTime = new Date(utcDate.getTime() + (9 * 60 * 60 * 1000));
+    return koreaTime;
+  };
+
   // 선택한 날짜에 해당하는 모든 데이터 찾기
   const selectedDateDataList = data?.filter(item => {
-    const itemDate = new Date(item.createdAt);
+    const itemDate = convertToKoreaTime(item.createdAt);
 
     // 더 간단한 날짜 비교 방법
     const selectedYear = selectedDate.getFullYear();
@@ -61,7 +69,7 @@ export default function CalendarPage () {
           tileContent={({ date }) => {
             // createdAt이 존재하는 날짜에만 빨간 점 표시
             const hasData = data?.some(item => {
-              const itemDate = new Date(item.createdAt);
+              const itemDate = convertToKoreaTime(item.createdAt);
               const selectedYear = date.getFullYear();
               const selectedMonth = date.getMonth() + 1;
               const selectedDay = date.getDate();
