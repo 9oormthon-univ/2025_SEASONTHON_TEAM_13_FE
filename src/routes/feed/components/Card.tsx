@@ -6,13 +6,15 @@ import comment from '@/assets/comment.svg';
 import { useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
 import { getRelativeTime } from '@/lib/dateUtils';
 import { SpotifyIframe } from '@/components/spotify-iframe';
+import type { IFrameAPI } from '@/hooks/useiFrameAPI';
 
 interface CardProps {
   item: Feed;
   isProfile?: boolean;
+  iFrameAPI?: IFrameAPI;
 }
 
-export default function Card ({ item, isProfile = false }: CardProps) {
+export default function Card ({ item, isProfile = false, iFrameAPI }: CardProps) {
   const navigate = useNavigate();
   const { mutate: likeFeed } = useLikeFeed();
   const { mutate: unlikeFeed } = useUnlikeFeed();
@@ -35,7 +37,7 @@ export default function Card ({ item, isProfile = false }: CardProps) {
         </div>
       )}
       <div className='w-full h-20'>
-        <SpotifyIframe id={item.song.trackId} />
+        <SpotifyIframe id={item.song.trackId} iFrameAPI={iFrameAPI} />
       </div>
       <div className='flex gap-1.5 mt-4 mb-3'>
         {item.dailyTags.map((tag, index) => (
