@@ -6,26 +6,34 @@ import comment from '@/assets/comment.svg';
 import { useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
 import { getRelativeTime } from '@/lib/dateUtils';
 
-export default function Card ({ item }: { item: Feed }) {
+interface CardProps {
+  item: Feed;
+  isProfile?: boolean;
+}
+
+export default function Card ({ item, isProfile = false }: CardProps) {
   const navigate = useNavigate();
   const { mutate: likeFeed } = useLikeFeed();
   const { mutate: unlikeFeed } = useUnlikeFeed();
   return (
     <div
       key={item.id}
-      className='p-[25px] bg-white cursor-pointer'
+      className='p-6 bg-white cursor-pointer'
       onClick={() => {
         navigate(`/feed/${item.id}`);
       }}
     >
-      <div className='flex items-center gap-[12px] mb-[20px]'>
-        <img src={item.userImageUrl} alt='user' className='w-[44px] h-[44px] rounded-full' />
-        <div className='flex flex-col gap-[2px]'>
-          <p className='text-gray800 text-[14px] font-semibold leading-[140%]'>{item.user}</p>
-          <p className='text-gray400 text-[14px] leading-[140%]'>{getRelativeTime(item.createdAt)}</p>
+      {!isProfile &&
+      (
+        <div className='flex items-center gap-3 mb-5'>
+          <img src={item.userImageUrl} alt='user' className='size-11 rounded-full' />
+          <div className='flex flex-col gap-0.5'>
+            <p className='text-gray800 text-sm font-semibold leading-[140%]'>{item.user}</p>
+            <p className='text-gray400 text-sm leading-[140%]'>{getRelativeTime(item.createdAt)}</p>
+          </div>
         </div>
-      </div>
-      <div className='w-full h-[80px]'>
+      )}
+      <div className='w-full h-20'>
         <iframe
           data-testid='embed-iframe'
           src={`https://open.spotify.com/embed/track/${item.song.trackId}?utm_source=generator&theme=0`}
@@ -35,27 +43,27 @@ export default function Card ({ item }: { item: Feed }) {
           loading='lazy'
         />
       </div>
-      <div className='flex gap-[6px] mt-[16px] mb-[12px] '>
+      <div className='flex gap-1.5 mt-4 mb-3'>
         {item.dailyTags.map((tag, index) => (
           <div
-            className='text-gray600 text-[14px] leading-[140%] font-medium'
+            className='text-gray600 text-sm leading-[140%] font-medium'
             key={index}
           >{tag}
           </div>
         ))}
       </div>
-      <div className='flex gap-[8px]'>
+      <div className='flex gap-2'>
         {item.emotionTags.map((tag, index) => (
           <div
-            className='border border-primary rounded-[100px] px-[16px] py-[4px] text-primary text-[14px] leading-[140%] font-medium bg-[#FFEBEA]'
+            className='border border-primary rounded-[100px] px-4 py-1 text-primary text-sm leading-[140%] font-medium bg-[#FFEBEA]'
             key={index}
           >{tag}
           </div>
         ))}
       </div>
-      <div className='h-[1px] bg-[#E7E7E7] my-[20px]' />
-      <div className='flex items-center gap-[16px]'>
-        <div className='flex items-center gap-[4px]'>
+      <div className='h-[1px] bg-[#E7E7E7] my-5' />
+      <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-1'>
           <img
             src={item.likeState ? heartActive : heart} alt='heart' className='cursor-pointer' onClick={(e) => {
               e.stopPropagation();
@@ -66,11 +74,11 @@ export default function Card ({ item }: { item: Feed }) {
               }
             }}
           />
-          <p className='text-gray700 text-[15px] leading-[140%] font-medium'>{item.likeCount}</p>
+          <p className='text-gray700 text-sm leading-[140%] font-medium'>{item.likeCount}</p>
         </div>
-        <div className='flex items-center gap-[4px]'>
+        <div className='flex items-center gap-1'>
           <img src={comment} alt='comment' />
-          <p className='text-gray700 text-[15px] leading-[140%] font-medium'>{item.commentCount}</p>
+          <p className='text-gray700 text-sm leading-[140%] font-medium'>{item.commentCount}</p>
         </div>
       </div>
     </div>

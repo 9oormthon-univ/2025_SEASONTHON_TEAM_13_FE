@@ -56,16 +56,16 @@ export const CreateNewPost = () => {
         <p className='body-m font-medium text-gray500'>이제 오늘의 하루와 노래를 사람들과 공유해보세요</p>
       </div>
       <div
-        className='p-[25px] bg-white w-full'
+        className='p-6 bg-white w-full'
       >
-        <div className='flex items-center gap-[12px] mb-[20px]'>
-          <img src={user.profileUrl} alt='user' className='w-[44px] h-[44px] rounded-full' />
-          <div className='flex flex-col gap-[2px]'>
-            <p className='text-gray800 text-[14px] font-semibold leading-[140%]'>{user.username}</p>
-            <p className='text-gray400 text-[14px] leading-[140%]'>방금</p>
+        <div className='flex items-center gap-3 mb-5'>
+          <img src={user.profileUrl} alt='user' className='size-11 rounded-full' />
+          <div className='flex flex-col gap-0.5'>
+            <p className='text-gray800 text-sm font-semibold leading-[140%]'>{user.username}</p>
+            <p className='text-gray400 text-sm leading-[140%]'>방금</p>
           </div>
         </div>
-        <div className='w-full h-[80px]'>
+        <div className='w-full h-20'>
           <iframe
             data-testid='embed-iframe'
             src={`https://open.spotify.com/embed/track/${music.id}?utm_source=generator&theme=0`}
@@ -75,19 +75,19 @@ export const CreateNewPost = () => {
             loading='lazy'
           />
         </div>
-        <div className='flex gap-[6px] mt-[16px] mb-[12px] '>
+        <div className='flex gap-1.5 mt-4 mb-3'>
           {tags.map((tag, index) => (
             <div
-              className='text-gray600 text-[14px] leading-[140%] font-medium'
+              className='text-gray600 text-sm leading-[140%] font-medium'
               key={index}
             >{tag}
             </div>
           ))}
         </div>
-        <div className='flex gap-[8px]'>
+        <div className='flex gap-2'>
           {feelings.map((tag, index) => (
             <div
-              className='border border-primary rounded-[100px] px-[16px] py-[4px] text-primary text-[14px] leading-[140%] font-medium bg-[#FFEBEA]'
+              className='border border-primary rounded-[100px] px-4 py-1 text-primary text-sm leading-[140%] font-medium bg-[#FFEBEA]'
               key={index}
             >{FEELINGS.find((feeling) => feeling.name === tag)?.name ?? '알 수 없음'}
             </div>
