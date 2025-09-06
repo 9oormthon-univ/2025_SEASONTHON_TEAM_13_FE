@@ -67,7 +67,7 @@ function App () {
 
   return (
     <div className='pt-23 bg-white'>
-      <p className='text-center text-3xl font-bold  leading-[140%] text-gray800  mb-2'>감정과 음악을 <br /> 연결하러 함께 가볼까요</p>
+      <p className='text-center text-3xl font-bold  leading-[140%] text-gray800  mb-2'>감정과 음악을 <br /> 연결하러 함께 가볼까요?</p>
       <div className='w-full aspect-square relative'>
         <div className='absolute inset-0 bg-[radial-gradient(50%_50%_at_50%_50%,rgba(242,86,58,0.15)_0%,rgba(242,86,58,0)_100%)] blur-[2px]' />
         <div className='relative z-10 flex flex-col items-center justify-center h-full'>
