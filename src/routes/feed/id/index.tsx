@@ -7,7 +7,7 @@ import Card from '../components/Card';
 import commentPost from '@/assets/comment_post.svg';
 import { useGetUser } from '@/hooks/useUser';
 import { getRelativeTime } from '@/lib/dateUtils';
-import { useIFrameAPIContext } from '@/providers/iframe-api-provider';
+// import { useIFrameAPIContext } from '@/providers/iframe-api-provider';
 
 export default function FeedId () {
   const { id } = useParams();
@@ -24,7 +24,7 @@ export default function FeedId () {
   const { data: comments } = useGetFeedComments(Number(id));
   const [comment, setComment] = useState('');
   const { mutate: postComment } = usePostFeedComment();
-  const iFrameAPI = useIFrameAPIContext();
+  // const iFrameAPI = useIFrameAPIContext();
   const handleClick = (e: React.MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
     navigate(-1);
@@ -36,7 +36,8 @@ export default function FeedId () {
         <img src={arrowBack} alt='뒤로가기' className='absolute left-5 cursor-pointer' onClick={handleClick} />
         게시글
       </div>
-      <Card item={feed} iFrameAPI={iFrameAPI} />
+      {/* <Card item={feed} iFrameAPI={iFrameAPI} /> */}
+      <Card item={feed} />
       <div className='mt-2 pt-2.5 px-5 bg-white flex flex-col gap-8'>
         <div className='py-4 flex gap-3 border-b border-b-gray100'>
           <img src={user.profileUrl} alt='user' className='size-11 rounded-full' />

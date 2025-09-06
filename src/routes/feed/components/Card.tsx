@@ -5,16 +5,20 @@ import heart from '@/assets/heart.svg';
 import comment from '@/assets/comment.svg';
 import { useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
 import { getRelativeTime } from '@/lib/dateUtils';
-import { SpotifyIframe } from '@/components/spotify-iframe';
-import type { IFrameAPI } from '@/hooks/useiFrameAPI';
+// import { SpotifyIframe } from '@/components/spotify-iframe';
+// import type { IFrameAPI } from '@/hooks/useiFrameAPI';
 
 interface CardProps {
   item: Feed;
   isProfile?: boolean;
-  iFrameAPI?: IFrameAPI;
+  // iFrameAPI?: IFrameAPI;
 }
 
-export default function Card ({ item, isProfile = false, iFrameAPI }: CardProps) {
+export default function Card ({
+  item,
+  isProfile = false,
+  // iFrameAPI
+}: CardProps) {
   const navigate = useNavigate();
   const { mutate: likeFeed } = useLikeFeed();
   const { mutate: unlikeFeed } = useUnlikeFeed();
@@ -37,7 +41,14 @@ export default function Card ({ item, isProfile = false, iFrameAPI }: CardProps)
         </div>
       )}
       <div className='w-full h-20'>
-        <SpotifyIframe id={item.song.trackId} iFrameAPI={iFrameAPI} />
+        <iframe
+          data-testid='embed-iframe'
+          src={`https://open.spotify.com/embed/track/${item.song.trackId}?utm_source=generator`}
+          width='100%'
+          height='100%'
+          allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
+          loading='lazy'
+        />
       </div>
       <div className='flex gap-1.5 mt-4 mb-3'>
         {item.dailyTags.map((tag, index) => (
