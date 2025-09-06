@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import Card from '../components/Card';
 import commentPost from '@/assets/comment_post.svg';
 import { useGetUser } from '@/hooks/useUser';
+import { getRelativeTime } from '@/lib/dateUtils';
 
 export default function FeedId () {
   const { id } = useParams();
@@ -67,7 +68,7 @@ export default function FeedId () {
               <div className='flex flex-col gap-0.5'>
                 <div className='flex items-center gap-2'>
                   <p className='text-gray800 text-sm font-semibold leading-[140%]'>{comment.authorNickname}</p>
-                  <p className='text-gray400 text-xs leading-[140%]'>{comment.createdAt}</p>
+                  <p className='text-gray400 text-xs leading-[140%]'>{getRelativeTime(comment.createdAt)}</p>
                 </div>
                 <p className='text-gray700 text-sm font-medium leading-[140%]'>{comment.content}</p>
               </div>
