@@ -1,11 +1,13 @@
 import React from 'react';
+import Lottie from 'lottie-react';
+import { useInView } from 'react-intersection-observer';
 import { TextInput } from '@/components/text-input';
 import { SearchIcon } from '@/icons/search';
 import type { Feed } from '@/types/feed';
 import Card from '../feed/components/Card';
 import { useTagRankings } from '@/hooks/useTag';
 import { searchFeedsByTag } from '@/apis/feed';
-import { useNearScreenBottom } from '@/hooks/useNearScreenBottom';
+import loading from '@/assets/loading.json';
 // import { useIFrameAPIContext } from '@/providers/iframe-api-provider';
 
 export default function Search () {
@@ -13,7 +15,10 @@ export default function Search () {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [searchResults, setSearchResults] = React.useState<Feed[] | null>(null);
   const [page, setPage] = React.useState(0);
-  const isNearBottom = useNearScreenBottom();
+  const [isFetchingNextPage, setIsFetchingNextPage] = React.useState(false);
+  const { ref: loadMoreRef, inView } = useInView({
+    threshold: 0.1,
+  });
   const { data: tagRankings } = useTagRankings();
   // const iFrameAPI = useIFrameAPIContext();
 
@@ -36,19 +41,21 @@ export default function Search () {
   }, [onSearch, searchQuery]);
 
   React.useEffect(() => {
-    if (isNearBottom && searchResults && searchResults.length >= (page + 1) * 10) {
+    if (inView && searchResults && searchResults.length >= (page + 1) * 10) {
       const fetchMore = async () => {
         try {
+          setIsFetchingNextPage(true);
           const morePosts = await searchFeedsByTag(searchQuery, page + 1);
           setSearchResults(prev => prev ? [...prev, ...morePosts] : morePosts);
           setPage(prev => prev + 1);
+          setIsFetchingNextPage(false);
         } catch (error) {
           console.error('Error fetching more search results:', error);
         }
       };
       fetchMore();
     }
-  }, [isNearBottom, searchResults, page, searchQuery]);
+  }, [inView, searchResults, page, searchQuery]);
 
   return (
     <div className='relative min-h-screen w-full flex flex-col items-center gap-10 pb-31'>
@@ -128,6 +135,11 @@ export default function Search () {
               // <Card key={result.id} item={result} iFrameAPI={iFrameAPI} />
               <Card key={result.id} item={result} />
             ))}
+            <div ref={loadMoreRef} className='h-10 flex items-center justify-center'>
+              {isFetchingNextPage && (
+                <Lottie animationData={loading} loop style={{ height: 80, width: '100%' }} />
+              )}
+            </div>
           </div>
           )}
     </div>
