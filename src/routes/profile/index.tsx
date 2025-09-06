@@ -3,19 +3,32 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/tabs';
 import { useState } from 'react';
 import { useCalendar } from '@/hooks/useCalendar';
 import Card from '@/routes/feed/components/Card';
+import more from '@/assets/more.svg';
 
 export default function Profile () {
   const { data: user } = useGetUser();
   const [activeTab, setActiveTab] = useState('posts');
+  const [showLogout, setShowLogout] = useState(false);
   const { data: calendar } = useCalendar();
   const { data: userLikes } = useGetUserLikes();
   return (
     <div className='min-h-screen bg-[#F8F8F8] pb-31'>
-      <div className='flex py-10 justify-center items-center gap-2 bg-white'>
+      <div className='flex py-10 justify-center items-center gap-2 bg-white relative'>
         <div className='flex flex-col items-center gap-4'>
-          <img src={user?.profileUrl} alt='profile' className='w-[80px] h-[80px] rounded-full' />
-          <p className='text-gray800 font-semibold text-[20px] leading-[160%]'>{user?.username}</p>
+          <img src={user?.profileUrl} alt='profile' className='w-20 h-20 rounded-full' />
+          <p className='text-gray800 font-semibold text-xl leading-[160%]'>{user?.username}</p>
         </div>
+        <img
+          src={more}
+          alt='more'
+          className='absolute right-5 top-10 cursor-pointer'
+          onClick={() => setShowLogout(!showLogout)}
+        />
+        {showLogout && (
+          <div className='absolute right-7.25 top-18 cursor-pointer py-2.5 pl-4 pr-9.25 rounded-lg bg-white border border-gray200 leading-[160%] text-gray600 font-semibold text-[0.875rem]'>
+            로그아웃
+          </div>
+        )}
       </div>
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList>
