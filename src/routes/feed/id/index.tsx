@@ -7,7 +7,7 @@ import Card from '../components/Card';
 import commentPost from '@/assets/comment_post.svg';
 import { useGetUser } from '@/hooks/useUser';
 import { getRelativeTime } from '@/lib/dateUtils';
-import { useIFrameAPI } from '@/hooks/useiFrameAPI';
+import { useIFrameAPIContext } from '@/providers/iframe-api-provider';
 
 export default function FeedId () {
   const { id } = useParams();
@@ -24,7 +24,7 @@ export default function FeedId () {
   const { data: comments } = useGetFeedComments(Number(id));
   const [comment, setComment] = useState('');
   const { mutate: postComment } = usePostFeedComment();
-  const iFrameAPI = useIFrameAPI();
+  const iFrameAPI = useIFrameAPIContext();
   const handleClick = (e: React.MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
     navigate(-1);

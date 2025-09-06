@@ -37,7 +37,7 @@ export const SelectTags = () => {
             }
           }}
           onKeyDown={(e) => {
-            if (e.key === ' ' && tagText.trim() !== '' && !tags.includes(tagText.trim())) {
+            if ((e.key === ' ' || e.key === 'Spacebar' || e.key === 'Space') && tagText.trim() !== '' && !tags.includes(tagText.trim())) {
               setTags([...tags, tagText.trim()]);
               setTagText('');
             }

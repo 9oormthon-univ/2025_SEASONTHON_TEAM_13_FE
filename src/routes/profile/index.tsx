@@ -6,7 +6,7 @@ import Card from '@/routes/feed/components/Card';
 import more from '@/assets/more.svg';
 import { LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useIFrameAPI } from '@/hooks/useiFrameAPI';
+import { useIFrameAPIContext } from '@/providers/iframe-api-provider';
 
 export default function Profile () {
   const { data: user } = useGetUser();
@@ -15,7 +15,7 @@ export default function Profile () {
   const { data: calendar } = useCalendar();
   const { data: userLikes } = useGetUserLikes();
   const navigate = useNavigate();
-  const iFrameAPI = useIFrameAPI();
+  const iFrameAPI = useIFrameAPIContext();
 
   const handleLogout = () => {
     localStorage.clear();

@@ -1,7 +1,7 @@
 import { useGetFeedInfinite } from '@/hooks/useFeed';
 import Card from './components/Card';
 import { Tabs, TabsList, TabsTrigger } from '@/components/tabs';
-import { useIFrameAPI } from '@/hooks/useiFrameAPI';
+import { useIFrameAPIContext } from '@/providers/iframe-api-provider';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
@@ -18,7 +18,7 @@ export default function Feed () {
     hasNextPage,
     isFetchingNextPage
   } = useGetFeedInfinite(currentSort as 'createdAt' | 'likeCount');
-  const iFrameAPI = useIFrameAPI();
+  const iFrameAPI = useIFrameAPIContext();
 
   // react-intersection-observer 사용
   const { ref: loadMoreRef, inView } = useInView({
