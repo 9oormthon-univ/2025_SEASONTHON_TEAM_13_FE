@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useCalendar } from '@/hooks/useCalendar';
 import Card from '@/routes/feed/components/Card';
 import more from '@/assets/more.svg';
+import { LogOut } from 'lucide-react';
 
 export default function Profile () {
   const { data: user } = useGetUser();
@@ -25,8 +26,9 @@ export default function Profile () {
           onClick={() => setShowLogout(!showLogout)}
         />
         {showLogout && (
-          <div className='absolute right-7.25 top-18 cursor-pointer py-2.5 pl-4 pr-9.25 rounded-lg bg-white border border-gray200 leading-[160%] text-gray600 font-semibold text-[0.875rem]'>
-            로그아웃
+          <div className='flex items-center gap-2  absolute right-7.25 top-18 cursor-pointer py-2.5 pl-4 pr-9.25 rounded-lg bg-white border border-gray200 hover:bg-gray100'>
+            <LogOut size={16} />
+            <p className='text-gray600 font-semibold text-[0.875rem] leading-[160%]'>로그아웃</p>
           </div>
         )}
       </div>
