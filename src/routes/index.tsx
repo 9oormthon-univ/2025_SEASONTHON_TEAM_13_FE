@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import kakao from '@/assets/kakao.svg';
-import logoSplash from '@/assets/logo_splash.svg';
 import logo from '@/assets/logo.svg';
+import logoAnimation from '@/assets/logo_animation.json';
+import Lottie from 'lottie-react';
 
 function App () {
   const [showSplash, setShowSplash] = useState(true);
@@ -18,9 +19,12 @@ function App () {
     return (
       <>
         <div className='w-full h-screen bg-primary flex items-center justify-center'>
-          <div className='relative'>
-            <img src={logoSplash} alt='logo' />
-            <p className='absolute text-xl font-bold leading-[140%] text-white -top-25 left-1/2 transform -translate-x-1/2 whitespace-nowrap'>
+          <div className='relative flex items-center justify-center'>
+            <Lottie
+              animationData={logoAnimation} loop autoplay
+              style={{ width: '80%', aspectRatio: '173/120' }}
+            />
+            <p className='absolute text-xl font-bold leading-[140%] text-white -top-20 left-1/2 transform -translate-x-1/2 whitespace-nowrap'>
               오늘의 감정과 음악을 연결하다
             </p>
           </div>
