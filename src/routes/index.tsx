@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import kakao from '@/assets/kakao.svg';
+import logoSplash from '@/assets/logo_splash.svg';
+import logo from '@/assets/logo.svg';
 
 function App () {
   const [showSplash, setShowSplash] = useState(true);
@@ -16,8 +18,11 @@ function App () {
     return (
       <>
         <div className='w-full h-screen bg-primary flex items-center justify-center'>
-          <div>
-            <p className='text-white text-[50px] font-bold leading-[140%]'>이음</p>
+          <div className='relative'>
+            <img src={logoSplash} alt='logo' />
+            <p className='absolute text-[20px] font-bold leading-[140%] text-white top-[-100px] left-1/2 transform -translate-x-1/2 whitespace-nowrap'>
+              오늘의 감정과 음악을 연결하다
+            </p>
           </div>
         </div>
       </>
@@ -26,9 +31,16 @@ function App () {
 
   return (
     <div className='pt-[92px]'>
-      <p className=' text-center text-[30px] font-bold  leading-[140%] text-gray800  mb-[16px]'>감정과 음악을 <br /> 연결하러 함께 가볼까요</p>
-
-      <p className='font-semibold text-[14px] text-primary text-center leading-[140%]'>이음에 오신 걸 환영합니다</p>
+      <p className=' text-center text-[30px] font-bold  leading-[140%] text-gray800  mb-[7px]'>감정과 음악을 <br /> 연결하러 함께 가볼까요</p>
+      <div className='w-full aspect-square relative'>
+        <div className='absolute inset-0 bg-[radial-gradient(50%_50%_at_50%_50%,rgba(242,86,58,0.15)_0%,rgba(242,86,58,0)_100%)] blur-[2px]' />
+        <div className='relative z-10 flex flex-col items-center justify-center h-full'>
+          <div className='flex flex-col items-center justify-center relative'>
+            <img src={logo} alt='logo' />
+            <p className='text-[16px] font-semibold leading-[140%] text-primary absolute bottom-[-54px] whitespace-nowrap'>이음에 오신 걸 환영합니다</p>
+          </div>
+        </div>
+      </div>
       <div className='fixed bottom-[46px] max-w-[500px] w-full'>
         <p className='text-center text-[12px] font-medium text-gray500 leading-[140%] mb-[16px]'>SNS 계정으로 로그인 / 회원가입</p>
         <div className='w-full px-[20px] '>
