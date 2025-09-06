@@ -1,18 +1,50 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import kakao from '@/assets/kakao.svg';
 import logoSplash from '@/assets/logo_splash.svg';
 import logo from '@/assets/logo.svg';
+import { getMyTodayFeed } from '@/apis/feed';
+import { toast } from 'sonner';
 
 function App () {
   const [showSplash, setShowSplash] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        try {
+          const decodedToken: { exp?: number } = jwtDecode(token);
+          const currentTime = Math.floor(Date.now() / 1000);
+          if ((decodedToken.exp ?? 0) > currentTime) {
+            try {
+              const myTodayFeed = await getMyTodayFeed();
+              if (myTodayFeed) {
+                navigate('/feed');
+                return;
+              } else {
+                navigate('/new/feeling');
+                return;
+              }
+            } catch (error) {
+              console.error("Error fetching today's feed:", error);
+              toast.error('오늘 작성한 게시글을 확인하는데 실패했어요. 잠시 후 다시 시도해주세요.');
+            }
+          } else {
+            localStorage.removeItem('accessToken');
+          }
+        } catch (error) {
+          console.error('Error decoding token:', error);
+          localStorage.removeItem('accessToken');
+        }
+      }
       setShowSplash(false);
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [navigate]);
 
   if (showSplash) {
     return (
@@ -30,7 +62,7 @@ function App () {
   }
 
   return (
-    <div className='pt-23'>
+    <div className='pt-23 bg-white'>
       <p className='text-center text-3xl font-bold  leading-[140%] text-gray800  mb-2'>감정과 음악을 <br /> 연결하러 함께 가볼까요</p>
       <div className='w-full aspect-square relative'>
         <div className='absolute inset-0 bg-[radial-gradient(50%_50%_at_50%_50%,rgba(242,86,58,0.15)_0%,rgba(242,86,58,0)_100%)] blur-[2px]' />
