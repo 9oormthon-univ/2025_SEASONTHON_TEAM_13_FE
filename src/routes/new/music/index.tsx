@@ -2,152 +2,57 @@ import React from 'react';
 import { ChevronLeft } from 'lucide-react';
 import { TextInput } from '@/components/text-input';
 import { SmallMusicAlbum, BigMusicAlbum } from '@/components/new/music/album-buttons';
+import { useRecommendedSongs } from '@/hooks/useSong';
 import { SearchIcon } from '@/icons/search';
-// import { useNavigate } from 'react-router-dom';
-
-// Dummy musics
-const musics: {
-  title: string;
-  albumURL: string;
-  artist: string;
-  playCount: number;
-}[] = [
-  {
-    title: 'Album 1',
-    albumURL: '/vite.svg',
-    artist: 'Artist 1',
-    playCount: 100
-  },
-  {
-    title: 'Album 2',
-    albumURL: '/vite.svg',
-    artist: 'Artist 2',
-    playCount: 200
-  },
-  {
-    title: 'Album 3',
-    albumURL: '/vite.svg',
-    artist: 'Artist 3',
-    playCount: 300
-  },
-  {
-    title: 'Album 4',
-    albumURL: '/vite.svg',
-    artist: 'Artist 4',
-    playCount: 400
-  },
-  {
-    title: 'Album 1',
-    albumURL: '/vite.svg',
-    artist: 'Artist 1',
-    playCount: 100
-  },
-  {
-    title: 'Album 2',
-    albumURL: '/vite.svg',
-    artist: 'Artist 2',
-    playCount: 200
-  },
-  {
-    title: 'Album 3',
-    albumURL: '/vite.svg',
-    artist: 'Artist 3',
-    playCount: 300
-  },
-  {
-    title: 'Album 4',
-    albumURL: '/vite.svg',
-    artist: 'Artist 4',
-    playCount: 400
-  },
-  {
-    title: 'Album 1',
-    albumURL: '/vite.svg',
-    artist: 'Artist 1',
-    playCount: 100
-  },
-  {
-    title: 'Album 2',
-    albumURL: '/vite.svg',
-    artist: 'Artist 2',
-    playCount: 200
-  },
-  {
-    title: 'Album 3',
-    albumURL: '/vite.svg',
-    artist: 'Artist 3',
-    playCount: 300
-  },
-  {
-    title: 'Album 4',
-    albumURL: '/vite.svg',
-    artist: 'Artist 4',
-    playCount: 400
-  },
-  {
-    title: 'Album 1',
-    albumURL: '/vite.svg',
-    artist: 'Artist 1',
-    playCount: 100
-  },
-  {
-    title: 'Album 2',
-    albumURL: '/vite.svg',
-    artist: 'Artist 2',
-    playCount: 200
-  },
-  {
-    title: 'Album 3',
-    albumURL: '/vite.svg',
-    artist: 'Artist 3',
-    playCount: 300
-  },
-  {
-    title: 'Album 4',
-    albumURL: '/vite.svg',
-    artist: 'Artist 4',
-    playCount: 400
-  },
-  {
-    title: 'Album 1',
-    albumURL: '/vite.svg',
-    artist: 'Artist 1',
-    playCount: 100
-  },
-  {
-    title: 'Album 2',
-    albumURL: '/vite.svg',
-    artist: 'Artist 2',
-    playCount: 200
-  },
-  {
-    title: 'Album 3',
-    albumURL: '/vite.svg',
-    artist: 'Artist 3',
-    playCount: 300
-  },
-  {
-    title: 'Album 4',
-    albumURL: '/vite.svg',
-    artist: 'Artist 4',
-    playCount: 400
-  },
-];
+import { useNavigate } from 'react-router-dom';
+import { useNewPagesProvider } from '@/providers/new-pages-provider';
+import type { Music } from '@/types/music';
+import { Button } from '@/components/button';
+import { searchSongs } from '@/apis/songs';
+import { toast } from 'sonner';
 
 export const SelectMusic = () => {
+  const navigate = useNavigate();
   const [musicSearchQuery, setMusicSearchQuery] = React.useState('');
-  const [searchedMusics, setSearchedMusics] = React.useState<{
-    title: string;
-    albumURL: string;
-    artist: string;
-    playCount: number;
-  }[]>([]);
-  // const navigate = useNavigate();
+  const [searchedMusics, setSearchedMusics] = React.useState<Music[]>([]);
+  const [searching, setSearching] = React.useState(false);
+  const { setMusic, feelings } = useNewPagesProvider();
 
-  const onClickMusic = (music: { title: string; albumURL: string; artist: string; playCount: number }) => {
-    // TODO: Handle music selection
-    console.log(music);
-    // navigate('/new/result');
+  if (feelings.length === 0) {
+    return (
+      <div className='min-h-screen w-full flex flex-col items-center gap-2 px-4'>
+        <div className='flex flex-col items-center gap-2 flex-grow'>
+          <h2 className='heading2 pt-24'>잘못된 접근이에요!</h2>
+          <p className='body-m font-medium text-gray500'>처음으로 돌아가서 다시 시도해주세요.</p>
+        </div>
+        <Button
+          className='mt-4 mb-16' onClick={() => {
+            navigate('/');
+          }}
+        >
+          돌아가기
+        </Button>
+      </div>
+    );
+  }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { data: recommendedMusics } = useRecommendedSongs(feelings);
+
+  const onClickMusic = (music: Music) => {
+    setMusic(music);
+    navigate('/new/post');
+  };
+
+  const onSearchMusic = async (query: string) => {
+    setSearching(true);
+    try {
+      const data = await searchSongs(query);
+      setSearchedMusics(data);
+    } catch (error) {
+      toast.error('노래 검색에 실패했어요. 잠시 후 다시 시도해주세요.');
+      console.error(error);
+    }
+    setSearching(false);
   };
 
   return (
@@ -178,22 +83,24 @@ export const SelectMusic = () => {
             if (e.key === 'Enter' && musicSearchQuery.trim() !== '') {
               // Block default behavior(submit)
               e.preventDefault();
-              // TODO: Search for music based on the query
-              // This requires backend to implement search functionality
-              setSearchedMusics(musics);
+              if (!searching) {
+                onSearchMusic(musicSearchQuery.trim());
+              }
             }
           }}
         />
         {
           searchedMusics.length === 0
             ? (
-              <div className='grid grid-cols-4 gap-4 mt-12 w-full'>
-                {musics
+              <div className='grid grid-cols-4 gap-4 mt-12 w-full items-start'>
+                {recommendedMusics
                   .map((music, index) => (
                     <SmallMusicAlbum
                       key={index} onClick={() => {
                         onClickMusic(music);
-                      }} {...music}
+                      }}
+                      title={music.name}
+                      albumURL={music.imageUrl}
                     />
                   ))}
               </div>
@@ -204,7 +111,11 @@ export const SelectMusic = () => {
                   <BigMusicAlbum
                     key={index} onClick={() => {
                       onClickMusic(music);
-                    }} {...music}
+                    }}
+                    title={music.name}
+                    albumURL={music.imageUrl}
+                    artist={music.artist}
+                    playCount={music.playCount}
                   />
                 ))}
               </div>
