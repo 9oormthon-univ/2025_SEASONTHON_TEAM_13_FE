@@ -5,7 +5,7 @@ import Header from '@/components/header';
 const DefaultLayout = () => {
   const location = useLocation();
 
-  const showHeader = ['/feed', '/calendar', '/profile'];
+  const showHeader = ['/feed', '/search', '/ranking', '/calendar', '/profile'];
   const showNav = ['/feed', '/search', '/ranking', '/calendar', '/profile'];
 
   const shouldShowHeader = showHeader.some((path) => location.pathname.startsWith(path));
