@@ -9,9 +9,9 @@ export const AuthCheck = () => {
     const token = localStorage.getItem('accessToken');
     if (token) {
       try {
-        const decodedToken: { exp: number } = jwtDecode(token);
+        const decodedToken: { exp?: number } = jwtDecode(token);
         const currentTime = Date.now() / 1000;
-        if (decodedToken.exp <= currentTime) {
+        if ((decodedToken.exp ?? 0) <= currentTime) {
           localStorage.removeItem('accessToken');
           navigate('/');
         }

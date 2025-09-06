@@ -16,9 +16,9 @@ function App () {
       const token = localStorage.getItem('accessToken');
       if (token) {
         try {
-          const decodedToken: { exp: number } = jwtDecode(token);
+          const decodedToken: { exp?: number } = jwtDecode(token);
           const currentTime = Math.floor(Date.now() / 1000);
-          if (decodedToken.exp > currentTime) {
+          if ((decodedToken.exp ?? 0) > currentTime) {
             try {
               const myTodayFeed = await getMyTodayFeed();
               if (myTodayFeed) {
