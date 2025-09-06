@@ -19,8 +19,8 @@ export default function Ranking () {
         }}
       />
       <div className='flex flex-col w-full h-48 bg-[#F8F8F8] justify-center items-center gap-2'>
-        <img src='/vite.svg' alt='1st music' className='size-24 rounded-sm z-20' />
-        <p className='body-xl'>1st music title</p>
+        <img src={rankings[0]?.tracks[0]?.albumImageUrl} alt='1st music' className='size-24 rounded-sm z-20' />
+        <p className='body-xl'>{rankings[0]?.tracks[0]?.trackTitle}</p>
       </div>
       <div className='px-6 py-5 flex flex-col gap-6 w-full'>
         <div className='flex flex-col gap-2 w-full'>
