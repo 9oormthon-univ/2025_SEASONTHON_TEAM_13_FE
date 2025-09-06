@@ -49,7 +49,7 @@ export default function Search () {
   }, [isNearBottom, searchResults, page, searchQuery]);
 
   return (
-    <div className='relative min-h-screen w-full flex flex-col items-center gap-10'>
+    <div className='relative min-h-screen w-full flex flex-col items-center gap-10 pb-31'>
       <div className='px-7 pt-7 w-full'>
         <TextInput
           value={input} onChange={

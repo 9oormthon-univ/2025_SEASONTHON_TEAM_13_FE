@@ -11,7 +11,7 @@ export default function Ranking () {
   const { data: rankings } = useSongRankPerTag(selectedEmotion.name);
 
   return (
-    <div className='relative min-h-screen w-full flex flex-col items-center gap-2'>
+    <div className='relative min-h-screen w-full flex flex-col items-center gap-2 pb-31'>
       <div
         className='absolute z-10 -top-[6.5rem] -left-[2rem] w-[calc(100%+4rem)] h-[12.7rem] rounded-[100%]'
         style={{
