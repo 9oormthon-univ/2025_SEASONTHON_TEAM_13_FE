@@ -1,16 +1,37 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import kakao from '@/assets/kakao.svg';
 
 function App () {
   const [showSplash, setShowSplash] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        try {
+          const decodedToken: { exp: number } = jwtDecode(token);
+          const currentTime = Math.floor(Date.now() / 1000);
+          if (decodedToken.exp > currentTime) {
+            // TODO: Check if the user already posted today
+            // If posted, navigate to /feed, else navigate to /new/feeling
+            navigate('/new/feeling');
+            return;
+          } else {
+            localStorage.removeItem('accessToken');
+          }
+        } catch (error) {
+          console.error('Error decoding token:', error);
+          localStorage.removeItem('accessToken');
+        }
+      }
       setShowSplash(false);
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [navigate]);
 
   if (showSplash) {
     return (

@@ -3,6 +3,7 @@ import DefaultLayout from '@/layouts/DefaultLayout';
 import Index from './index';
 import Callback from './callback';
 import { NewPagesLayout } from './new/layout';
+import { AuthCheck } from './auth-check';
 
 export const router = createBrowserRouter([
   {
@@ -18,98 +19,103 @@ export const router = createBrowserRouter([
         element: <Callback />,
       },
       {
-        path: 'feed',
-        lazy: async () => {
-          const { default: Feed } = await import('./feed');
-          return {
-            Component: Feed
-          };
-        },
-      },
-      {
-        path: 'feed/:id',
-        lazy: async () => {
-          const { default: FeedId } = await import('./feed/id');
-          return {
-            Component: FeedId
-          };
-        },
-      },
-      {
-        path: 'search',
-        lazy: async () => {
-          const { default: Search } = await import('./search');
-          return {
-            Component: Search
-          };
-        },
-      },
-      {
-        path: 'ranking',
-        lazy: async () => {
-          const { default: Ranking } = await import('./ranking');
-          return {
-            Component: Ranking
-          };
-        },
-      },
-      {
-        path: 'calendar',
-        lazy: async () => {
-          const { default: Calendar } = await import('./calendar');
-          return {
-            Component: Calendar
-          };
-        },
-      },
-      {
-        path: 'profile',
-        lazy: async () => {
-          const { default: Profile } = await import('./profile');
-          return {
-            Component: Profile
-          };
-        },
-      },
-      {
-        path: 'new',
-        element: <NewPagesLayout />,
+        element: <AuthCheck />,
         children: [
           {
-            path: 'feeling',
+            path: 'feed',
             lazy: async () => {
-              const { SelectFeelings } = await import('./new/feeling');
+              const { default: Feed } = await import('./feed');
               return {
-                Component: SelectFeelings
+                Component: Feed
               };
             },
           },
           {
-            path: 'music',
+            path: 'feed/:id',
             lazy: async () => {
-              const { SelectMusic } = await import('./new/music');
+              const { default: FeedId } = await import('./feed/id');
               return {
-                Component: SelectMusic
+                Component: FeedId
               };
-            }
+            },
           },
           {
-            path: 'tag',
+            path: 'search',
             lazy: async () => {
-              const { SelectTags } = await import('./new/tag');
+              const { default: Search } = await import('./search');
               return {
-                Component: SelectTags
+                Component: Search
               };
-            }
+            },
           },
           {
-            path: 'post',
+            path: 'ranking',
             lazy: async () => {
-              const { CreateNewPost } = await import('./new/post');
+              const { default: Ranking } = await import('./ranking');
               return {
-                Component: CreateNewPost
+                Component: Ranking
               };
-            }
+            },
+          },
+          {
+            path: 'calendar',
+            lazy: async () => {
+              const { default: Calendar } = await import('./calendar');
+              return {
+                Component: Calendar
+              };
+            },
+          },
+          {
+            path: 'profile',
+            lazy: async () => {
+              const { default: Profile } = await import('./profile');
+              return {
+                Component: Profile
+              };
+            },
+          },
+          {
+            path: 'new',
+            element: <NewPagesLayout />,
+            children: [
+              {
+                path: 'feeling',
+                lazy: async () => {
+                  const { SelectFeelings } = await import('./new/feeling');
+                  return {
+                    Component: SelectFeelings
+                  };
+                },
+              },
+              {
+                path: 'music',
+                lazy: async () => {
+                  const { SelectMusic } = await import('./new/music');
+                  return {
+                    Component: SelectMusic
+                  };
+                }
+              },
+              {
+                path: 'tag',
+                lazy: async () => {
+                  const { SelectTags } = await import('./new/tag');
+                  return {
+                    Component: SelectTags
+                  };
+                }
+              },
+              {
+                path: 'post',
+                lazy: async () => {
+                  const { CreateNewPost } = await import('./new/post');
+                  return {
+                    Component: CreateNewPost
+                  };
+                }
+              }
+            ]
           }
         ]
       }
