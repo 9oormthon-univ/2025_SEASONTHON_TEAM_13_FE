@@ -1,3 +1,13 @@
+export interface TagRanking {
+  tagName: string
+  tagCount: number
+}
+
+export interface TagRankingsResponse {
+  emotionTags: TagRanking[]
+  dayTags: TagRanking[]
+}
+
 export interface TagMusic {
   trackId: string
   trackTitle: string

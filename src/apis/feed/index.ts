@@ -57,3 +57,14 @@ export const getMyTodayFeed = async (): Promise<Feed | null> => {
   });
   return response.data;
 };
+
+export const searchFeedsByTag = async (tag: string, page: number = 0, size: number = 10): Promise<Feed[]> => {
+  const response = await instance.get('/posts/search', {
+    params: {
+      tag,
+      page,
+      size
+    }
+  });
+  return response.data;
+};
