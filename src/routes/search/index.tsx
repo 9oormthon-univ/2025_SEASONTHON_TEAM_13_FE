@@ -3,47 +3,13 @@ import { TextInput } from '@/components/text-input';
 import { SearchIcon } from '@/icons/search';
 import type { Feed } from '@/types/feed';
 import Card from '../feed/components/Card';
-// import { useTagRankings } from '@/hooks/useTag';
-
-const tagRankings = {
-  emotionTags: [
-    { tagName: '짜증', tagCount: 15 },
-    { tagName: '화남', tagCount: 10 },
-    { tagName: '힘듦', tagCount: 8 },
-    { tagName: '즐거움', tagCount: 20 },
-    { tagName: '기쁨', tagCount: 18 },
-    { tagName: '행복', tagCount: 25 },
-    { tagName: '피곤함', tagCount: 12 },
-    { tagName: '우울', tagCount: 14 },
-    { tagName: '졸림', tagCount: 5 },
-    { tagName: '외로움', tagCount: 7 },
-    { tagName: '슬픔', tagCount: 9 },
-    { tagName: '복잡함', tagCount: 6 },
-    { tagName: '두근거림', tagCount: 11 },
-    { tagName: '감동', tagCount: 13 },
-    { tagName: '설렘', tagCount: 17 },
-    { tagName: '놀람', tagCount: 4 },
-    { tagName: '어지러움', tagCount: 3 }
-  ],
-  dayTags: [
-    { tagName: '월요병', tagCount: 22 },
-    { tagName: '불금', tagCount: 30 },
-    { tagName: '주말', tagCount: 28 },
-    { tagName: '공강', tagCount: 16 },
-    { tagName: '시험', tagCount: 19 },
-    { tagName: '과제', tagCount: 21 },
-    { tagName: '휴강', tagCount: 23 },
-    { tagName: '방학', tagCount: 27 },
-    { tagName: '개강', tagCount: 24 },
-    { tagName: '출근', tagCount: 26 }
-  ]
-};
+import { useTagRankings } from '@/hooks/useTag';
 
 export default function Search () {
   const [input, setInput] = React.useState('');
   const [searchQuery, setSearchQuery] = React.useState('');
   const [searchResults, setSearchResults] = React.useState<Feed[] | null>(null);
-  // const { data: tagRankings } = useTagRankings();
+  const { data: tagRankings } = useTagRankings();
 
   return (
     <div className='relative min-h-screen w-full flex flex-col items-center gap-10'>

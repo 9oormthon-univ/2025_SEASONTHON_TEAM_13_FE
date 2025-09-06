@@ -2,7 +2,7 @@ import { instance } from '@/apis/instance';
 import type { TagRankingsResponse, SongRankPerTagResponse } from '@/types/tags';
 
 export const getTagRankings = async (): Promise<TagRankingsResponse> => {
-  const response = await instance.get('/songs/recommend');
+  const response = await instance.get('/tags/ranking');
   return response.data;
 };
 
