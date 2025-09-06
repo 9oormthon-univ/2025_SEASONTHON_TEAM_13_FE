@@ -21,36 +21,36 @@ export const Navbar = ({ currentPath }: NavbarProps) => {
   const isActive = (path: string) => actualPath === path;
 
   return (
-    <div className='bg-white pt-[17px] pb-[34px] border-t border-t-[#F2F2F2] rounded-t-[24px] flex justify-center items-center fixed bottom-0 max-w-[500px] w-full'>
-      <Link to='/feed' className='flex flex-col items-center gap-[4px] flex-grow' aria-current={isActive('/feed') ? 'page' : undefined}>
+    <div className='bg-white pt-4 pb-8.5 border-t border-t-[#F2F2F2] rounded-t-3xl flex justify-center items-center fixed bottom-0 max-w-[500px] w-full'>
+      <Link to='/feed' className='flex flex-col items-center gap-1 flex-grow' aria-current={isActive('/feed') ? 'page' : undefined}>
         <img src={actualPath === '/feed' ? activeFeed : feed} alt='' aria-hidden='true' />
         <p className={`body-s ${actualPath === '/feed' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           피드
         </p>
       </Link>
 
-      <Link to='/search' className='flex flex-col items-center gap-[4px] flex-grow' aria-current={isActive('/search') ? 'page' : undefined}>
+      <Link to='/search' className='flex flex-col items-center gap-1 flex-grow' aria-current={isActive('/search') ? 'page' : undefined}>
         <img src={actualPath === '/search' ? activeSearch : search} alt='' aria-hidden='true' />
         <p className={`body-s ${actualPath === '/search' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           검색
         </p>
       </Link>
 
-      <Link to='/ranking' className='flex flex-col items-center gap-[4px] flex-grow' aria-current={isActive('/ranking') ? 'page' : undefined}>
+      <Link to='/ranking' className='flex flex-col items-center gap-1 flex-grow' aria-current={isActive('/ranking') ? 'page' : undefined}>
         <img src={actualPath === '/ranking' ? activeRanking : ranking} alt='' aria-hidden='true' />
         <p className={`body-s ${actualPath === '/ranking' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           랭킹
         </p>
       </Link>
 
-      <Link to='/calendar' className='flex flex-col items-center gap-[4px] flex-grow' aria-current={isActive('/calendar') ? 'page' : undefined}>
+      <Link to='/calendar' className='flex flex-col items-center gap-1 flex-grow' aria-current={isActive('/calendar') ? 'page' : undefined}>
         <img src={actualPath === '/calendar' ? activeCalendar : calendar} alt='' aria-hidden='true' />
         <p className={`body-s ${actualPath === '/calendar' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           캘린더
         </p>
       </Link>
 
-      <Link to='/profile' className='flex flex-col items-center gap-[4px] flex-grow' aria-current={isActive('/profile') ? 'page' : undefined}>
+      <Link to='/profile' className='flex flex-col items-center gap-1 flex-grow' aria-current={isActive('/profile') ? 'page' : undefined}>
         <img src={actualPath === '/profile' ? activeProfile : profile} alt='' aria-hidden='true' />
         <p className={`body-s ${actualPath === '/profile' ? 'text-primary' : 'text-gray300'} font-semibold`}>
           프로필
