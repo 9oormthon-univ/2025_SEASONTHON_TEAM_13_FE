@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { getMyTodayFeed } from '@/apis/feed';
 
 export const AuthCheck = () => {
   const navigate = useNavigate();
@@ -14,6 +15,20 @@ export const AuthCheck = () => {
         if ((decodedToken.exp ?? 0) <= currentTime) {
           localStorage.removeItem('accessToken');
           navigate('/');
+        }
+        if (!location.pathname.startsWith('/new')) {
+          const checkTodayFeed = async () => {
+            try {
+              const myTodayFeed = await getMyTodayFeed();
+              if (!myTodayFeed) {
+                navigate('/new/feeling');
+              }
+            } catch (error) {
+              console.error("Error fetching today's feed:", error);
+              navigate('/');
+            }
+          };
+          checkTodayFeed();
         }
       } catch (error) {
         console.error('Error decoding token:', error);
