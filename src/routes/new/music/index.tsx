@@ -80,7 +80,7 @@ export const SelectMusic = () => {
             }
           }}
           onKeyUp={(e) => {
-            if (e.key === 'Enter' && musicSearchQuery.trim() !== '') {
+            if (e.key === 'Enter' && musicSearchQuery.trim() !== '' && !e.nativeEvent.isComposing) {
               // Block default behavior(submit)
               e.preventDefault();
               if (!searching) {
