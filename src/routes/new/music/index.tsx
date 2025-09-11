@@ -79,7 +79,7 @@ export const SelectMusic = () => {
               setSearchedMusics([]);
             }
           }}
-          onKeyDown={(e) => {
+          onKeyUp={(e) => {
             if (e.key === 'Enter' && musicSearchQuery.trim() !== '') {
               // Block default behavior(submit)
               e.preventDefault();
