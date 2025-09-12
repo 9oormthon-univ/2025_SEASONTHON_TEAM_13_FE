@@ -2,7 +2,9 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Navbar } from '@/components/navbar';
 import Header from '@/components/header';
 import { Toaster } from 'sonner';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
+import Lottie from 'lottie-react';
+import loading from '@/assets/loading.json';
 
 const DefaultLayout = () => {
   const location = useLocation();
@@ -21,7 +23,15 @@ const DefaultLayout = () => {
   return (
     <>
       {shouldShowHeader && <Header />}
-      <Outlet />
+      <Suspense
+        fallback={
+          <div className='min-h-screen w-full flex justify-center items-center'>
+            <Lottie animationData={loading} loop style={{ height: 80, width: '100%' }} />
+          </div>
+      }
+      >
+        <Outlet />
+      </Suspense>
       {shouldShowNav && <Navbar />}
       <Toaster richColors position='bottom-center' />
     </>

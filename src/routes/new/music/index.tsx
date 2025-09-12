@@ -10,11 +10,13 @@ import type { Music } from '@/types/music';
 import { Button } from '@/components/button';
 import { searchSongs } from '@/apis/songs';
 import { toast } from 'sonner';
+import Lottie from 'lottie-react';
+import loading from '@/assets/loading.json';
 
 export const SelectMusic = () => {
   const navigate = useNavigate();
   const [musicSearchQuery, setMusicSearchQuery] = React.useState('');
-  const [searchedMusics, setSearchedMusics] = React.useState<Music[]>([]);
+  const [searchedMusics, setSearchedMusics] = React.useState<Music[] | undefined>(undefined);
   const [searching, setSearching] = React.useState(false);
   const { setMusic, feelings } = useNewPagesProvider();
 
@@ -76,7 +78,7 @@ export const SelectMusic = () => {
           onChange={(e) => {
             setMusicSearchQuery(e.target.value);
             if (e.target.value === '') {
-              setSearchedMusics([]);
+              setSearchedMusics(undefined);
             }
           }}
           onKeyUp={(e) => {
@@ -88,38 +90,49 @@ export const SelectMusic = () => {
               }
             }
           }}
+          disabled={searching}
         />
         {
-          searchedMusics.length === 0
+          searching
             ? (
-              <div className='grid grid-cols-4 gap-4 mt-12 w-full items-start'>
-                {recommendedMusics
-                  .map((music, index) => (
-                    <SmallMusicAlbum
-                      key={index} onClick={() => {
-                        onClickMusic(music);
-                      }}
-                      title={music.name}
-                      albumURL={music.imageUrl}
-                    />
-                  ))}
+              <div className='flex w-full h-full justify-center items-center'>
+                <Lottie animationData={loading} loop style={{ height: 80, width: '100%' }} />
               </div>
               )
-            : (
-              <div className='flex flex-col gap-4 mt-12 w-full'>
-                {searchedMusics.map((music, index) => (
-                  <BigMusicAlbum
-                    key={index} onClick={() => {
-                      onClickMusic(music);
-                    }}
-                    title={music.name}
-                    albumURL={music.imageUrl}
-                    artist={music.artist}
-                    playCount={music.playCount}
-                  />
-                ))}
-              </div>
-              )
+            : !searchedMusics
+                ? (
+                  <div className='grid grid-cols-4 gap-4 mt-12 w-full items-start'>
+                    {recommendedMusics
+                      .map((music, index) => (
+                        <SmallMusicAlbum
+                          key={index} onClick={() => {
+                            onClickMusic(music);
+                          }}
+                          title={music.name}
+                          albumURL={music.imageUrl}
+                        />
+                      ))}
+                  </div>
+                  )
+                : searchedMusics.length > 0
+                  ? (
+                    <div className='flex flex-col gap-4 mt-12 w-full'>
+                      {searchedMusics.map((music, index) => (
+                        <BigMusicAlbum
+                          key={index} onClick={() => {
+                            onClickMusic(music);
+                          }}
+                          title={music.name}
+                          albumURL={music.imageUrl}
+                          artist={music.artist}
+                          playCount={music.playCount}
+                        />
+                      ))}
+                    </div>
+                    )
+                  : (
+                    <p className='text-sm font-medium text-gray400 text-center pb-25'>검색 결과가 없습니다.</p>
+                    )
         }
       </div>
     </div>

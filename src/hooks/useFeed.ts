@@ -1,5 +1,5 @@
-import { useSuspenseQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
-import { getFeed, likeFeed, unlikeFeed, getFeedById, getFeedComments, postFeedComment, getFeedPage } from '@/apis/feed';
+import { useSuspenseQuery, useMutation, useQueryClient, useInfiniteQuery, useSuspenseInfiniteQuery } from '@tanstack/react-query';
+import { getFeed, likeFeed, unlikeFeed, getFeedById, getFeedComments, postFeedComment, getFeedPage, searchFeedsByTag } from '@/apis/feed';
 
 export const useGetFeed = (sortBy: 'createdAt' | 'likeCount') => {
   return useSuspenseQuery({
@@ -68,6 +68,18 @@ export const usePostFeedComment = () => {
       queryClient.invalidateQueries({ queryKey: ['feed', postId, 'comments'] });
       queryClient.invalidateQueries({ queryKey: ['feed', postId] });
       queryClient.invalidateQueries({ queryKey: ['feed'] });
+    },
+  });
+};
+
+export const useSearchFeeds = (query: string) => {
+  return useSuspenseInfiniteQuery({
+    queryKey: ['feed', 'search', query],
+    queryFn: ({ pageParam = 0 }) => searchFeedsByTag(query, pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.length === 0) return undefined;
+      return allPages.length;
     },
   });
 };

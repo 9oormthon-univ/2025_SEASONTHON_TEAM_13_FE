@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
             lazy: async () => {
               const { default: Feed } = await import('./feed');
               return {
-                Component: Feed
+                Component: Feed,
               };
             },
           },
@@ -93,7 +93,7 @@ export const router = createBrowserRouter([
                 lazy: async () => {
                   const { SelectMusic } = await import('./new/music');
                   return {
-                    Component: SelectMusic
+                    Component: SelectMusic,
                   };
                 }
               },
