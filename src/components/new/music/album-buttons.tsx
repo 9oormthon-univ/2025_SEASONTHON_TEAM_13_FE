@@ -15,7 +15,7 @@ export const BigMusicAlbum = ({ title, albumURL, artist, playCount, onClick }: {
   title: string;
   albumURL: string;
   artist: string;
-  playCount: number;
+  playCount?: number;
   onClick?: () => void;
 }) => {
   return (
@@ -25,10 +25,14 @@ export const BigMusicAlbum = ({ title, albumURL, artist, playCount, onClick }: {
         <p className='font-medium'>{title}</p>
         <p className='text-xs font-medium text-gray500'>{artist}</p>
       </div>
-      <div className='flex items-center gap-1'>
-        <DiscIcon className='size-4 text-gray500' />
-        <p className='text-xs font-medium text-gray500'>{playCount}</p>
-      </div>
+      {
+        playCount !== undefined && (
+          <div className='flex items-center gap-1'>
+            <DiscIcon className='size-4 text-gray500' />
+            <p className='text-xs font-medium text-gray500'>{playCount}</p>
+          </div>
+        )
+      }
     </div>
   );
 };

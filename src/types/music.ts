@@ -4,7 +4,6 @@ export type Music = {
   artist: string
   spotifyUrl: string
   imageUrl: string
-  valence: number
-  energy: number
-  playCount: number
+  album: string
+  releaseDate: string
 };

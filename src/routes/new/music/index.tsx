@@ -115,7 +115,6 @@ export const SelectMusic = () => {
                     title={music.name}
                     albumURL={music.imageUrl}
                     artist={music.artist}
-                    playCount={music.playCount}
                   />
                 ))}
               </div>
