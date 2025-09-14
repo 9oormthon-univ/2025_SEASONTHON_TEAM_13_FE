@@ -1,5 +1,6 @@
 import { Button } from '@/components/button';
 import { FeelingTagButton } from '@/components/feeling-tag-button';
+import { Progress } from '@/components/new/progress';
 import { FEELINGS } from '@/constants/feelings';
 import { useNewPagesProvider } from '@/providers/new-pages-provider';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +12,8 @@ export const SelectFeelings = () => {
   return (
     <div className='min-h-screen w-full flex flex-col items-center gap-2 px-4'>
       <div className='flex flex-col items-center gap-2 flex-grow'>
-        <h2 className='heading2 pt-24'>오늘, 당신의 하루는 어땠나요?</h2>
+        <Progress selectedIndex={0} className='pt-21' />
+        <h2 className='heading2 pt-7'>오늘, 당신의 하루는 어땠나요?</h2>
         <p className='body-m font-medium text-gray500'>오늘의 감정과 맞는 태그를 3개 선택해보세요</p>
         <div className='grid grid-cols-3 gap-2 mt-12'>
           {FEELINGS.map(({ id, emoji, name }) => (

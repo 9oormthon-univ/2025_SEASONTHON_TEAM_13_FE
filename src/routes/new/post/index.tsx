@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { postFeed } from '@/apis/feed';
 import { ChevronLeft } from 'lucide-react';
 import { toast } from 'sonner';
+import { Progress } from '@/components/new/progress';
 
 export const CreateNewPost = () => {
   const { feelings, tags, music } = useNewPagesProvider();
@@ -51,8 +52,9 @@ export const CreateNewPost = () => {
           <ChevronLeft className='size-7 text-gray800' />
         </button>
       </div>
+      <Progress selectedIndex={3} />
       <div className='flex flex-col items-center gap-2 flex-grow'>
-        <h2 className='heading2 pt-8'>오늘의 게시물이 완성됐어요!</h2>
+        <h2 className='heading2 pt-7'>오늘의 게시물이 완성됐어요!</h2>
         <p className='body-m font-medium text-gray500'>이제 오늘의 하루와 노래를 사람들과 공유해보세요</p>
       </div>
       <div

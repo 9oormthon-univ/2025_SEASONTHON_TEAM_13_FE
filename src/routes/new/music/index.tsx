@@ -10,6 +10,7 @@ import type { Music } from '@/types/music';
 import { Button } from '@/components/button';
 import { searchSongs } from '@/apis/songs';
 import { toast } from 'sonner';
+import { Progress } from '@/components/new/progress';
 
 export const SelectMusic = () => {
   const navigate = useNavigate();
@@ -62,8 +63,9 @@ export const SelectMusic = () => {
           <ChevronLeft className='size-7 text-gray800' />
         </button>
       </div>
+      <Progress selectedIndex={2} />
       <div className='flex flex-col items-center gap-4 flex-grow w-full px-6'>
-        <h2 className='heading2 text-3xl pt-8'>오늘의 하루와</h2>
+        <h2 className='heading2 text-3xl pt-7'>오늘의 하루와</h2>
         <h2 className='heading2 text-3xl -mt-4 text-primary'>어울리는 노래를 찾았어요</h2>
         <div className='mt-2' />
         <p className='body-m font-medium text-gray500'>마음에 드는 곡이 없다면, 음악을 직접 검색해보세요!</p>
