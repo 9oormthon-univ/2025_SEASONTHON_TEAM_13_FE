@@ -24,7 +24,7 @@ export const SelectTags = () => {
         <p className='body-m font-medium text-gray500'>사람들에게 당신의 하루를 태그로 소개해요</p>
         <div className='mt-14' />
         <TextInput
-          placeholder='입력 후 스페이스바를 누르세요'
+          placeholder='입력 후 스페이스바 또는 엔터를 누르세요'
           icon={
             <div className='rounded-full bg-[#FFEBEA]'>
               <UserIcon className='size-7 text-primary rounded-full' />
