@@ -8,7 +8,7 @@ import Card from '../feed/components/Card';
 import { useTagRankings } from '@/hooks/useTag';
 import { searchFeedsByTag } from '@/apis/feed';
 import loading from '@/assets/loading.json';
-// import { useIFrameAPIContext } from '@/providers/iframe-api-provider';
+import { usePlayerShown } from '@/hooks/usePlayerShown';
 
 export default function Search () {
   const [input, setInput] = React.useState('');
@@ -20,7 +20,7 @@ export default function Search () {
     threshold: 0.1,
   });
   const { data: tagRankings } = useTagRankings();
-  // const iFrameAPI = useIFrameAPIContext();
+  const isPlayerShown = usePlayerShown();
 
   const onSearch = React.useCallback(async () => {
     try {
@@ -58,7 +58,7 @@ export default function Search () {
   }, [inView, searchResults, page, searchQuery]);
 
   return (
-    <div className='relative min-h-screen w-full flex flex-col items-center gap-10 pb-31'>
+    <div className={`relative min-h-screen w-full flex flex-col items-center gap-10 ${isPlayerShown ? 'pb-51' : 'pb-31'}`}>
       <div className='px-7 pt-7 w-full'>
         <TextInput
           value={input} onChange={
@@ -132,7 +132,6 @@ export default function Search () {
               </p>
             </div>
             {searchResults.map(result => (
-              // <Card key={result.id} item={result} iFrameAPI={iFrameAPI} />
               <Card key={result.id} item={result} />
             ))}
             <div ref={loadMoreRef} className='h-10 flex items-center justify-center'>

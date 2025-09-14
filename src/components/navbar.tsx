@@ -21,7 +21,7 @@ export const Navbar = ({ currentPath }: NavbarProps) => {
   const isActive = (path: string) => actualPath === path;
 
   return (
-    <div className='bg-white pt-4 pb-8.5 border-t border-t-[#F2F2F2] rounded-t-3xl flex justify-center items-center fixed bottom-0 max-w-[500px] w-full'>
+    <div className='bg-white pt-4 pb-8.5 border-t border-t-[#F2F2F2] rounded-t-3xl flex justify-center items-center fixed bottom-0 max-w-[500px] w-full z-10'>
       <Link to='/feed' className='flex flex-col items-center gap-1 flex-grow' aria-current={isActive('/feed') ? 'page' : undefined}>
         <img src={actualPath === '/feed' ? activeFeed : feed} alt='' aria-hidden='true' />
         <p className={`body-s ${actualPath === '/feed' ? 'text-primary' : 'text-gray300'} font-semibold`}>

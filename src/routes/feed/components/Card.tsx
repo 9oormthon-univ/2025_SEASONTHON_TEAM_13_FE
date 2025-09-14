@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Feed } from '@/types/feed';
 import { useNavigate } from 'react-router-dom';
 import heartActive from '@/assets/heart_active.svg';
@@ -5,6 +6,11 @@ import heart from '@/assets/heart.svg';
 import comment from '@/assets/comment.svg';
 import { useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
 import { getRelativeTime } from '@/lib/dateUtils';
+import { BigMusicAlbum } from '@/components/new/music/album-buttons';
+import { useErrorState, usePlayerDevice, useSpotifyPlayer } from 'react-spotify-web-playback-sdk';
+import { getSpotifyLoginURL } from '@/apis/login';
+import { toast } from 'sonner';
+import { increaseSongPlayCount } from '@/apis/songs';
 // import { SpotifyIframe } from '@/components/spotify-iframe';
 // import type { IFrameAPI } from '@/hooks/useiFrameAPI';
 
@@ -22,6 +28,45 @@ export default function Card ({
   const navigate = useNavigate();
   const { mutate: likeFeed } = useLikeFeed();
   const { mutate: unlikeFeed } = useUnlikeFeed();
+  const player = useSpotifyPlayer();
+  const device = usePlayerDevice();
+  const error = useErrorState();
+
+  const onClickTrack = async (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    const { token } = JSON.parse(localStorage.getItem('spotifyToken') || '{}');
+    if ((error && error.type === 'authentication_error') || !token) {
+      const loginURL = await getSpotifyLoginURL();
+      window.location.href = loginURL;
+      return;
+    }
+    if (!player || !device) {
+      toast.error('스포티파이 플레이어가 준비되지 않았어요. 잠시 후 다시 시도해주세요.');
+      return;
+    }
+    if (device.status === 'not_ready') {
+      await player?.connect();
+    }
+    const response = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device?.device_id ?? ''}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        uris: [`spotify:track:${item.song.trackId}`]
+      })
+    });
+    if (!response.ok) {
+      console.error('Failed to start playback', response);
+      toast.error('재생에 실패했어요. 다시 시도해주세요.');
+      return;
+    }
+    player?.activateElement();
+    player?.resume();
+    await increaseSongPlayCount(item.song.trackId);
+  };
+
   return (
     <div
       key={item.id}
@@ -41,13 +86,12 @@ export default function Card ({
         </div>
       )}
       <div className='w-full h-20'>
-        <iframe
-          data-testid='embed-iframe'
-          src={`https://open.spotify.com/embed/track/${item.song.trackId}?utm_source=generator`}
-          width='100%'
-          height='100%'
-          allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
-          loading='lazy'
+        <BigMusicAlbum
+          title={item.song.title}
+          artist={item.song.artist}
+          albumURL={item.song.albumArtUrl}
+          playCount={item.song.playCount}
+          onClick={onClickTrack}
         />
       </div>
       <div className='flex gap-1.5 mt-4 mb-3'>
