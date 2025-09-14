@@ -13,7 +13,7 @@ export default function Ranking () {
   const isPlayerShown = usePlayerShown();
 
   return (
-    <div className={`relative min-h-screen w-full flex flex-col items-center gap-2 overflow-hidden  ${isPlayerShown ? 'pb-51' : 'pb-31'}`}>
+    <div className={`relative min-h-screen w-full flex flex-col items-center gap-2 overflow-hidden ${isPlayerShown ? 'pb-51' : 'pb-31'}`}>
       <div
         className='absolute z-10 -top-[6.5rem] -left-[2rem] w-[calc(100%+4rem)] h-[12.7rem] rounded-[100%]'
         style={{

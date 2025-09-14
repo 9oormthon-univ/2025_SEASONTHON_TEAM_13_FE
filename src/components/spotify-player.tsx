@@ -11,7 +11,7 @@ export const SpotifyPlayer = () => {
   const frameRef = React.useRef<number | undefined>(undefined);
 
   const animate = React.useCallback(() => {
-    if (state && progressRef.current && state.duration > 0) {
+    if (state && !state.paused && progressRef.current && state.duration > 0) {
       const progress = (state.position / state.duration) * 100;
       progressRef.current.style.width = `${progress}%`;
       frameRef.current = requestAnimationFrame(animate);
