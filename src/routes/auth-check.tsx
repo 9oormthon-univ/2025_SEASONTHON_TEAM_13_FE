@@ -1,10 +1,11 @@
 import React from 'react';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { getMyTodayFeed } from '@/apis/feed';
 
 export const AuthCheck = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   React.useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -38,7 +39,9 @@ export const AuthCheck = () => {
     } else {
       navigate('/');
     }
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
-  return <Outlet />;
+  return (
+    <Outlet />
+  );
 };
