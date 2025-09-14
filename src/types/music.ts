@@ -1,5 +1,5 @@
 export type Music = {
-  id: string
+  trackId: string
   name: string
   artist: string
   spotifyUrl: string

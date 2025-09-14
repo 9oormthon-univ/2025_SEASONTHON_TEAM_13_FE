@@ -35,7 +35,7 @@ export const CreateNewPost = () => {
   const postThePost = async () => {
     setPosting(true);
     try {
-      await postFeed(feelings, tags, music.id);
+      await postFeed(feelings, tags, music.trackId);
       navigate('/feed');
     } catch (error) {
       toast.error('게시물 작성에 실패했어요. 잠시 후 다시 시도해주세요.');
@@ -68,7 +68,7 @@ export const CreateNewPost = () => {
         <div className='w-full h-20'>
           <iframe
             data-testid='embed-iframe'
-            src={`https://open.spotify.com/embed/track/${music.id}?utm_source=generator&theme=0`}
+            src={`https://open.spotify.com/embed/track/${music.trackId}?utm_source=generator&theme=0`}
             width='100%'
             height='100%'
             allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
