@@ -16,9 +16,9 @@ const AlbumButton = ({ song }: { song: Song }) => {
   const player = useSpotifyPlayer();
   const device = usePlayerDevice();
   const error = useErrorState();
+  const [starting, setStarting] = React.useState(false);
 
-  const onClickTrack = async (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
+  const playSong = async () => {
     const { token } = JSON.parse(localStorage.getItem('spotifyToken') || '{}');
     if ((error && error.type === 'authentication_error') || !token) {
       const loginURL = await getSpotifyLoginURL();
@@ -50,6 +50,14 @@ const AlbumButton = ({ song }: { song: Song }) => {
     player?.activateElement();
     player?.resume();
     await increaseSongPlayCount(song.trackId);
+  };
+
+  const onClickTrack = async (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (starting) return;
+    setStarting(true);
+    await playSong();
+    setStarting(false);
   };
 
   return (
