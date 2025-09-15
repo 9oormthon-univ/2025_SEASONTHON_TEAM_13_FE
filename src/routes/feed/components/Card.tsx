@@ -40,6 +40,15 @@ export default function Card ({
           </div>
         </div>
       )}
+      <div className='flex gap-2 mb-3'>
+        {item.emotionTags.map((tag, index) => (
+          <div
+            className='border border-primary rounded-[100px] px-4 py-1 text-primary text-sm leading-[140%] font-medium bg-[#FFEBEA]'
+            key={index}
+          >{tag}
+          </div>
+        ))}
+      </div>
       <div className='w-full h-20'>
         <iframe
           data-testid='embed-iframe'
@@ -56,15 +65,6 @@ export default function Card ({
             className='text-gray600 text-sm leading-[140%] font-medium'
             key={index}
           >#{tag}
-          </div>
-        ))}
-      </div>
-      <div className='flex gap-2'>
-        {item.emotionTags.map((tag, index) => (
-          <div
-            className='border border-primary rounded-[100px] px-4 py-1 text-primary text-sm leading-[140%] font-medium bg-[#FFEBEA]'
-            key={index}
-          >{tag}
           </div>
         ))}
       </div>
