@@ -26,9 +26,9 @@ export default function Ranking () {
         <img src={rankings[0]?.tracks[0]?.albumImageUrl} alt='1st music' className='size-24 rounded-sm z-20' />
         <p className='body-xl'>{rankings[0]?.tracks[0]?.trackTitle}</p>
       </div>
-      <div className='px-6 py-5 flex flex-col gap-6 w-full'>
+      <div className='px-6 py-6 flex flex-col gap-6 w-full'>
         <div className='flex flex-col gap-2 w-full'>
-          <p className='body-m font-medium text-gray500'>원하는 감정 태그를 선택해 인기차트를 확인해보세요</p>
+          <p className='body-m font-medium text-gray700'>원하는 감정 태그를 선택해 인기차트를 확인해보세요</p>
           <ScrollArea className='max-w-full'>
             <div className='flex space-x-2 w-max py-1'>
               {FEELINGS.map(({ id, name }) => (
