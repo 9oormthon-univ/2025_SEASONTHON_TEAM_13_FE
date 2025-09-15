@@ -4,3 +4,8 @@ export interface User {
   email: string,
   profileUrl: string
 }
+
+export interface UserState {
+  postCount: number;
+  mostUsedEmotion: string;
+}
