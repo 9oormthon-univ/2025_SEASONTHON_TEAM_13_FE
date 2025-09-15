@@ -6,58 +6,15 @@ import heart from '@/assets/heart.svg';
 import comment from '@/assets/comment.svg';
 import { useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
 import { getRelativeTime } from '@/lib/dateUtils';
-import { useErrorState, usePlayerDevice, useSpotifyPlayer } from 'react-spotify-web-playback-sdk';
-import { getSpotifyLoginURL } from '@/apis/login';
-import { toast } from 'sonner';
-import { increaseSongPlayCount } from '@/apis/songs';
 import { DiscIcon } from '@/icons/disc';
+import { usePlaySong } from '@/hooks/usePlaySong';
 
 const AlbumButton = ({ song }: { song: Song }) => {
-  const player = useSpotifyPlayer();
-  const device = usePlayerDevice();
-  const error = useErrorState();
-  const [starting, setStarting] = React.useState(false);
-
-  const playSong = async () => {
-    const { token } = JSON.parse(localStorage.getItem('spotifyToken') || '{}');
-    if ((error && error.type === 'authentication_error') || !token) {
-      const loginURL = await getSpotifyLoginURL();
-      window.location.href = loginURL;
-      return;
-    }
-    if (!player || !device) {
-      toast.error('스포티파이 플레이어가 준비되지 않았어요. 잠시 후 다시 시도해주세요.');
-      return;
-    }
-    if (device.status === 'not_ready') {
-      await player?.connect();
-    }
-    const response = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device?.device_id ?? ''}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        uris: [`spotify:track:${song.trackId}`]
-      })
-    });
-    if (!response.ok) {
-      console.error('Failed to start playback', response);
-      toast.error('재생에 실패했어요. 다시 시도해주세요.');
-      return;
-    }
-    player?.activateElement();
-    player?.resume();
-    await increaseSongPlayCount(song.trackId);
-  };
+  const playSong = usePlaySong();
 
   const onClickTrack = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    if (starting) return;
-    setStarting(true);
-    await playSong();
-    setStarting(false);
+    await playSong(song.trackId);
   };
 
   return (
