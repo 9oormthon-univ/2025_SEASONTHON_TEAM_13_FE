@@ -3,7 +3,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/tabs';
 import { useState } from 'react';
 import { useCalendar } from '@/hooks/useCalendar';
 import Card from '@/routes/feed/components/Card';
-import more from '@/assets/more.svg';
+import moreWhite from '@/assets/more_white.svg';
 import { LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { usePlayerShown } from '@/hooks/usePlayerShown';
@@ -23,26 +23,41 @@ export default function Profile () {
   };
   return (
     <div className={`min-h-screen bg-[#F8F8F8] ${isPlayerShown ? 'pb-51' : 'pb-31'} `}>
-      <div className='flex py-10 justify-center items-center gap-2 bg-white relative'>
-        <div className='flex flex-col items-center gap-4'>
-          <img src={user?.profileUrl} alt='profile' className='w-20 h-20 rounded-full' />
-          <p className='text-gray800 font-semibold text-xl leading-[160%]'>{user?.username}</p>
-        </div>
-        <img
-          src={more}
-          alt='more'
-          className='absolute right-5 top-10 cursor-pointer'
-          onClick={() => setShowLogout(!showLogout)}
-        />
-        {showLogout && (
-          <div
-            className='flex items-center gap-2  absolute right-7.25 top-18 cursor-pointer py-2.5 pl-4 pr-9.25 rounded-lg bg-white border border-gray200 hover:bg-gray100'
-            onClick={handleLogout}
-          >
-            <LogOut size={16} />
-            <p className='text-gray600 font-semibold text-[0.875rem] leading-[160%]'>로그아웃</p>
+      <div className='px-6 pt-8 pb-10 bg-white'>
+        <div className='bg-[linear-gradient(334deg,#F2433A_16.44%,#FD6E66_83.56%)] rounded-[0.625rem]'>
+          <div className='flex items-center p-5 justify-between'>
+            <div className='flex items-center gap-3'>
+              <img src={user?.profileUrl} alt='profile' className='w-16 h-16 rounded-full' />
+              <p className='text-gray100 font-semibold text-xl leading-[140%]'>{user?.username}</p>
+            </div>
+            <div className='relative'>
+              <img src={moreWhite} alt='more' className='cursor-pointer' onClick={() => setShowLogout(!showLogout)} />
+              {showLogout && (
+                <div
+                  className='flex items-center gap-2  absolute right-0 -bottom-14 cursor-pointer py-2.5 pl-4 pr-9.25 rounded-lg bg-white border border-gray200 hover:bg-gray100'
+                  onClick={handleLogout}
+                >
+                  <LogOut size={16} />
+                  <p className='text-gray600 font-semibold text-[0.875rem] leading-[160%] whitespace-nowrap'>로그아웃</p>
+                </div>
+              )}
+            </div>
           </div>
-        )}
+          <div className='px-8 pt-4 pb-3 bg-[linear-gradient(180deg,#F9736B_0%,#F05B53_100%)] rounded-b-[0.625rem] flex justify-between items-center'>
+            <div className='flex flex-col items-center gap-0.5'>
+              <p className='text-gray100 font-medium text-sm leading-[140%]'>게시물</p>
+              <p className='text-white font-semibold text-lg leading-[140%]'>5</p>
+            </div>
+            <div className='flex flex-col items-center gap-0.5'>
+              <p className='text-gray100 font-medium text-sm leading-[140%]'>주요감정</p>
+              <p className='text-white font-semibold text-lg leading-[140%]'>외로움</p>
+            </div>
+            <div className='flex flex-col items-center gap-0.5'>
+              <p className='text-gray100 font-medium text-sm leading-[140%]'>선호 장르</p>
+              <p className='text-white font-semibold text-lg leading-[140%]'>발라드</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div className='sticky top-0 z-50 bg-[#F8F8F8]'>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
