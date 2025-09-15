@@ -4,11 +4,13 @@ import './calendar.css';
 import { useState } from 'react';
 import { useCalendar } from '@/hooks/useCalendar';
 import music from '@/assets/music.svg';
+import { usePlayerShown } from '@/hooks/usePlayerShown';
 
 export default function CalendarPage () {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [activeStartDate, setActiveStartDate] = useState<Date>(new Date());
   const { data } = useCalendar();
+  const isPlayerShown = usePlayerShown();
 
   // UTC 시간을 한국시간으로 변환하는 함수
   const convertToKoreaTime = (utcDateString: string) => {
@@ -47,7 +49,7 @@ export default function CalendarPage () {
   };
 
   return (
-    <div className='min-h-screen pb-31 bg-[#F8F8F8]'>
+    <div className={`min-h-screen ${isPlayerShown ? 'pb-51' : 'pb-31'} bg-[#F8F8F8]`}>
 
       <div className='px-4 bg-white pb-7.5 pt-5'>
         <Calendar

@@ -1,3 +1,4 @@
+import React from 'react';
 import { DiscIcon } from '@/icons/disc';
 
 // NOTE: it tries to use full width, but it's intended
@@ -16,7 +17,7 @@ export const BigMusicAlbum = ({ title, albumURL, artist, playCount, onClick }: {
   albumURL: string;
   artist: string;
   playCount?: number;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }) => {
   return (
     <div className={`flex justify-center items-center gap-4 w-full ${onClick && 'hover:cursor-pointer'}`} onClick={onClick}>

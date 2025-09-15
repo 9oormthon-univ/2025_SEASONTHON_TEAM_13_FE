@@ -4,14 +4,16 @@ import { ScrollArea, ScrollBar } from '@/components/scroll-area';
 import { FEELINGS } from '@/constants/feelings';
 import { BigMusicAlbum } from '@/components/new/music/album-buttons';
 import { useSongRankPerTag } from '@/hooks/useTag';
+import { usePlayerShown } from '@/hooks/usePlayerShown';
 
 export default function Ranking () {
   const [selectedEmotion, setSelectedEmotion] = React.useState<typeof FEELINGS[number]>(FEELINGS[0]);
   const currentDate = new Date();
   const { data: rankings } = useSongRankPerTag(selectedEmotion.name);
+  const isPlayerShown = usePlayerShown();
 
   return (
-    <div className='relative min-h-screen w-full flex flex-col items-center gap-2 pb-31 overflow-hidden'>
+    <div className={`relative min-h-screen w-full flex flex-col items-center gap-2 overflow-hidden ${isPlayerShown ? 'pb-51' : 'pb-31'}`}>
       <div
         className='absolute z-10 -top-[6.5rem] -left-[2rem] w-[calc(100%+4rem)] h-[12.7rem] rounded-[100%]'
         style={{

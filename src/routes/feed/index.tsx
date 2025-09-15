@@ -1,7 +1,7 @@
 import { useGetFeedInfinite } from '@/hooks/useFeed';
 import Card from './components/Card';
 import { Tabs, TabsList, TabsTrigger } from '@/components/tabs';
-// import { useIFrameAPIContext } from '@/providers/iframe-api-provider';
+import { usePlayerShown } from '@/hooks/usePlayerShown';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
@@ -18,7 +18,7 @@ export default function Feed () {
     hasNextPage,
     isFetchingNextPage
   } = useGetFeedInfinite(currentSort as 'createdAt' | 'likeCount');
-  // const iFrameAPI = useIFrameAPIContext();
+  const isPlayerShown = usePlayerShown();
 
   // react-intersection-observer 사용
   const { ref: loadMoreRef, inView } = useInView({
@@ -44,7 +44,7 @@ export default function Feed () {
   const allFeeds = data?.pages.flat() || [];
 
   return (
-    <div className='min-h-screen bg-[#F8F8F8] pb-31'>
+    <div className={`min-h-screen bg-[#F8F8F8] ${isPlayerShown ? 'pb-51' : 'pb-31'}`}>
       <div className='sticky top-0 z-50 bg-[#F8F8F8]'>
         <Tabs value={currentSort === 'createdAt' ? 'createdAt' : 'likeCount'} onValueChange={handleTabChange}>
           <TabsList>
@@ -55,7 +55,6 @@ export default function Feed () {
       </div>
       <div className='flex flex-col gap-2'>
         {allFeeds.map((item) => (
-          // <Card key={item.id} item={item} iFrameAPI={iFrameAPI} />
           <Card key={item.id} item={item} />
         ))}
         {/* 무한 스크롤 트리거 요소 */}

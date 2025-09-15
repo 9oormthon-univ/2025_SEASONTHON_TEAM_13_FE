@@ -1,27 +1,98 @@
-import type { Feed } from '@/types/feed';
+import React from 'react';
+import type { Feed, Song } from '@/types/feed';
 import { useNavigate } from 'react-router-dom';
 import heartActive from '@/assets/heart_active.svg';
 import heart from '@/assets/heart.svg';
 import comment from '@/assets/comment.svg';
 import { useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
 import { getRelativeTime } from '@/lib/dateUtils';
-// import { SpotifyIframe } from '@/components/spotify-iframe';
-// import type { IFrameAPI } from '@/hooks/useiFrameAPI';
+import { useErrorState, usePlayerDevice, useSpotifyPlayer } from 'react-spotify-web-playback-sdk';
+import { getSpotifyLoginURL } from '@/apis/login';
+import { toast } from 'sonner';
+import { increaseSongPlayCount } from '@/apis/songs';
+import { DiscIcon } from '@/icons/disc';
+
+const AlbumButton = ({ song }: { song: Song }) => {
+  const player = useSpotifyPlayer();
+  const device = usePlayerDevice();
+  const error = useErrorState();
+  const [starting, setStarting] = React.useState(false);
+
+  const playSong = async () => {
+    const { token } = JSON.parse(localStorage.getItem('spotifyToken') || '{}');
+    if ((error && error.type === 'authentication_error') || !token) {
+      const loginURL = await getSpotifyLoginURL();
+      window.location.href = loginURL;
+      return;
+    }
+    if (!player || !device) {
+      toast.error('스포티파이 플레이어가 준비되지 않았어요. 잠시 후 다시 시도해주세요.');
+      return;
+    }
+    if (device.status === 'not_ready') {
+      await player?.connect();
+    }
+    const response = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device?.device_id ?? ''}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        uris: [`spotify:track:${song.trackId}`]
+      })
+    });
+    if (!response.ok) {
+      console.error('Failed to start playback', response);
+      toast.error('재생에 실패했어요. 다시 시도해주세요.');
+      return;
+    }
+    player?.activateElement();
+    player?.resume();
+    await increaseSongPlayCount(song.trackId);
+  };
+
+  const onClickTrack = async (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (starting) return;
+    setStarting(true);
+    await playSong();
+    setStarting(false);
+  };
+
+  return (
+    <div
+      className='h-21.5 rounded-md bg-cover bg-center hover:cursor-pointer' onClick={onClickTrack} style={{
+        backgroundImage: `url(${song.albumArtUrl})`,
+      }}
+    >
+      <div className='w-full h-full flex flex-row p-3 gap-8.5 backdrop-blur-sm bg-black/50 rounded-md'>
+        <div className='min-w-0 flex flex-col flex-grow flex-shrink'>
+          <p className='text-white text-lg font-bold overflow-ellipsis overflow-hidden whitespace-nowrap'>{song.title}</p>
+          <p className='text-gray300 text-sm font-medium overflow-ellipsis overflow-hidden whitespace-nowrap'>{song.artist}</p>
+        </div>
+        <div className='flex gap-1 flex-grow-0 flex-shrink-0'>
+          <DiscIcon className='size-4 text-gray300' />
+          <p className='text-xs font-medium text-gray300'>{song.playCount}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 interface CardProps {
   item: Feed;
   isProfile?: boolean;
-  // iFrameAPI?: IFrameAPI;
 }
 
 export default function Card ({
   item,
   isProfile = false,
-  // iFrameAPI
 }: CardProps) {
   const navigate = useNavigate();
   const { mutate: likeFeed } = useLikeFeed();
   const { mutate: unlikeFeed } = useUnlikeFeed();
+
   return (
     <div
       key={item.id}
@@ -49,17 +120,10 @@ export default function Card ({
           </div>
         ))}
       </div>
-      <div className='w-full h-20'>
-        <iframe
-          data-testid='embed-iframe'
-          src={`https://open.spotify.com/embed/track/${item.song.trackId}?utm_source=generator`}
-          width='100%'
-          height='100%'
-          allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
-          loading='lazy'
-        />
+      <div className='w-full h-21.5'>
+        <AlbumButton song={item.song} />
       </div>
-      <div className='flex gap-1.5 mt-4 mb-3'>
+      <div className='flex gap-1.5 mt-2 mb-3'>
         {item.dailyTags.map((tag, index) => (
           <div
             className='text-gray600 text-sm leading-[140%] font-medium'

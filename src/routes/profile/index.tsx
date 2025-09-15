@@ -6,7 +6,7 @@ import Card from '@/routes/feed/components/Card';
 import more from '@/assets/more.svg';
 import { LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-// import { useIFrameAPIContext } from '@/providers/iframe-api-provider';
+import { usePlayerShown } from '@/hooks/usePlayerShown';
 
 export default function Profile () {
   const { data: user } = useGetUser();
@@ -15,14 +15,14 @@ export default function Profile () {
   const { data: calendar } = useCalendar();
   const { data: userLikes } = useGetUserLikes();
   const navigate = useNavigate();
-  // const iFrameAPI = useIFrameAPIContext();
+  const isPlayerShown = usePlayerShown();
 
   const handleLogout = () => {
     localStorage.clear();
     navigate('/');
   };
   return (
-    <div className='min-h-screen bg-[#F8F8F8] pb-31'>
+    <div className={`min-h-screen bg-[#F8F8F8] ${isPlayerShown ? 'pb-51' : 'pb-31'} `}>
       <div className='flex py-10 justify-center items-center gap-2 bg-white relative'>
         <div className='flex flex-col items-center gap-4'>
           <img src={user?.profileUrl} alt='profile' className='w-20 h-20 rounded-full' />
@@ -57,7 +57,6 @@ export default function Profile () {
           ? (
             <>
               {calendar?.map((item) => (
-                // <Card key={item.id} item={item} isProfile iFrameAPI={iFrameAPI} />
                 <Card key={item.id} item={item} isProfile />
               ))}
             </>
@@ -65,7 +64,6 @@ export default function Profile () {
           : (
             <>
               {userLikes?.map((item) => (
-                // <Card key={item.id} item={item} iFrameAPI={iFrameAPI} />
                 <Card key={item.id} item={item} />
               ))}
             </>
