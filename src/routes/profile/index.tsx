@@ -1,4 +1,4 @@
-import { useGetUser, useGetUserLikes } from '@/hooks/useUser';
+import { useGetUser, useGetUserLikes, useGetUserState } from '@/hooks/useUser';
 import { Tabs, TabsList, TabsTrigger } from '@/components/tabs';
 import { useState } from 'react';
 import { useCalendar } from '@/hooks/useCalendar';
@@ -7,6 +7,7 @@ import moreWhite from '@/assets/more_white.svg';
 import { LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { usePlayerShown } from '@/hooks/usePlayerShown';
+import stroke from '@/assets/stroke.svg';
 
 export default function Profile () {
   const { data: user } = useGetUser();
@@ -14,6 +15,7 @@ export default function Profile () {
   const [showLogout, setShowLogout] = useState(false);
   const { data: calendar } = useCalendar();
   const { data: userLikes } = useGetUserLikes();
+  const { data: userState } = useGetUserState();
   const navigate = useNavigate();
   const isPlayerShown = usePlayerShown();
 
@@ -46,16 +48,19 @@ export default function Profile () {
           <div className='px-8 pt-4 pb-3 bg-[linear-gradient(180deg,#F9736B_0%,#F05B53_100%)] rounded-b-[0.625rem] flex justify-between items-center'>
             <div className='flex flex-col items-center gap-0.5'>
               <p className='text-gray100 font-medium text-sm leading-[140%]'>게시물</p>
-              <p className='text-white font-semibold text-lg leading-[140%]'>5</p>
+              <p className='text-white font-semibold text-lg leading-[140%]'>{userState?.postCount}</p>
             </div>
+            <img src={stroke} alt='stroke' className='h-full' />
             <div className='flex flex-col items-center gap-0.5'>
-              <p className='text-gray100 font-medium text-sm leading-[140%]'>주요감정</p>
-              <p className='text-white font-semibold text-lg leading-[140%]'>외로움</p>
+              <p className='text-gray100 font-medium text-sm leading-[140%]'>누적 좋아요</p>
+              <p className='text-white font-semibold text-lg leading-[140%]'>999</p>
             </div>
+            <img src={stroke} alt='stroke' className=' h-full' />
             <div className='flex flex-col items-center gap-0.5'>
-              <p className='text-gray100 font-medium text-sm leading-[140%]'>선호 장르</p>
-              <p className='text-white font-semibold text-lg leading-[140%]'>발라드</p>
+              <p className='text-gray100 font-medium text-sm leading-[140%]'>주요 감정</p>
+              <p className='text-white font-semibold text-lg leading-[140%]'>{userState?.mostUsedEmotion}</p>
             </div>
+
           </div>
         </div>
       </div>
