@@ -36,7 +36,7 @@ export default function Profile () {
               <img src={moreWhite} alt='more' className='cursor-pointer' onClick={() => setShowLogout(!showLogout)} />
               {showLogout && (
                 <div
-                  className='flex items-center gap-2  absolute right-0 -bottom-14 cursor-pointer py-2.5 pl-4 pr-9.25 rounded-lg bg-white border border-gray200 hover:bg-gray100'
+                  className='flex items-center gap-2  absolute right-0 -bottom-14 cursor-pointer py-2.5 pl-4 pr-9.25 rounded-lg bg-white hover:bg-gray100 shadow-[0_2px_8px_0_rgba(0,0,0,0.15)]'
                   onClick={handleLogout}
                 >
                   <LogOut size={16} />

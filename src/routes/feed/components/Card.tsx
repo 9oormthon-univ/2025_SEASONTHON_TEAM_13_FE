@@ -13,6 +13,9 @@ import { toast } from 'sonner';
 import { increaseSongPlayCount } from '@/apis/songs';
 import { DiscIcon } from '@/icons/disc';
 import Lottie from 'lottie-react';
+import { formatKoreanDate } from '@/lib/formatDate';
+import more from '@/assets/more_gray.svg';
+import { CircleX } from 'lucide-react';
 
 const AlbumButton = ({ song }: { song: Song }) => {
   const player = useSpotifyPlayer();
@@ -95,6 +98,7 @@ export default function Card ({
   const { mutate: likeFeed } = useLikeFeed();
   const { mutate: unlikeFeed } = useUnlikeFeed();
   const [isAnimating, setIsAnimating] = React.useState(false);
+  const [showMoreOptions, setShowMoreOptions] = React.useState(false);
 
   return (
     <div
@@ -114,6 +118,31 @@ export default function Card ({
           </div>
         </div>
       )}
+      {
+        isProfile && (
+          <div className='flex items-center justify-between mb-5 relative'>
+            <p className='text-gray800 text-lg font-semibold leading-[140%]'>{formatKoreanDate(item.createdAt)}</p>
+            <img
+              src={more} alt='더보기' onClick={(e) => {
+                e.stopPropagation();
+                setShowMoreOptions(!showMoreOptions);
+              }}
+            />
+            {showMoreOptions && (
+              <div
+                className='absolute top-8 right-0 flex items-center gap-2 bg-white  rounded-lg shadow-[0_2px_8px_0_rgba(0,0,0,0.15)] py-2.5 pl-4 pr-10 z-10 hover:bg-gray100
+              ' onClick={(e) => {
+                  e.stopPropagation();
+                  setShowMoreOptions(false);
+                }}
+              >
+                <CircleX size={16} color='#F2433A' strokeWidth={3} />
+                <p className='text-primary text-sm leading-[160%] font-semibold'>삭제</p>
+              </div>
+            )}
+          </div>
+        )
+      }
       <div className='flex gap-2 mb-3'>
         {item.emotionTags.map((tag, index) => (
           <div
