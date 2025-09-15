@@ -5,12 +5,14 @@ import { FEELINGS } from '@/constants/feelings';
 import { BigMusicAlbum } from '@/components/new/music/album-buttons';
 import { useSongRankPerTag } from '@/hooks/useTag';
 import { usePlayerShown } from '@/hooks/usePlayerShown';
+import { usePlaySong } from '@/hooks/usePlaySong';
 
 export default function Ranking () {
   const [selectedEmotion, setSelectedEmotion] = React.useState<typeof FEELINGS[number]>(FEELINGS[0]);
   const currentDate = new Date();
   const { data: rankings } = useSongRankPerTag(selectedEmotion.name);
   const isPlayerShown = usePlayerShown();
+  const playSong = usePlaySong();
 
   return (
     <div className={`relative min-h-screen w-full flex flex-col items-center gap-2 overflow-hidden ${isPlayerShown ? 'pb-51' : 'pb-31'}`}>
@@ -47,7 +49,7 @@ export default function Ranking () {
             {rankings[0]?.tracks.map((music, index) => (
               <div className='flex items-center' key={music.trackId}>
                 <p className='w-7 font-semibold'>{index + 1}</p>
-                <BigMusicAlbum title={music.trackTitle} albumURL={music.albumImageUrl} artist={music.artist} playCount={music.playCount} />
+                <BigMusicAlbum title={music.trackTitle} albumURL={music.albumImageUrl} artist={music.artist} playCount={music.playCount} onClick={() => playSong(music.trackId)} />
               </div>
             ))}
           </div>
