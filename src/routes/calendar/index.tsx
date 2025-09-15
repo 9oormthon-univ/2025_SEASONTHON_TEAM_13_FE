@@ -127,7 +127,7 @@ export default function CalendarPage () {
               {selectedDateData?.song && (
                 <div className='flex items-center '>
                   <img src={music} alt='music' />
-                  <p className='text-[16px] text-gray800 font-semibold leading-[140%]'>{selectedDateData.song.title} - {selectedDateData.song.artist}</p>
+                  <p className='text-[16px] text-gray800 font-semibold leading-[140%] truncate'>{selectedDateData.song.title} - {selectedDateData.song.artist}</p>
                 </div>
               )}
             </div>
@@ -150,6 +150,13 @@ export default function CalendarPage () {
           </div>
         </div>
       )}
+      {
+        !selectedDateData && (
+          <div className='mt-32 text-center text-gray-300 leading-[140%] font-medium text-[0.75rem]'>
+            그 날의 게시물의 궁금하다면 해당 날짜를 선택하세요
+          </div>
+        )
+      }
     </div>
   );
 }
