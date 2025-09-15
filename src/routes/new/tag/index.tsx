@@ -6,6 +6,7 @@ import { UserIcon } from '@/icons/user';
 import { Tag } from '@/components/tag';
 import { useNavigate } from 'react-router-dom';
 import { useNewPagesProvider } from '@/providers/new-pages-provider';
+import { Progress } from '@/components/new/progress';
 
 export const SelectTags = () => {
   const [tagText, setTagText] = React.useState('');
@@ -19,8 +20,9 @@ export const SelectTags = () => {
           <ChevronLeft className='size-7 text-gray800' />
         </button>
       </div>
+      <Progress selectedIndex={1} />
       <div className='flex flex-col items-center gap-2 flex-grow w-full px-4'>
-        <h2 className='heading2 pt-8'>당신의 하루를 말해주세요</h2>
+        <h2 className='heading2 pt-7'>당신의 하루를 말해주세요</h2>
         <p className='body-m font-medium text-gray500'>사람들에게 당신의 하루를 태그로 소개해요</p>
         <div className='mt-14' />
         <TextInput
