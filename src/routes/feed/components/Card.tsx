@@ -66,14 +66,14 @@ const AlbumButton = ({ song }: { song: Song }) => {
         backgroundImage: `url(${song.albumArtUrl})`,
       }}
     >
-      <div className='w-full h-full flex flex-row p-3 gap-8.5 backdrop-blur-sm rounded-md'>
+      <div className='w-full h-full flex flex-row p-3 gap-8.5 backdrop-blur-sm bg-black/50 rounded-md'>
         <div className='min-w-0 flex flex-col flex-grow flex-shrink'>
           <p className='text-white text-lg font-bold overflow-ellipsis overflow-hidden whitespace-nowrap'>{song.title}</p>
           <p className='text-gray300 text-sm font-medium overflow-ellipsis overflow-hidden whitespace-nowrap'>{song.artist}</p>
         </div>
         <div className='flex gap-1 flex-grow-0 flex-shrink-0'>
-          <DiscIcon className='size-4 text-gray500' />
-          <p className='text-xs font-medium text-gray500'>{song.playCount}</p>
+          <DiscIcon className='size-4 text-gray300' />
+          <p className='text-xs font-medium text-gray300'>{song.playCount}</p>
         </div>
       </div>
     </div>
