@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import heartActive from '@/assets/heart_active.svg';
 import heart from '@/assets/heart.svg';
 import comment from '@/assets/comment.svg';
+import likeAnimation from '@/assets/like.json';
 import { useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
 import { getRelativeTime } from '@/lib/dateUtils';
 import { useErrorState, usePlayerDevice, useSpotifyPlayer } from 'react-spotify-web-playback-sdk';
@@ -11,6 +12,7 @@ import { getSpotifyLoginURL } from '@/apis/login';
 import { toast } from 'sonner';
 import { increaseSongPlayCount } from '@/apis/songs';
 import { DiscIcon } from '@/icons/disc';
+import Lottie from 'lottie-react';
 
 const AlbumButton = ({ song }: { song: Song }) => {
   const player = useSpotifyPlayer();
@@ -92,6 +94,7 @@ export default function Card ({
   const navigate = useNavigate();
   const { mutate: likeFeed } = useLikeFeed();
   const { mutate: unlikeFeed } = useUnlikeFeed();
+  const [isAnimating, setIsAnimating] = React.useState(false);
 
   return (
     <div
@@ -135,16 +138,33 @@ export default function Card ({
       <div className='h-[1px] bg-[#E7E7E7] my-5' />
       <div className='flex items-center gap-4'>
         <div className='flex items-center gap-1'>
-          <img
-            src={item.likeState ? heartActive : heart} alt='heart' className='cursor-pointer' onClick={(e) => {
-              e.stopPropagation();
-              if (item.likeState) {
-                unlikeFeed(item.id);
-              } else {
-                likeFeed(item.id);
-              }
-            }}
-          />
+          <div className='relative w-6 h-6'>
+            {isAnimating
+              ? (
+                <Lottie
+                  animationData={likeAnimation}
+                  loop={false}
+                  autoplay
+                  style={{ width: '24px', height: '24px' }}
+                  onComplete={() => {
+                    setIsAnimating(false);
+                  }}
+                />
+                )
+              : (
+                <img
+                  src={item.likeState ? heartActive : heart} alt='heart' className='cursor-pointer w-6 h-6' onClick={(e) => {
+                    e.stopPropagation();
+                    if (item.likeState) {
+                      unlikeFeed(item.id);
+                    } else {
+                      setIsAnimating(true);
+                      likeFeed(item.id);
+                    }
+                  }}
+                />
+                )}
+          </div>
           <p className='text-gray700 text-sm leading-[140%] font-medium'>{item.likeCount}</p>
         </div>
         <div className='flex items-center gap-1'>
