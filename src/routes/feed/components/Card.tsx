@@ -62,7 +62,7 @@ const AlbumButton = ({ song }: { song: Song }) => {
 
   return (
     <div
-      className='h-20 rounded-md bg-cover bg-center hover:cursor-pointer' onClick={onClickTrack} style={{
+      className='h-21.5 rounded-md bg-cover bg-center hover:cursor-pointer' onClick={onClickTrack} style={{
         backgroundImage: `url(${song.albumArtUrl})`,
       }}
     >
@@ -111,24 +111,24 @@ export default function Card ({
           </div>
         </div>
       )}
-      <div className='w-full h-21.5'>
-        <AlbumButton song={item.song} />
-      </div>
-      <div className='flex gap-1.5 mt-4 mb-3'>
-        {item.dailyTags.map((tag, index) => (
-          <div
-            className='text-gray600 text-sm leading-[140%] font-medium'
-            key={index}
-          >#{tag}
-          </div>
-        ))}
-      </div>
-      <div className='flex gap-2'>
+      <div className='flex gap-2 mb-3'>
         {item.emotionTags.map((tag, index) => (
           <div
             className='border border-primary rounded-[100px] px-4 py-1 text-primary text-sm leading-[140%] font-medium bg-[#FFEBEA]'
             key={index}
           >{tag}
+          </div>
+        ))}
+      </div>
+      <div className='w-full h-21.5'>
+        <AlbumButton song={item.song} />
+      </div>
+      <div className='flex gap-1.5 mt-2 mb-3'>
+        {item.dailyTags.map((tag, index) => (
+          <div
+            className='text-gray600 text-sm leading-[140%] font-medium'
+            key={index}
+          >#{tag}
           </div>
         ))}
       </div>
