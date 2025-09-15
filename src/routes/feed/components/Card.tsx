@@ -1,33 +1,18 @@
 import React from 'react';
-import type { Feed } from '@/types/feed';
+import type { Feed, Song } from '@/types/feed';
 import { useNavigate } from 'react-router-dom';
 import heartActive from '@/assets/heart_active.svg';
 import heart from '@/assets/heart.svg';
 import comment from '@/assets/comment.svg';
 import { useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
 import { getRelativeTime } from '@/lib/dateUtils';
-import { BigMusicAlbum } from '@/components/new/music/album-buttons';
 import { useErrorState, usePlayerDevice, useSpotifyPlayer } from 'react-spotify-web-playback-sdk';
 import { getSpotifyLoginURL } from '@/apis/login';
 import { toast } from 'sonner';
 import { increaseSongPlayCount } from '@/apis/songs';
-// import { SpotifyIframe } from '@/components/spotify-iframe';
-// import type { IFrameAPI } from '@/hooks/useiFrameAPI';
+import { DiscIcon } from '@/icons/disc';
 
-interface CardProps {
-  item: Feed;
-  isProfile?: boolean;
-  // iFrameAPI?: IFrameAPI;
-}
-
-export default function Card ({
-  item,
-  isProfile = false,
-  // iFrameAPI
-}: CardProps) {
-  const navigate = useNavigate();
-  const { mutate: likeFeed } = useLikeFeed();
-  const { mutate: unlikeFeed } = useUnlikeFeed();
+const AlbumButton = ({ song }: { song: Song }) => {
   const player = useSpotifyPlayer();
   const device = usePlayerDevice();
   const error = useErrorState();
@@ -54,7 +39,7 @@ export default function Card ({
         Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({
-        uris: [`spotify:track:${item.song.trackId}`]
+        uris: [`spotify:track:${song.trackId}`]
       })
     });
     if (!response.ok) {
@@ -64,8 +49,41 @@ export default function Card ({
     }
     player?.activateElement();
     player?.resume();
-    await increaseSongPlayCount(item.song.trackId);
+    await increaseSongPlayCount(song.trackId);
   };
+
+  return (
+    <div
+      className='h-20 rounded-md bg-cover bg-center hover:cursor-pointer' onClick={onClickTrack} style={{
+        backgroundImage: `url(${song.albumArtUrl})`,
+      }}
+    >
+      <div className='h-full flex flex-row p-3 gap-8.5 backdrop-blur-sm rounded-md'>
+        <div className='flex flex-col flex-grow'>
+          <p className='text-white text-lg font-bold'>{song.title}</p>
+          <p className='text-gray300 text-sm font-medium'>{song.artist}</p>
+        </div>
+        <div className='flex gap-1'>
+          <DiscIcon className='size-4 text-gray500' />
+          <p className='text-xs font-medium text-gray500'>{song.playCount}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+interface CardProps {
+  item: Feed;
+  isProfile?: boolean;
+}
+
+export default function Card ({
+  item,
+  isProfile = false,
+}: CardProps) {
+  const navigate = useNavigate();
+  const { mutate: likeFeed } = useLikeFeed();
+  const { mutate: unlikeFeed } = useUnlikeFeed();
 
   return (
     <div
@@ -85,14 +103,8 @@ export default function Card ({
           </div>
         </div>
       )}
-      <div className='w-full h-20'>
-        <BigMusicAlbum
-          title={item.song.title}
-          artist={item.song.artist}
-          albumURL={item.song.albumArtUrl}
-          playCount={item.song.playCount}
-          onClick={onClickTrack}
-        />
+      <div className='w-full h-21.5'>
+        <AlbumButton song={item.song} />
       </div>
       <div className='flex gap-1.5 mt-4 mb-3'>
         {item.dailyTags.map((tag, index) => (
