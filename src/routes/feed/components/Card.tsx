@@ -5,7 +5,7 @@ import heartActive from '@/assets/heart_active.svg';
 import heart from '@/assets/heart.svg';
 import comment from '@/assets/comment.svg';
 import likeAnimation from '@/assets/like.json';
-import { useLikeFeed, useUnlikeFeed } from '@/hooks/useFeed';
+import { useLikeFeed, useUnlikeFeed, useDeleteFeed } from '@/hooks/useFeed';
 import { getRelativeTime } from '@/lib/dateUtils';
 import { useErrorState, usePlayerDevice, useSpotifyPlayer } from 'react-spotify-web-playback-sdk';
 import { getSpotifyLoginURL } from '@/apis/login';
@@ -107,6 +107,7 @@ export default function Card ({
   const navigate = useNavigate();
   const { mutate: likeFeed } = useLikeFeed();
   const { mutate: unlikeFeed } = useUnlikeFeed();
+  const { mutate: deleteFeed } = useDeleteFeed();
   const [isAnimating, setIsAnimating] = React.useState(false);
   const [showMoreOptions, setShowMoreOptions] = React.useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
@@ -234,15 +235,15 @@ export default function Card ({
                 e.stopPropagation();
                 setShowDeleteDialog(false);
               }}
-              className='text-primary text-base leading-[140%] font-semibold text-center p-5 rounded-[0.625rem] bg-[#FFEBEA] grow border-none cursor-pointer'
+              className='text-primary text-base leading-[140%] font-semibold text-center p-5 rounded-[0.625rem] bg-[#FFEBEA] grow border-0 cursor-pointer outline-none focus:outline-none'
             >
               돌아가기
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={(e) => {
+                deleteFeed(item.id);
                 setShowDeleteDialog(false);
                 e.stopPropagation();
-                toast.success('게시글이 삭제되었습니다.');
               }}
               className='text-white text-base leading-[140%] font-semibold text-center p-5 rounded-[0.625rem] bg-primary grow cursor-pointer'
             >

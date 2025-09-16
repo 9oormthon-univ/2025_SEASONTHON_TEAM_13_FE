@@ -1,5 +1,5 @@
 import { useSuspenseQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
-import { getFeed, likeFeed, unlikeFeed, getFeedById, getFeedComments, postFeedComment, getFeedPage } from '@/apis/feed';
+import { getFeed, likeFeed, unlikeFeed, getFeedById, getFeedComments, postFeedComment, getFeedPage, deleteFeed } from '@/apis/feed';
 
 export const useGetFeed = (sortBy: 'createdAt' | 'likeCount') => {
   return useSuspenseQuery({
@@ -68,6 +68,19 @@ export const usePostFeedComment = () => {
       queryClient.invalidateQueries({ queryKey: ['feed', postId, 'comments'] });
       queryClient.invalidateQueries({ queryKey: ['feed', postId] });
       queryClient.invalidateQueries({ queryKey: ['feed'] });
+    },
+  });
+};
+
+export const useDeleteFeed = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteFeed,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['feed'] });
+      queryClient.invalidateQueries({ queryKey: ['calendar'] });
+      queryClient.invalidateQueries({ queryKey: ['userLikes'] });
+      queryClient.invalidateQueries({ queryKey: ['userState'] });
     },
   });
 };
