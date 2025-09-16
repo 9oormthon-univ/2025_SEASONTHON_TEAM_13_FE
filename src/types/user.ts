@@ -7,5 +7,6 @@ export interface User {
 
 export interface UserState {
   postCount: number;
+  likeCount: number;
   mostUsedEmotion: string;
 }

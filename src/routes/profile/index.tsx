@@ -53,7 +53,7 @@ export default function Profile () {
             <img src={stroke} alt='stroke' className='h-full' />
             <div className='flex flex-col items-center gap-0.5'>
               <p className='text-gray100 font-medium text-sm leading-[140%]'>누적 좋아요</p>
-              <p className='text-white font-semibold text-lg leading-[140%]'>999</p>
+              <p className='text-white font-semibold text-lg leading-[140%]'>{userState?.likeCount}</p>
             </div>
             <img src={stroke} alt='stroke' className=' h-full' />
             <div className='flex flex-col items-center gap-0.5'>
