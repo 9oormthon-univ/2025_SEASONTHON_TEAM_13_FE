@@ -55,7 +55,7 @@ export const CreateNewPost = () => {
       <Progress selectedIndex={3} />
       <div className='flex flex-col items-center gap-2 flex-grow'>
         <h2 className='heading2 pt-7'>오늘의 게시물이 완성됐어요!</h2>
-        <p className='body-m font-medium text-gray500'>이제 오늘의 하루와 노래를 사람들과 공유해보세요</p>
+        <p className='body-m font-medium text-gray500'>이제 오늘의 하루와 음악을 사람들과 공유해보세요</p>
       </div>
       <div
         className='p-6 bg-white w-full'

@@ -5,12 +5,14 @@ import { FEELINGS } from '@/constants/feelings';
 import { BigMusicAlbum } from '@/components/new/music/album-buttons';
 import { useSongRankPerTag } from '@/hooks/useTag';
 import { usePlayerShown } from '@/hooks/usePlayerShown';
+import { usePlaySong } from '@/hooks/usePlaySong';
 
 export default function Ranking () {
   const [selectedEmotion, setSelectedEmotion] = React.useState<typeof FEELINGS[number]>(FEELINGS[0]);
   const currentDate = new Date();
   const { data: rankings } = useSongRankPerTag(selectedEmotion.name);
   const isPlayerShown = usePlayerShown();
+  const playSong = usePlaySong();
 
   return (
     <div className={`relative min-h-screen w-full flex flex-col items-center gap-2 overflow-hidden ${isPlayerShown ? 'pb-51' : 'pb-31'}`}>
@@ -24,9 +26,9 @@ export default function Ranking () {
         <img src={rankings[0]?.tracks[0]?.albumImageUrl} alt='1st music' className='size-24 rounded-sm z-20' />
         <p className='body-xl'>{rankings[0]?.tracks[0]?.trackTitle}</p>
       </div>
-      <div className='px-6 py-5 flex flex-col gap-6 w-full'>
+      <div className='px-6 py-6 flex flex-col gap-6 w-full'>
         <div className='flex flex-col gap-2 w-full'>
-          <p className='body-m font-medium text-gray500'>원하는 감정 태그를 선택해 인기차트를 확인해보세요</p>
+          <p className='body-m font-medium text-gray700'>원하는 감정 태그를 선택해 인기차트를 확인해보세요</p>
           <ScrollArea className='max-w-full'>
             <div className='flex space-x-2 w-max py-1'>
               {FEELINGS.map(({ id, name }) => (
@@ -47,7 +49,7 @@ export default function Ranking () {
             {rankings[0]?.tracks.map((music, index) => (
               <div className='flex items-center' key={music.trackId}>
                 <p className='w-7 font-semibold'>{index + 1}</p>
-                <BigMusicAlbum title={music.trackTitle} albumURL={music.albumImageUrl} artist={music.artist} playCount={music.playCount} />
+                <BigMusicAlbum title={music.trackTitle} albumURL={music.albumImageUrl} artist={music.artist} playCount={music.playCount} onClick={() => playSong(music.trackId)} />
               </div>
             ))}
           </div>

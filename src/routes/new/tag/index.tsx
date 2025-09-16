@@ -23,8 +23,8 @@ export const SelectTags = () => {
       <Progress selectedIndex={1} />
       <div className='flex flex-col items-center gap-2 flex-grow w-full px-4'>
         <h2 className='heading2 pt-7'>당신의 하루를 말해주세요</h2>
-        <p className='body-m font-medium text-gray500'>사람들에게 당신의 하루를 태그로 소개해요</p>
-        <div className='mt-14' />
+        <p className='body-m font-medium text-gray500'>소개하고 싶은 하루를 입력하고 태그로 등록해보세요</p>
+        <div className='mt-8' />
         <TextInput
           placeholder='입력 후 스페이스바 또는 엔터를 누르세요'
           icon={
@@ -53,7 +53,7 @@ export const SelectTags = () => {
         </div>
         {tags.length > 0 && (
           <>
-            <div className='bg-[#F8F8F8] w-full h-1 my-6' />
+            <div className='bg-[#F8F8F8] w-full h-1 mt-12 mb-6' />
             <div className='flex flex-col w-full gap-4'>
               <div className='flex items-center gap-4'>
                 <p className='body-l font-semibold text-gray700'>입력한 태그</p>

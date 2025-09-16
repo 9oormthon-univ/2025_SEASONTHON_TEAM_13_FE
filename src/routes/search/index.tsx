@@ -123,7 +123,7 @@ export default function Search () {
           </div>
           )
         : (
-          <div className='flex flex-col w-full gap-2.5'>
+          <div className='flex flex-col w-full bg-[#F8F8F8]'>
             <div className='relative w-full h-32 -pt-8 flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#FFE7E7] to-[#FF9C96] gap-2'>
               <div className='absolute top-6 size-60 bg-primary rounded-full blur-[50px]' />
               <p className='text-3xl font-extrabold z-10 text-white'>#{searchQuery}</p>
@@ -131,13 +131,15 @@ export default function Search () {
                 관련 태그의 모든 글을 볼 수 있어요!
               </p>
             </div>
-            {searchResults.map(result => (
-              <Card key={result.id} item={result} />
-            ))}
-            <div ref={loadMoreRef} className='h-10 flex items-center justify-center'>
-              {isFetchingNextPage && (
-                <Lottie animationData={loading} loop style={{ height: 80, width: '100%' }} />
-              )}
+            <div className='flex flex-col w-full gap-2'>
+              {searchResults.map(result => (
+                <Card key={result.id} item={result} />
+              ))}
+              <div ref={loadMoreRef} className='h-10 flex items-center justify-center'>
+                {isFetchingNextPage && (
+                  <Lottie animationData={loading} loop style={{ height: 80, width: '100%' }} />
+                )}
+              </div>
             </div>
           </div>
           )}

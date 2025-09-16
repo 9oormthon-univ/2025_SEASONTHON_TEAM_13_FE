@@ -6,7 +6,7 @@ export const Tag = ({ className, children, onClickRemove, ...props }: React.Comp
   onClickRemove?: () => void;
 }) => {
   return (
-    <div className='inline-flex gap-2 items-center justify-center rounded-md px-3 py-1 body-m font-medium w-fit whitespace-nowrap shrink-0 transition-colors overflow-hidden bg-[#FFEBEA]'>
+    <div className='inline-flex gap-2 items-center justify-center rounded-full px-3 py-1 body-m font-medium w-fit whitespace-nowrap shrink-0 transition-colors overflow-hidden bg-[#FFEBEA]'>
       <span className={cn('text-primary', className)} {...props}>
         {children}
       </span>

@@ -65,12 +65,12 @@ export const SelectMusic = () => {
       </div>
       <Progress selectedIndex={2} />
       <div className='flex flex-col items-center gap-4 flex-grow w-full px-6'>
-        <h2 className='heading2 text-3xl pt-7'>오늘의 하루와</h2>
-        <h2 className='heading2 text-3xl -mt-4 text-primary'>어울리는 노래를 찾았어요</h2>
-        <div className='mt-2' />
-        <p className='body-m font-medium text-gray500'>마음에 드는 곡이 없다면, 음악을 직접 검색해보세요!</p>
+        <h2 className='heading2 text-3xl text-primary pt-7'>딱 맞는 음악 발견!</h2>
+        <h2 className='heading2 text-3xl -mt-4'>원하는 곡 하나를 선택하세요</h2>
+        <div className='mt-4' />
+        <p className='body-m font-medium text-gray500'>마음에 드는 곡이 없다면, 직접 검색해보세요</p>
         <TextInput
-          placeholder='마음에 드는 곡이 없나요? 직접 검색해보세요'
+          placeholder='제목 혹은 가수를 입력하세요'
           icon={
             <SearchIcon className='size-6 text-primary' />
           }
@@ -94,7 +94,7 @@ export const SelectMusic = () => {
         {
           searchedMusics.length === 0
             ? (
-              <div className='grid grid-cols-4 gap-4 mt-12 w-full items-start'>
+              <div className='grid grid-cols-4 gap-4 mt-9 w-full items-start'>
                 {recommendedMusics
                   .map((music, index) => (
                     <SmallMusicAlbum
