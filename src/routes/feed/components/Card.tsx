@@ -169,6 +169,9 @@ export default function Card ({
                     height: '56px',
                     transform: 'translate(-15.75px, -15.5px)'
                   }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
                   onComplete={() => {
                     setIsAnimating(false);
                   }}
