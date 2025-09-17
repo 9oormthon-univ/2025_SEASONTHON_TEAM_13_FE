@@ -4,7 +4,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/tabs';
 import { usePlayerShown } from '@/hooks/usePlayerShown';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import loading from '@/assets/loading.json';
 import Lottie from 'lottie-react';
 
@@ -19,6 +19,7 @@ export default function Feed () {
     isFetchingNextPage
   } = useGetFeedInfinite(currentSort as 'createdAt' | 'likeCount');
   const isPlayerShown = usePlayerShown();
+  const prevSortRef = useRef(currentSort);
 
   // react-intersection-observer 사용
   const { ref: loadMoreRef, inView } = useInView({
@@ -33,6 +34,14 @@ export default function Feed () {
     }
   };
 
+  // 탭 전환 시 스크롤을 맨 위로 이동
+  useEffect(() => {
+    if (prevSortRef.current !== currentSort) {
+      window.scrollTo(0, 0);
+      prevSortRef.current = currentSort;
+    }
+  }, [currentSort]);
+
   // react-intersection-observer를 사용한 무한 스크롤
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -40,8 +49,11 @@ export default function Feed () {
     }
   }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  // 모든 페이지의 데이터를 평면화
+  // 모든 페이지의 데이터를 평면화하고 중복 제거
   const allFeeds = data?.pages.flat() || [];
+  const uniqueFeeds = allFeeds.filter((feed, index, self) =>
+    index === self.findIndex(f => f.id === feed.id)
+  );
 
   return (
     <div className={`min-h-screen bg-[#F8F8F8] ${isPlayerShown ? 'pb-51' : 'pb-31'}`}>
@@ -54,7 +66,7 @@ export default function Feed () {
         </Tabs>
       </div>
       <div className='flex flex-col gap-2'>
-        {allFeeds.map((item) => (
+        {uniqueFeeds.map((item) => (
           <Card key={item.id} item={item} />
         ))}
         {/* 무한 스크롤 트리거 요소 */}
