@@ -136,7 +136,7 @@ export default function Card ({
       <div className='flex gap-2 mb-3'>
         {item.emotionTags.map((tag, index) => (
           <div
-            className='border border-primary rounded-[100px] px-4 py-1 text-primary text-sm leading-[140%] font-medium bg-[#FFEBEA]'
+            className='border border-primary rounded-[100px] px-4 py-1 text-primary text-sm leading-[140%] font-semibold bg-[#FFEBEA]'
             key={index}
           >{tag}
           </div>
