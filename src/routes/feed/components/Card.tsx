@@ -65,7 +65,7 @@ export default function Card ({
   const navigate = useNavigate();
   const { mutate: likeFeed } = useLikeFeed();
   const { mutate: unlikeFeed } = useUnlikeFeed();
-  const { mutate: deleteFeed } = useDeleteFeed();
+  const { mutate: deleteFeed, isPending: isDeleting } = useDeleteFeed();
   const [isAnimating, setIsAnimating] = React.useState(false);
   const [showMoreOptions, setShowMoreOptions] = React.useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
@@ -231,13 +231,21 @@ export default function Card ({
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={(e) => {
-                deleteFeed(item.id);
-                setShowDeleteDialog(false);
                 e.stopPropagation();
+                deleteFeed(item.id, {
+                  onSuccess: () => {
+                    setShowDeleteDialog(false);
+                  }
+                });
               }}
-              className='text-white text-base leading-[140%] font-semibold text-center p-5 rounded-[0.625rem] bg-primary grow cursor-pointer'
+              disabled={isDeleting}
+              className={`text-white text-base leading-[140%] font-semibold text-center p-5 rounded-[0.625rem] grow cursor-pointer ${
+                isDeleting
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-primary'
+              }`}
             >
-              삭제하기
+              {isDeleting ? '삭제 중...' : '삭제하기'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
