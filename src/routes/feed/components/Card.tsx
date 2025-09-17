@@ -148,7 +148,11 @@ export default function Card ({
                   animationData={likeAnimation}
                   loop={false}
                   autoplay
-                  style={{ width: '24px', height: '24px' }}
+                  style={{
+                    width: '56px',
+                    height: '56px',
+                    transform: 'translate(-15.75px, -15.5px)'
+                  }}
                   onComplete={() => {
                     setIsAnimating(false);
                   }}

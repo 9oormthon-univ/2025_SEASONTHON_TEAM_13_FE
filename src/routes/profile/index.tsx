@@ -45,7 +45,7 @@ export default function Profile () {
               )}
             </div>
           </div>
-          <div className='px-8 pt-4 pb-3 bg-[linear-gradient(180deg,#F9736B_0%,#F05B53_100%)] rounded-b-[0.625rem] flex justify-between items-center'>
+          <div className='pt-4 pb-3 bg-[linear-gradient(180deg,#F9736B_0%,#F05B53_100%)] rounded-b-[0.625rem] flex justify-evenly items-center'>
             <div className='flex flex-col items-center gap-0.5'>
               <p className='text-gray100 font-medium text-sm leading-[140%]'>게시물</p>
               <p className='text-white font-semibold text-lg leading-[140%]'>{userState?.postCount}</p>
