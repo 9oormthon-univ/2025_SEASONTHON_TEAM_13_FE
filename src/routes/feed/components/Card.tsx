@@ -12,6 +12,7 @@ import Lottie from 'lottie-react';
 import { formatKoreanDate } from '@/lib/formatDate';
 import more from '@/assets/more_gray.svg';
 import { CircleX } from 'lucide-react';
+import { useClickOutside } from '@/hooks/useClickOutside';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -69,6 +70,10 @@ export default function Card ({
   const [showMoreOptions, setShowMoreOptions] = React.useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
 
+  const moreOptionsRef = useClickOutside(() => {
+    setShowMoreOptions(false);
+  });
+
   return (
     <div
       key={item.id}
@@ -99,6 +104,7 @@ export default function Card ({
             />
             {showMoreOptions && (
               <div
+                ref={moreOptionsRef}
                 className='absolute top-8 right-0 flex items-center gap-2 bg-white  rounded-lg shadow-[0_2px_8px_0_rgba(0,0,0,0.15)] py-2.5 pl-4 pr-10 z-10 hover:bg-gray100
               ' onClick={(e) => {
                   e.stopPropagation();

@@ -8,6 +8,7 @@ import { LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { usePlayerShown } from '@/hooks/usePlayerShown';
 import stroke from '@/assets/stroke.svg';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 export default function Profile () {
   const { data: user } = useGetUser();
@@ -18,6 +19,10 @@ export default function Profile () {
   const { data: userState } = useGetUserState();
   const navigate = useNavigate();
   const isPlayerShown = usePlayerShown();
+
+  const logoutRef = useClickOutside(() => {
+    setShowLogout(false);
+  });
 
   const handleLogout = () => {
     localStorage.clear();
@@ -36,6 +41,7 @@ export default function Profile () {
               <img src={moreWhite} alt='more' className='cursor-pointer' onClick={() => setShowLogout(!showLogout)} />
               {showLogout && (
                 <div
+                  ref={logoutRef}
                   className='flex items-center gap-2  absolute right-0 -bottom-14 cursor-pointer py-2.5 pl-4 pr-9.25 rounded-lg bg-white hover:bg-gray100 shadow-[0_2px_8px_0_rgba(0,0,0,0.15)]'
                   onClick={handleLogout}
                 >
