@@ -74,6 +74,16 @@ export default function Card ({
     setShowMoreOptions(false);
   });
 
+  // 오늘 날짜인지 확인하는 함수
+  const isToday = (dateString: string) => {
+    const today = new Date();
+    const itemDate = new Date(dateString);
+
+    return today.getFullYear() === itemDate.getFullYear() &&
+           today.getMonth() === itemDate.getMonth() &&
+           today.getDate() === itemDate.getDate();
+  };
+
   return (
     <div
       key={item.id}
@@ -190,10 +200,23 @@ export default function Card ({
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent className='bg-white border-none rounded-lg pt-10 pb-5 px-5 flex flex-col gap-9 max-w-[28.125rem] [@media(min-width:500px)]:max-w-[28.125rem]'>
           <AlertDialogHeader className='flex flex-col gap-6 items-center'>
-            <AlertDialogTitle className='text-gray800 text-xl font-bold leading-[140%] text-center'>게시글 삭제하기</AlertDialogTitle>
+            <AlertDialogTitle className='text-gray800 text-xl font-bold leading-[140%] text-center'>
+              {isToday(item.createdAt) ? '오늘의 게시물 삭제하기' : '게시물 삭제하기'}
+            </AlertDialogTitle>
             <AlertDialogDescription className='text-gray600 text-sm leading-[140%] font-medium text-center'>
-              게시물을 삭제할 경우 다시 되돌릴 수 없습니다.<br />
-              정말로 삭제 하시겠습니까?
+              {isToday(item.createdAt)
+                ? (
+                  <>
+                    게시물을 삭제할 경우 처음부터 다시 작성합니다.<br />
+                    정말로 삭제 하시겠습니까?
+                  </>
+                  )
+                : (
+                  <>
+                    게시물을 삭제할 경우 다시 되돌릴 수 없습니다.<br />
+                    정말로 삭제 하시겠습니까?
+                  </>
+                  )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className='flex flex-row gap-5'>
