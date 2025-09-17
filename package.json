@@ -34,7 +34,8 @@
     "react-spotify-web-playback-sdk": "^3.0.2",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.12"
+    "tailwindcss": "^4.1.12",
+    "tw-animate-css": "^1.3.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
