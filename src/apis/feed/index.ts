@@ -78,3 +78,8 @@ export const searchFeedsByTag = async (tag: string, page: number = 0, size: numb
   });
   return response.data;
 };
+
+export const deleteFeed = async (postId: number) => {
+  const response = await instance.delete(`/posts/${postId}`);
+  return response.data;
+};

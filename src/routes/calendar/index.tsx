@@ -105,7 +105,7 @@ export default function CalendarPage () {
         />
       </div>
       {selectedDateData && (
-        <div className='p-6 flex flex-col gap-6'>
+        <div className='p-6 flex flex-col gap-5'>
           <p className='font-semibold text-xl text-gray800 leading-[140%]'>{formatDate(selectedDate)}</p>
           <div className='flex flex-col px-5 py-4 bg-white rounded-2xl'>
             <div className='mb-4'>
@@ -113,7 +113,7 @@ export default function CalendarPage () {
                 ? (
                   <div className='flex flex-wrap gap-2'>
                     {selectedDateData.emotionTags.map((tag, index) => (
-                      <span key={index} className='px-3.5 py-1 bg-[#FFEBEA] text-primary text-xs font-medium leading-[140%] rounded-full border border-primary'>
+                      <span key={index} className='px-3.5 py-1 bg-[#FFEBEA] text-primary text-xs font-semibold leading-[140%] rounded-full border border-primary'>
                         {tag}
                       </span>
                     ))}
@@ -125,9 +125,9 @@ export default function CalendarPage () {
             </div>
             <div className='mb-1'>
               {selectedDateData?.song && (
-                <div className='flex items-center '>
+                <div className='flex items-center gap-1'>
                   <img src={music} alt='music' />
-                  <p className='text-[16px] text-gray800 font-semibold leading-[140%]'>{selectedDateData.song.title} - {selectedDateData.song.artist}</p>
+                  <p className='text-[16px] text-gray800 font-semibold leading-[140%] truncate'>{selectedDateData.song.title} - {selectedDateData.song.artist}</p>
                 </div>
               )}
             </div>
@@ -150,6 +150,13 @@ export default function CalendarPage () {
           </div>
         </div>
       )}
+      {
+        !selectedDateData && (
+          <div className='mt-32 text-center text-gray-300 leading-[140%] font-medium text-[0.75rem]'>
+            그 날의 게시물의 궁금하다면 해당 날짜를 선택하세요
+          </div>
+        )
+      }
     </div>
   );
 }
