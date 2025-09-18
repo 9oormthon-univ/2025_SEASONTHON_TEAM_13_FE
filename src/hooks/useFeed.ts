@@ -1,5 +1,7 @@
 import { useSuspenseQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
 import { getFeed, likeFeed, unlikeFeed, getFeedById, getFeedComments, postFeedComment, getFeedPage, deleteFeed } from '@/apis/feed';
+import { toast } from 'sonner';
+import { AxiosError } from 'axios';
 
 export const useGetFeed = (sortBy: 'createdAt' | 'likeCount') => {
   return useSuspenseQuery({
@@ -68,6 +70,13 @@ export const usePostFeedComment = () => {
       queryClient.invalidateQueries({ queryKey: ['feed', postId, 'comments'] });
       queryClient.invalidateQueries({ queryKey: ['feed', postId] });
       queryClient.invalidateQueries({ queryKey: ['feed'] });
+    },
+    onError: (error: unknown) => {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message || '요청 처리 중 오류가 발생했습니다.');
+      } else {
+        toast.error('요청 처리 중 오류가 발생했습니다.');
+      }
     },
   });
 };
