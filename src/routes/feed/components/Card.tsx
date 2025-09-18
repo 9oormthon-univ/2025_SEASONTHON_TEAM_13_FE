@@ -24,6 +24,7 @@ import {
   AlertDialogTitle,
 } from '@/components/alert-dialog';
 import { usePlaySong } from '@/hooks/usePlaySong';
+import { motion } from 'framer-motion';
 
 const AlbumButton = ({ song }: { song: Song }) => {
   const playSong = usePlaySong();
@@ -63,10 +64,15 @@ export default function Card ({
   isProfile = false,
 }: CardProps) {
   const navigate = useNavigate();
+  const buttonRef = React.useRef<HTMLImageElement>(null);
   const { mutate: likeFeed } = useLikeFeed();
   const { mutate: unlikeFeed } = useUnlikeFeed();
   const { mutate: deleteFeed, isPending: isDeleting } = useDeleteFeed();
   const [isAnimating, setIsAnimating] = React.useState(false);
+  const [targetPos, setTargetPos] = React.useState<{ x: number, y: number }>({ x: 0, y: 0 });
+  const LIKE_SIZE = 56; // Lottie visual size
+  const [startPos, setStartPos] = React.useState<{ left: number, top: number } | null>(null);
+  const [move, setMove] = React.useState(false);
   const [showMoreOptions, setShowMoreOptions] = React.useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
 
@@ -92,6 +98,45 @@ export default function Card ({
         navigate(`/feed/${item.id}`);
       }}
     >
+      {isAnimating && startPos && (
+        <motion.div
+          initial={{
+            left: startPos.left,
+            top: startPos.top,
+            scale: 2,
+          }}
+          animate={
+            move
+              ? {
+                  left: targetPos.x - LIKE_SIZE / 2,
+                  top: targetPos.y - LIKE_SIZE / 2,
+                  scale: 0.5,
+                }
+              : {}
+          }
+          transition={{ duration: 0.75, ease: 'easeInOut' }}
+          style={{
+            position: 'fixed',
+            width: LIKE_SIZE,
+            height: LIKE_SIZE,
+            pointerEvents: 'none',
+            zIndex: 100,
+          }}
+        >
+          <Lottie
+            animationData={likeAnimation}
+            loop={false}
+            autoplay
+            style={{
+              width: LIKE_SIZE,
+              height: LIKE_SIZE,
+            }}
+            onComplete={() => {
+              setIsAnimating(false);
+            }}
+          />
+        </motion.div>
+      )}
       {!isProfile &&
       (
         <div className='flex items-center gap-3 mb-5'>
@@ -158,38 +203,38 @@ export default function Card ({
       <div className='flex items-center gap-4'>
         <div className='flex items-center gap-1'>
           <div className='relative w-6 h-6'>
-            {isAnimating
-              ? (
-                <Lottie
-                  animationData={likeAnimation}
-                  loop={false}
-                  autoplay
-                  style={{
-                    width: '56px',
-                    height: '56px',
-                    transform: 'translate(-15.75px, -15.5px)'
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                  onComplete={() => {
-                    setIsAnimating(false);
-                  }}
-                />
-                )
-              : (
-                <img
-                  src={item.likeState ? heartActive : heart} alt='heart' className='cursor-pointer w-6 h-6' onClick={(e) => {
-                    e.stopPropagation();
-                    if (item.likeState) {
-                      unlikeFeed(item.id);
-                    } else {
-                      setIsAnimating(true);
-                      likeFeed(item.id);
+            <img
+              ref={buttonRef}
+              src={item.likeState ? heartActive : heart}
+              alt='heart'
+              className='cursor-pointer w-6 h-6'
+              onClick={(e) => {
+                e.stopPropagation();
+                if (item.likeState) {
+                  unlikeFeed(item.id);
+                } else {
+                  setIsAnimating(true);
+                  setMove(false);
+                  // compute viewport center as start position
+                  const viewportCenter = {
+                    left: window.innerWidth / 2 - LIKE_SIZE / 2,
+                    top: window.innerHeight / 2 - LIKE_SIZE / 2,
+                  };
+                  setStartPos(viewportCenter);
+                  setTimeout(() => {
+                    if (buttonRef.current) {
+                      const rect = buttonRef.current.getBoundingClientRect();
+                      setTargetPos({
+                        x: rect.left + rect.width / 2,
+                        y: rect.top + rect.height / 2,
+                      });
                     }
-                  }}
-                />
-                )}
+                    setMove(true);
+                  }, 800);
+                  likeFeed(item.id);
+                }
+              }}
+            />
           </div>
           <p className='text-gray700 text-sm leading-[140%] font-medium'>{item.likeCount}</p>
         </div>
