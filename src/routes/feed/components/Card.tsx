@@ -75,10 +75,20 @@ export default function Card ({
   const [move, setMove] = React.useState(false);
   const [showMoreOptions, setShowMoreOptions] = React.useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
+  const clickTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const moreOptionsRef = useClickOutside(() => {
     setShowMoreOptions(false);
   });
+
+  // 컴포넌트 언마운트 시 타이머 정리
+  React.useEffect(() => {
+    return () => {
+      if (clickTimeoutRef.current) {
+        clearTimeout(clickTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // 오늘 날짜인지 확인하는 함수
   const isToday = (dateString: string) => {
@@ -95,7 +105,47 @@ export default function Card ({
       key={item.id}
       className='p-6 bg-white cursor-pointer'
       onClick={() => {
-        navigate(`/feed/${item.id}`);
+        // 기존 타이머 있으면 제거
+        if (clickTimeoutRef.current) {
+          clearTimeout(clickTimeoutRef.current);
+        }
+
+        // 일정 시간 기다렸다가 단일 클릭 확정
+        clickTimeoutRef.current = setTimeout(() => {
+          navigate(`/feed/${item.id}`);
+        }, 250); // 250ms 안에 두 번째 클릭이 없으면 single
+      }}
+      onDoubleClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // 기존 클릭 타이머 취소 (더블클릭이므로 클릭 이벤트 실행 안됨)
+        if (clickTimeoutRef.current) {
+          clearTimeout(clickTimeoutRef.current);
+        }
+
+        if (item.likeState) {
+          unlikeFeed(item.id);
+        } else {
+          setIsAnimating(true);
+          setMove(false);
+          // 더블클릭한 위치를 시작점으로 설정
+          setStartPos({
+            left: e.clientX - LIKE_SIZE / 2,
+            top: e.clientY - LIKE_SIZE / 2,
+          });
+          setTimeout(() => {
+            if (buttonRef.current) {
+              const rect = buttonRef.current.getBoundingClientRect();
+              setTargetPos({
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2,
+              });
+            }
+            setMove(true);
+          }, 800);
+          likeFeed(item.id);
+        }
       }}
     >
       {isAnimating && startPos && (
@@ -208,32 +258,7 @@ export default function Card ({
               src={item.likeState ? heartActive : heart}
               alt='heart'
               className='cursor-pointer w-6 h-6'
-              onClick={(e) => {
-                e.stopPropagation();
-                if (item.likeState) {
-                  unlikeFeed(item.id);
-                } else {
-                  setIsAnimating(true);
-                  setMove(false);
-                  // compute viewport center as start position
-                  const viewportCenter = {
-                    left: window.innerWidth / 2 - LIKE_SIZE / 2,
-                    top: window.innerHeight / 2 - LIKE_SIZE / 2,
-                  };
-                  setStartPos(viewportCenter);
-                  setTimeout(() => {
-                    if (buttonRef.current) {
-                      const rect = buttonRef.current.getBoundingClientRect();
-                      setTargetPos({
-                        x: rect.left + rect.width / 2,
-                        y: rect.top + rect.height / 2,
-                      });
-                    }
-                    setMove(true);
-                  }, 800);
-                  likeFeed(item.id);
-                }
-              }}
+
             />
           </div>
           <p className='text-gray700 text-sm leading-[140%] font-medium'>{item.likeCount}</p>
