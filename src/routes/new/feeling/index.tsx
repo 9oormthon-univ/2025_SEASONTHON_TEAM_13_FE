@@ -15,7 +15,7 @@ export const SelectFeelings = () => {
         <Progress selectedIndex={0} className='pt-21' />
         <h2 className='heading2 pt-7'>오늘, 당신의 하루는 어땠나요?</h2>
         <p className='body-m font-medium text-gray500'>오늘의 감정과 맞는 태그를 3개 선택해보세요</p>
-        <div className='grid grid-cols-3 gap-2 mt-12'>
+        <div className='flex flex-wrap justify-center gap-2 mt-12'>
           {FEELINGS.map(({ id, emoji, name }) => (
             <FeelingTagButton
               key={id}
